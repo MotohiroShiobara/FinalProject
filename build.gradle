@@ -18,6 +18,15 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
+
+// Spring Boot起動中にIntelliJでコード修正が反映されるように
+idea {
+	module {
+		outputDir file('build/classes/main')
+		testOutputDir file('build/classes/test')
+	}
+}
 
 group = 'com.final.project'
 version = '0.0.1-SNAPSHOT'
