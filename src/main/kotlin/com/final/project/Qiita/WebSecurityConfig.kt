@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -19,8 +22,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 // アクセス権限の設定
                 // staticディレクトリにある、'/css/','fonts','/js/'は制限なし
                 .antMatchers("/css/**", "/fonts/**", "/js/**").permitAll()
-                // '/admin/'で始まるURLには、'ADMIN'ロールのみアクセス可
-                .antMatchers("/admin/**").hasRole("ADMIN")
                 // 他は制限なし
                 .anyRequest().authenticated()
                 .and()
@@ -47,14 +48,19 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .permitAll()
     }
 
-    @Bean
-    public override fun userDetailsService(): UserDetailsService {
-        val user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
-                .roles("USER")
-                .build()
+//    @Bean
+//    public override fun userDetailsService(): UserDetailsService {
+//        val user = User.withDefaultPasswordEncoder()
+//                .username("user")
+//                .password("password")
+//                .roles("USER")
+//                .build()
+//
+//        return InMemoryUserDetailsManager(user)
+//    }
 
-        return InMemoryUserDetailsManager(user)
-    }
+//    @Throws(Exception::class)
+//    override fun configure(auth: AuthenticationManagerBuilder?) {
+//        auth!!.userDetailsService<UserDetailsService>(userInfoService)
+//    }
 }

@@ -11,6 +11,10 @@
         SELECT * FROM user WHERE id = #{id}
     </select>
 
+    <select id="selectByUserName" resultType="com.final.project.Qiita.domain.User">
+        SELECT * FROM user WHERE name = #{name}
+    </select>
+
     <select id="all" resultType="com.final.project.Qiita.domain.User">
         SELECT * FROM user;
     </select>

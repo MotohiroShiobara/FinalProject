@@ -5,16 +5,18 @@
     <title>Title</title>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
+<!-- ログインが失敗した時のメッセージ -->
+<div class="alert alert-danger" role="alert"
+     th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+    <strong>ログインに失敗しました: </strong>ユーザが存在しないか、パスワードが間違っています。
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+
+<!-- ログインのフォーム -->
+<form class="form-signin" action="" th:action="@{/login}" method="post" name="login">
+    <h2 class="form-signin-heading">ログイン画面</h2>
+    <input type="text" class="form-control" placeholder="ユーザID" name="username" />
+    <input type="password" class="form-control" placeholder="パスワード" name="password" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
 </form>
 </body>
 </html>

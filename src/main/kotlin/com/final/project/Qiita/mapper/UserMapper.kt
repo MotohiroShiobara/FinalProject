@@ -10,6 +10,8 @@ interface UserMapper {
 
     fun select(id: Int): User
 
+    fun selectByUserName(name: String): User
+
     fun all(): List<User>
 
     fun delete(id: Int)
