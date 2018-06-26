@@ -1,6 +1,6 @@
-package com.final.project.Qiitq.mapper
+package com.final.project.Qiita.mapper
 
-import com.final.project.Qiitq.domain.User
+import com.final.project.Qiita.domain.User
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper

@@ -1,15 +1,15 @@
-package com.final.project.Qiitq.controller
+package com.final.project.Qiita.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("/user")
-class UserController {
+@RequestMapping("/login")
+class LoginController {
 
     @GetMapping("/", "")
-    fun show(): String {
+    fun login(): String {
         return "login"
     }
 }

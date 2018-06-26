@@ -1,6 +1,6 @@
-package com.final.project.Qiitq.UserDetail
+package com.final.project.Qiita.UserDetail
 
-import com.final.project.Qiitq.domain.User
+import com.final.project.Qiita.domain.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.GrantedAuthority
 
