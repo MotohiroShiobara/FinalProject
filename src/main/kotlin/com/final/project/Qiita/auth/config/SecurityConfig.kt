@@ -53,7 +53,7 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Configuration
     open class AuthenticationConfiguration : GlobalAuthenticationConfigurerAdapter() {
         @Autowired
-        var userDetailsService : UserDetailsServiceImpl = UserDetailsServiceImpl() ;
+        var userDetailsService : UserDetailsServiceImpl = UserDetailsServiceImpl()
 
         override fun init( auth : AuthenticationManagerBuilder) {
             // 認証するユーザーの設定

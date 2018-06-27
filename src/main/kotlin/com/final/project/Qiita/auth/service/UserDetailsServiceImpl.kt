@@ -20,12 +20,12 @@ open class UserDetailsServiceImpl :UserDetailsService {
     @Autowired
     lateinit var userMapper: UserMapper
 
-    override fun loadUserByUsername(username : String ) : UserDetails{
+    override fun loadUserByUsername(email : String ) : UserDetails{
         // 認証を行うユーザー情報を格納する
         var user : User?  = null
         try {
             // 入力したユーザーIDから認証を行うユーザー情報を取得する
-            user = userMapper.findByEmail(username)
+            user = userMapper.findByEmail(email)
         } catch (e:Exception ) {
             // 取得時にExceptionが発生した場合
             throw UsernameNotFoundException("It can not be acquired User");
@@ -33,11 +33,11 @@ open class UserDetailsServiceImpl :UserDetailsService {
 
         // ユーザー情報を取得できなかった場合
         if(user == null){
-            throw UsernameNotFoundException("User not found for login id: " + username);
+            throw UsernameNotFoundException("User not found for login id: " + email);
         }
 
         // ユーザー情報が取得できたらSpring Securityで認証できる形で戻す
-        return LoginUser(user);
+        return LoginUser(user)
     }
 
 }
