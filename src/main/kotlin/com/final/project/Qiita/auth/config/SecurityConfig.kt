@@ -32,23 +32,22 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http : HttpSecurity)  {
         // 認可の設定
         http.authorizeRequests()
-                .antMatchers("/", "/index").permitAll() // indexは全ユーザーアクセス許可
+                .antMatchers("/login", "/", "register").permitAll() // indexは全ユーザーアクセス許可
                 .anyRequest().authenticated()  // それ以外は全て認証無しの場合アクセス不許可
 
         // ログイン設定
         http.formLogin()
                 .loginProcessingUrl("/users/login")   // 認証処理のパス
-                .loginPage("/index")            // ログインフォームのパス
+                .loginPage("/login")            // ログインフォームのパス
                 .failureHandler(AuthenticationFailureHandler())       // 認証失敗時に呼ばれるハンドラクラス
-                .defaultSuccessUrl("/login/success")     // 認証成功時の遷移先
+                .defaultSuccessUrl("/trend")     // 認証成功時の遷移先
                 .usernameParameter("email").passwordParameter("pass")  // ユーザー名、パスワードのパラメータ名
                 .and()
 
         // ログアウト
         http.logout()
                 .logoutRequestMatcher(AntPathRequestMatcher("/logout**"))
-                .logoutSuccessUrl("/index")
-
+                .logoutSuccessUrl("/login")
     }
 
     @Configuration
@@ -59,7 +58,6 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
         override fun init( auth : AuthenticationManagerBuilder) {
             // 認証するユーザーの設定
             auth.userDetailsService(userDetailsService)
-
         }
     }
 }

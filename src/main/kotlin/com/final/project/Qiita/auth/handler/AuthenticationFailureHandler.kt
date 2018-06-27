@@ -31,6 +31,6 @@ class AuthenticationFailureHandler : AuthenticationFailureHandler {
         }
 
         // ログイン画面にリダイレクト
-        httpServletResponse.sendRedirect(httpServletRequest.contextPath + "/index?error=" + errorId)
+        httpServletResponse.sendRedirect(httpServletRequest.contextPath + "/login?error=" + errorId)
     }
 }
