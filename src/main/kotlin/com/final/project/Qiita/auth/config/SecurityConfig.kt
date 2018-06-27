@@ -32,7 +32,7 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http : HttpSecurity)  {
         // 認可の設定
         http.authorizeRequests()
-                .antMatchers("/login", "/", "register").permitAll() // indexは全ユーザーアクセス許可
+                .antMatchers("/login", "/", "/signup").permitAll() // indexは全ユーザーアクセス許可
                 .anyRequest().authenticated()  // それ以外は全て認証無しの場合アクセス不許可
 
         // ログイン設定

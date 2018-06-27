@@ -1,0 +1,15 @@
+.login-form {
+    margin-top: 10%;
+}
+
+.submit-button {
+    background-color: #59bb0c;
+    text-decoration-color: #ffffff;
+    font-size: 2rem;
+
+}
+
+.register-link {
+    color: rgba(95, 95, 95, 0.63);
+    margin-top: 10px;
+}
