@@ -26,4 +26,8 @@
     <update id="update" useGeneratedKeys="true" keyProperty="id">
         UPDATE user SET name=#{name}, email=#{email}, password=#{password}, description=#{description} WHERE id=#{id}
     </update>
+
+    <select id="findByEmail" resultType="com.final.project.Qiita.domain.User">
+        SELECT * FROM user WHERE email=#{email}
+    </select>
 </mapper>

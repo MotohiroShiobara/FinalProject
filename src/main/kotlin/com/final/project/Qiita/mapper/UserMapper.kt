@@ -17,4 +17,6 @@ interface UserMapper {
     fun delete(id: Int)
 
     fun update(user: User)
+
+    fun findByEmail(email: String): User
 }
