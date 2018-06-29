@@ -4,5 +4,4 @@ CREATE TABLE user (
     ,email VARCHAR(255) NOT NULL
     ,pass VARCHAR(255) NOT NULL
     ,description VARCHAR (255)
-    ,authority VARCHAR (30)
 )
