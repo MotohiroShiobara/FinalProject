@@ -13,21 +13,21 @@
 <body>
 <div class="container login-form">
     <h1 class="text-center">Qiitaへようこそ!!</h1>
-    <form id="loginForm" method="post" th:action="@{/signup}">
+    <form id="loginForm" method="post" th:action="@{/signup}" th:object="${registerForm}">
 
         <div class="form-group">
-            <label for="nameInput">Name</label>
-            <input type="text" class="form-control" id="nameInput" placeholder="ユーザー名" name="name">
+            <input type="text" class="form-control" id="nameInput" placeholder="ユーザー名" th:field="*{accountName}">
+            <p th:if="${#fields.hasErrors('accountName')}" th:errors="*{accountName}" class="col-sm-offset-2 text-danger"></p>
         </div>
 
         <div class="form-group">
-            <label for="emailInput">Email</label>
-            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="メールアドレス" name="email">
+            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="メールアドレス" th:field="*{email}">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="col-sm-offset-2 text-danger"></p>
         </div>
 
         <div class="form-group">
-            <label for="passwordInput">Password</label>
-            <input type="password" class="form-control" id="passwordInput" placeholder="Password" name="pass">
+            <input type="password" class="form-control" id="passwordInput" placeholder="Password" th:field="*{password}">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="col-sm-offset-2 text-danger"></p>
         </div>
 
         <div class="button row">
