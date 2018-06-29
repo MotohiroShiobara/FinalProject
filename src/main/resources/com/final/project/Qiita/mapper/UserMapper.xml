@@ -8,12 +8,12 @@
         <result property="accountName" column="account_name" />
         <result property="emailAddress" column="email_address" />
         <result property="password" column="password" />
-        <result property="description" column="description" />
+        <result property="profile" column="profile" />
         <result property="id" column="id" />
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (account_name, email_address, password, description) VALUES (#{accountName}, #{emailAddress}, #{password}, #{description})
+        INSERT INTO user (account_name, email_address, password, profile) VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile})
     </insert>
 
     <select id="select" resultType="com.final.project.Qiita.domain.User" resultMap="userResultMap">
@@ -33,7 +33,7 @@
     </delete>
 
     <update id="update" useGeneratedKeys="true" keyProperty="id">
-        UPDATE user SET account_name=#{accountName}, email_address=#{emailAddress}, password=#{password}, description=#{description} WHERE id=#{id}
+        UPDATE user SET account_name=#{accountName}, email_address=#{emailAddress}, password=#{password}, profile=#{profile} WHERE id=#{id}
     </update>
 
     <select id="findByEmail" resultType="com.final.project.Qiita.domain.User" resultMap="userResultMap">
