@@ -39,4 +39,8 @@
     <select id="findByEmail" resultType="com.final.project.Qiita.domain.User" resultMap="userResultMap">
         SELECT * FROM user WHERE email_address=#{emailAddress}
     </select>
+
+    <select id="findByEmailOrName" resultType="com.final.project.Qiita.domain.User" resultMap="userResultMap">
+        SELECT * FROM user WHERE email_address=#{loginName} OR account_name=#{loginName} LIMIT 1
+    </select>
 </mapper>

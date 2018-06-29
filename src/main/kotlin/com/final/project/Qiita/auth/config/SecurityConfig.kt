@@ -42,7 +42,7 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .loginPage("/login")            // ログインフォームのパス
                 .failureHandler(AuthenticationFailureHandler())       // 認証失敗時に呼ばれるハンドラクラス
                 .defaultSuccessUrl("/trend")     // 認証成功時の遷移先
-                .usernameParameter("email").passwordParameter("pass")  // ユーザー名、パスワードのパラメータ名
+                .usernameParameter("loginName").passwordParameter("pass")  // ユーザー名、パスワードのパラメータ名
                 .and()
 
         // ログアウト

@@ -15,8 +15,8 @@
     <h1 class="text-center">Qiita にログイン</h1>
     <form id="loginForm" method="post" th:action="@{/users/login}">
         <div class="form-group">
-            <label for="emailInput">Email</label>
-            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="メールアドレス" name="email">
+            <label for="loginNameInput">Email</label>
+            <input type="text" class="form-control" id="loginNameInput" placeholder="メールアドレスもしくはユーザー名" name="loginName">
         </div>
 
         <div class="form-group">
