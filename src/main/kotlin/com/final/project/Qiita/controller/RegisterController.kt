@@ -32,7 +32,6 @@ class RegisterController @Autowired constructor(private val userMapper: UserMapp
             @RequestParam(value = "password", required = true) password: String): String {
 
         if (bindingResult.hasErrors()) {
-
             return "register"
         }
 

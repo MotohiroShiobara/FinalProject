@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>記事を投稿する</title>
+    <title>記事詳細</title>
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/new.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -18,16 +18,6 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<form id="newArticle" method="post" th:action="@{/article}" th:object="${articleForm}">
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="タイトル" th:name="*{title}">
-    </div>
-
-    <div class="form-group">
-        <textarea class="form-control" rows="30" th:name="*{markdownText}"></textarea>
-    </div>
-
-    <button type="submit" class="btn submit-button">投稿</button>
-</form>
+<h1>記事詳細</h1>
 </body>
 </html>
