@@ -10,7 +10,7 @@ interface UserMapper {
 
     fun select(id: Int): User
 
-    fun selectByUserName(name: String): User
+    fun selectByUserName(accountName: String): User
 
     fun all(): List<User>
 
@@ -18,6 +18,6 @@ interface UserMapper {
 
     fun update(user: User)
 
-    fun findByEmail(email: String): User
+    fun findByEmail(emailAddress: String): User
 
 }

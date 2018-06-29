@@ -12,16 +12,15 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories
  * 認証ユーザーの情報を格納するクラス
  */
 class LoginUser (user: User): org.springframework.security.core.userdetails.User(
-        user.email,
-        user.pass,
+        user.emailAddress,
+        user.password,
         AuthorityUtils.createAuthorityList("ROLE_USER")) {
     /**
      * ログインユーザー
      */
     var loginUser: User? = null
-
     init {
-        println(user.pass)
+        println(user.emailAddress)
         // スーパークラスのユーザーID、パスワードに値をセットする
         // 実際の認証はスーパークラスのユーザーID、パスワードで行われる
         this.loginUser = user
