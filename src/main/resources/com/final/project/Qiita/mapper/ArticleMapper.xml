@@ -7,16 +7,16 @@
     <resultMap id="articleResultMap" type="com.final.project.Qiita.domain.Article">
         <result property="userId" column="user_id" />
         <result property="title" column="title" />
+        <result property="releasedAt" column="released_at" />
         <result property="markdownText" column="markdown_text" />
         <result property="id" column="id" />
-        <result property="releasedAt" column="released_at" />
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
+        INSERT INTO article (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
     </insert>
 
-    <select id="select" resultType="com.final.project.Qiita.domain.Article" resultMap="articleResultMap">
+    <select id="select" resultMap="articleResultMap">
         SELECT * FROM user WHERE id = #{id}
     </select>
 </mapper>

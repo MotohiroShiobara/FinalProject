@@ -8,5 +8,5 @@ interface ArticleMapper {
 
     fun insert(article: Article)
 
-    fun select(id: Int)
+    fun select(id: Int): Article
 }
