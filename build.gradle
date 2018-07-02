@@ -18,6 +18,15 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
+
+// Spring Boot起動中にIntelliJでコード修正が反映されるように
+idea {
+	module {
+		outputDir file('build/classes/main')
+		testOutputDir file('build/classes/test')
+	}
+}
 
 group = 'com.final.project'
 version = '0.0.1-SNAPSHOT'
@@ -51,5 +60,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-reflect")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0")// mybatis
-
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.0.RELEASE'
+	compile("org.springframework.boot:spring-boot-devtools")
 }

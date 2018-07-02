@@ -1,11 +1,11 @@
-package com.final.project.Qiitq
+package com.final.project.Qiita
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class QiitqApplication
+class QiitaApplication
 
 fun main(args: Array<String>) {
-    runApplication<QiitqApplication>(*args)
+    runApplication<QiitaApplication>(*args)
 }
