@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import java.security.Principal
 
 @Controller
 class RegisterController @Autowired constructor(private val userMapper: UserMapper) {
     @GetMapping("", "/signup")
-    fun register(model : Model): String {
+    fun register(model : Model, principal: Principal?): String {
+        if (principal is Principal) {
+            return "redirect:/trend"
+        }
         val registerForm = RegisterForm()
         model.addAttribute("registerForm", registerForm)
         return "register"
@@ -32,7 +36,6 @@ class RegisterController @Autowired constructor(private val userMapper: UserMapp
             @RequestParam(value = "password", required = true) password: String): String {
 
         if (bindingResult.hasErrors()) {
-
             return "register"
         }
 
