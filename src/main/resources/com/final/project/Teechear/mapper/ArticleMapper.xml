@@ -23,7 +23,7 @@
 
     <select id="trend" resultMap="articleResultMap">
         select
-        article.title, article.id, (select COUNT(*) from user_like_article where article.id = article_id) like_count
+        article.title, article.id, (select COUNT(ula.id) from user_like_article ula where article.id = ula.article_id) like_count
         from
         article, user_like_article
         where
