@@ -16,7 +16,11 @@
         INSERT INTO article (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
     </insert>
 
-    <select id="find" resultType="com.final.project.Teechear.domain.Article">
+    <select id="find" resultMap="articleResultMap">
         SELECT * FROM article WHERE id = #{id} LIMIT 1
+    </select>
+
+    <select id="trend" resultMap="articleResultMap">
+        SELECT * FROM article WHERE released_at > DATE_SUB(now(), interval '7' DAY) LIMIT 20
     </select>
 </mapper>
