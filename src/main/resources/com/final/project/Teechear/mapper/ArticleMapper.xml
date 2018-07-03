@@ -5,18 +5,30 @@
 
 <mapper namespace="com.final.project.Teechear.mapper.ArticleMapper">
     <resultMap id="articleResultMap" type="com.final.project.Teechear.domain.Article">
-        <result property="title" column="title" />
-        <result property="userId" column="user_id" />
-        <result property="releasedAt" column="released_at" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
-        <result property="markdownText" column="markdown_text" />
-        <result property="id" column="id" />
+        <result property="title" column="title"/>
+        <result property="userId" column="user_id"/>
+        <result property="releasedAt" column="released_at"
+                typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="markdownText" column="markdown_text"/>
+        <result property="id" column="id"/>
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO article (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
     </insert>
 
-    <select id="find" resultType="com.final.project.Teechear.domain.Article">
+    <select id="find" resultMap="articleResultMap">
         SELECT * FROM article WHERE id = #{id} LIMIT 1
+    </select>
+
+    <select id="trend" resultMap="articleResultMap">
+        select
+        article.title, article.id, (select COUNT(ula.id) from user_like_article ula where article.id = ula.article_id) like_count
+        from
+        article, user_like_article
+        where
+        article.released_at > DATE_SUB(now(), interval '7' DAY)
+        order by
+        like_count desc LIMIT 20;
     </select>
 </mapper>

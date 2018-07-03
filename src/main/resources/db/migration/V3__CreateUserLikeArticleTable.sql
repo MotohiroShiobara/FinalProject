@@ -4,4 +4,5 @@ id INT AUTO_INCREMENT NOT NULL PRIMARY KEY
 ,article_id INT NOT NULL
 ,FOREIGN KEY(user_id) REFERENCES user (id)
 ,FOREIGN KEY(article_id) REFERENCES article (id)
+,UNIQUE (user_id, article_id)
 )

@@ -45,6 +45,7 @@ class ArticleController @Autowired constructor(private val userMapper: UserMappe
     @GetMapping("/{articleId}")
     fun show(@PathVariable("articleId") articleId: Int, model: Model): String {
         val article = articleMapper.find(articleId)
+        println(article?.releasedAt)
         if (article is Article) {
             model.addAttribute("article", article)
             return "article/show"
