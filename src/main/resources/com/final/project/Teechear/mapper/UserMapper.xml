@@ -24,7 +24,7 @@
         SELECT * FROM user WHERE account_name = #{accountName}
     </select>
 
-    <select id="all" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
+    <select id="selectAll" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
         SELECT * FROM user;
     </select>
 

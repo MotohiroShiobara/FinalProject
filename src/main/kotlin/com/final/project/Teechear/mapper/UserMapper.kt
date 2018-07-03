@@ -12,7 +12,7 @@ interface UserMapper {
 
     fun selectByUserName(accountName: String): User
 
-    fun all(): List<User>
+    fun selectAll(): List<User>
 
     fun delete(id: Int)
 
