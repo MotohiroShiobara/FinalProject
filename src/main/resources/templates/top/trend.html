@@ -20,6 +20,9 @@
 <body>
 <h1>Trendページ</h1>
 <a href="/article/new">投稿する</a>
+<form id="searchForm" method="get" th:action="@{/search}">
+　　　　<input type="text" class="form-control" placeholder="キーワードを入力" name="q">
+</form>
 <div class="container">
     <table class="table table-condensed">
         <tbody>
