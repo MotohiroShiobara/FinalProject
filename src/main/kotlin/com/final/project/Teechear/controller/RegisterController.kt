@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import java.security.Principal
 
 @Controller
-class RegisterController @Autowired constructor(private val userMapper: UserMapper) {
+class RegisterController(private val userMapper: UserMapper) {
     @GetMapping("", "/signup")
     fun register(model : Model, principal: Principal?): String {
         if (principal is Principal) {
