@@ -5,15 +5,16 @@ import com.final.project.Qiita.mapper.UserMapper
 import com.final.project.Qiita.validate.RegisterForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import java.security.Principal
+import java.time.LocalDateTime
 
 @Controller
 class RegisterController @Autowired constructor(private val userMapper: UserMapper) {
@@ -38,7 +39,7 @@ class RegisterController @Autowired constructor(private val userMapper: UserMapp
         if (bindingResult.hasErrors()) {
             return "register"
         }
-
+        LocalDateTime.now()
         val user = User(accountName, email, BCryptPasswordEncoder().encode(password))
         userMapper.insert(user)
         return "redirect:/login"

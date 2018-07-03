@@ -6,15 +6,15 @@ import javax.validation.constraints.Size
 
 class RegisterForm {
 
-    @NotBlank
+    @NotBlank(message = "このフィールドを入力してください")
     @Size(min = 4, max = 30)
     var accountName: String = ""
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "このフィールドを入力してください")
+    @Email(message = "メールアドレス")
     var email: String = ""
 
-    @NotBlank
-    @Size(min = 8, max = 32)
+    @NotBlank(message = "このフィールドを入力してください")
+    @Size(min = 8, max = 32, message = "8文字以上32文字以内で入力してください")
     var password: String = ""
 }

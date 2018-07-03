@@ -63,4 +63,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.0.RELEASE'
 	compile("org.springframework.boot:spring-boot-devtools")
+	// https://mvnrepository.com/artifact/org.mybatis/mybatis-typehandlers-jsr310
+	compile("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
 }

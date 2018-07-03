@@ -20,11 +20,11 @@
 <body>
 <form id="newArticle" method="post" th:action="@{/article}" th:object="${articleForm}">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="タイトル" th:name="*{title}">
+        <input type="text" class="form-control" placeholder="タイトル" th:field="*{title}">
     </div>
 
     <div class="form-group">
-        <textarea class="form-control" rows="30" th:name="*{markdownText}"></textarea>
+        <textarea class="form-control" rows="30" th:field="*{markdownText}"></textarea>
     </div>
 
     <button type="submit" class="btn submit-button">投稿</button>
