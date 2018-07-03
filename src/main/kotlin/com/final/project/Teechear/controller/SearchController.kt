@@ -13,7 +13,8 @@ class SearchController(private val articleMapper: ArticleMapper) {
 
     @GetMapping("")
     fun search(model: Model, @RequestParam(value = "q") query: String): String {
-        println(query)
-        return "/search/result"
+        model.addAttribute("articleList", articleMapper.search(query))
+        model.addAttribute("query", query)
+        return "search/result"
     }
 }
