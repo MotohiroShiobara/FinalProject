@@ -1,4 +1,4 @@
-package com.final.project.Qiita.controller
+package com.final.project.Teechear.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,6 +1,6 @@
-package com.final.project.Qiita.mapper
+package com.final.project.Teechear.mapper
 
-import com.final.project.Qiita.domain.Article
+import com.final.project.Teechear.domain.Article
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper

@@ -1,9 +1,9 @@
-package com.final.project.Qiita.controller
+package com.final.project.Teechear.controller
 
-import com.final.project.Qiita.domain.Article
-import com.final.project.Qiita.mapper.ArticleMapper
-import com.final.project.Qiita.mapper.UserMapper
-import com.final.project.Qiita.validate.ArticleForm
+import com.final.project.Teechear.domain.Article
+import com.final.project.Teechear.mapper.ArticleMapper
+import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.validate.ArticleForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

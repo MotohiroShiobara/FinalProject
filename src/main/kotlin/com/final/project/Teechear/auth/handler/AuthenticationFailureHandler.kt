@@ -1,4 +1,4 @@
-package com.final.project.Qiita.auth.handler
+package com.final.project.Teechear.auth.handler
 
 /**
  * Created by admin on 2017/05/26.

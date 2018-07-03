@@ -1,20 +1,17 @@
-package com.final.project.Qiita.controller
+package com.final.project.Teechear.controller
 
-import com.final.project.Qiita.domain.User
-import com.final.project.Qiita.mapper.UserMapper
-import com.final.project.Qiita.validate.RegisterForm
+import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.validate.RegisterForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
 import java.security.Principal
-import java.time.LocalDateTime
 
 @Controller
 class RegisterController @Autowired constructor(private val userMapper: UserMapper) {
@@ -31,16 +28,15 @@ class RegisterController @Autowired constructor(private val userMapper: UserMapp
     @PostMapping("", "/signup")
     fun userRegister(
             @Validated registerForm: RegisterForm,
-            bindingResult: BindingResult,
-            @RequestParam(value = "accountName", required = true) accountName: String,
-            @RequestParam(value = "email", required = true) email: String,
-            @RequestParam(value = "password", required = true) password: String): String {
-
+            bindingResult: BindingResult): String {
         if (bindingResult.hasErrors()) {
             return "register"
         }
-        LocalDateTime.now()
-        val user = User(accountName, email, BCryptPasswordEncoder().encode(password))
+
+        val user = User(
+                registerForm.accountName,
+                registerForm.email,
+                BCryptPasswordEncoder().encode(registerForm.password))
         userMapper.insert(user)
         return "redirect:/login"
     }
