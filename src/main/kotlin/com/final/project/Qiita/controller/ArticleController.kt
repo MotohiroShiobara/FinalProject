@@ -7,14 +7,12 @@ import com.final.project.Qiita.validate.ArticleForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.validation.AbstractBindingResult
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import java.security.Principal
 import java.time.LocalDateTime
 
@@ -28,7 +26,7 @@ class ArticleController @Autowired constructor(private val userMapper: UserMappe
         return "article/new"
     }
 
-    @PostMapping("", "")
+    @PostMapping("")
     fun create(
             principal: Principal,
             @Validated articleForm: ArticleForm,
@@ -36,18 +34,22 @@ class ArticleController @Autowired constructor(private val userMapper: UserMappe
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val nowDateTime = LocalDateTime.now()
-        if (nowDateTime is LocalDateTime) {
-            val article = Article(currentUser.id, articleForm.title, nowDateTime, articleForm.markdownText)
-            articleMapper.insert(article)
-            return "redirect:/article"
-        }
-
-        return "article/new"
+        println("article Formの中身")
+        println(articleForm.title)
+        println(articleForm.markdownText)
+        val article = Article(articleForm.title, currentUser.id, nowDateTime, articleForm.markdownText)
+        articleMapper.insert(article)
+        return "redirect:/article/${article.id}"
     }
 
     @GetMapping("/{articleId}")
-    fun show(@PathVariable("articleId") articleId: Int): String {
-        println(articleId)
-        return "article/show"
+    fun show(@PathVariable("articleId") articleId: Int, model: Model): String {
+        val article = articleMapper.find(articleId)
+        if (article is Article) {
+            model.addAttribute("article", article)
+            return "article/show"
+        }
+
+        return "error/404.html"
     }
 }

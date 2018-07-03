@@ -1,11 +1,8 @@
 package com.final.project.Qiita.domain
 
-import java.time.LocalDateTime
-
 data class Article(
-        val userId: Int,
-        val title: String,
-        val releasedAt: LocalDateTime,
-        val markdownText: String = "",
-        val id: Int = 0
-        )
+        val title: String? = null,
+        val userId: Int? = null,
+        val releasedAt: java.time.LocalDateTime? = null,
+        val markdownText: String? = null,
+        val id: Int? = null)
