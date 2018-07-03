@@ -1,11 +1,10 @@
-package com.final.project.Qiita.controller
+package com.final.project.Teechear.controller
 
-import com.final.project.Qiita.domain.User
-import com.final.project.Qiita.mapper.UserMapper
-import com.final.project.Qiita.validate.RegisterForm
+import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.validate.RegisterForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult

@@ -1,12 +1,10 @@
-package com.final.project.Qiita.auth.model
+package com.final.project.Teechear.auth.model
 
 /**
  * Created by version1 on 2017/05/26.
  */
-import com.final.project.Qiita.domain.User
+import com.final.project.Teechear.domain.User
 import org.springframework.security.core.authority.AuthorityUtils
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
 /**
  * 認証ユーザーの情報を格納するクラス

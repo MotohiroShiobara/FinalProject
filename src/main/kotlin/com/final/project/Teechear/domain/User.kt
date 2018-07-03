@@ -1,4 +1,4 @@
-package com.final.project.Qiita.domain
+package com.final.project.Teechear.domain
 
 data class User(
         val accountName: String? = null,

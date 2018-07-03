@@ -1,7 +1,7 @@
-package com.final.project.Qiita.auth.config
+package com.final.project.Teechear.auth.config
 
-import com.final.project.Qiita.auth.handler.AuthenticationFailureHandler
-import com.final.project.Qiita.auth.service.UserDetailsServiceImpl
+import com.final.project.Teechear.auth.handler.AuthenticationFailureHandler
+import com.final.project.Teechear.auth.service.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder

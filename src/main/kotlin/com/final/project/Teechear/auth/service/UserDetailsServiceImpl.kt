@@ -1,8 +1,8 @@
-package com.final.project.Qiita.auth.service
+package com.final.project.Teechear.auth.service
 
-import com.final.project.Qiita.auth.model.LoginUser
-import com.final.project.Qiita.domain.User
-import com.final.project.Qiita.mapper.UserMapper
+import com.final.project.Teechear.auth.model.LoginUser
+import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.mapper.UserMapper
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,6 @@
-package com.final.project.Qiita.controller
+package com.final.project.Teechear.controller
 
-import com.final.project.Qiita.mapper.UserMapper
+import com.final.project.Teechear.mapper.UserMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

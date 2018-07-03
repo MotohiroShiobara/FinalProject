@@ -1,4 +1,4 @@
-package com.final.project.Qiita.validate
+package com.final.project.Teechear.validate
 
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Email
