@@ -55,6 +55,7 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
 
         val currentUser = obtainCurrentUser(principal.name)
         val copyCurrentUser = currentUser.copy(accountName = userEditForm.accountName, profile = userEditForm.profile)
+
         userMapper.update(copyCurrentUser)
         return "redirect:user/${currentUser.id}"
     }
