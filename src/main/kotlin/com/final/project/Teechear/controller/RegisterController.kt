@@ -32,6 +32,7 @@ class RegisterController(private val userMapper: UserMapper) {
             @Validated registerForm: RegisterForm,
             bindingResult: BindingResult): String {
         if (userMapper.findByEmail(registerForm.email) is User) {
+            println(userMapper.findByEmail(registerForm.email))
             bindingResult.addError(FieldError("uniq exception", "email", "メールアドレスはすでに登録済みです"))
         }
 
