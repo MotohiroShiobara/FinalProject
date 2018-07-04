@@ -37,6 +37,7 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
         println("article Formの中身")
         println(articleForm.title)
         println(articleForm.markdownText)
+        nowDateTime.toq
         val article = Article(articleForm.title, currentUser.id, nowDateTime, articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
@@ -45,7 +46,10 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
     @GetMapping("/{articleId}")
     fun show(@PathVariable("articleId") articleId: Int, model: Model): String {
         val article = articleMapper.find(articleId)
-        println(article?.releasedAt)
+        val userId = article?.userId
+        if (userId is Int) {
+
+        }
         if (article is Article) {
             model.addAttribute("article", article)
             return "article/show"

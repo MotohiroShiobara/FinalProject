@@ -18,11 +18,15 @@
             crossorigin="anonymous"></script>
 
 </head>
-<body>
-<h1 th:text="${article?.title}"></h1>
-<!--<div id="markdownText" style="display: none;">```<br><h1>aaa</h1><br><h2>kkk</h2><br>```</div>-->
-<div th:text="${article?.markdownText}" id="markdownText" style="display: none;"></div>
-<div id="content"></div>
+<body style="background-color: lightgray;">
+<div class="container" style="background-color: white;">
+    <div>
+        <h5>${article?.}</h5>
+    </div>
+    <h1 th:text="${article?.title}"></h1>
+    <div th:text="${article?.markdownText}" id="markdownText" style="display: none;"></div>
+    <div id="content"></div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
     var plainText = document.getElementById("markdownText").innerText
@@ -36,14 +40,14 @@
         smartLists: true,
         smartypants: false,
         langPrefix: 'language-',
-        highlight: function(code, lang) {
+        highlight: function (code, lang) {
             // hogehoge
             return code;
         }
     });
 
     document.getElementById('content').innerHTML =
-    marked(plainText);
+        marked(plainText);
 </script>
 <style>
     pre {

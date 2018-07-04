@@ -11,7 +11,11 @@
                 typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <result property="markdownText" column="markdown_text"/>
         <result property="id" column="id"/>
+        <result property="userAccountName" column="user_account_name" />
+        <result property="likeCount" column="like_count" />
     </resultMap>
+
+
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO article (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
@@ -23,9 +27,13 @@
 
     <select id="trend" resultMap="articleResultMap">
         select
-        article.title, article.id, (select COUNT(ula.id) from user_like_article ula where article.id = ula.article_id) like_count
+        article.*, (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count, user.account_name user_account_name
         from
-        article, user_like_article
+        user_like_article, article
+        INNER JOIN
+        user
+        ON
+        article.user_id = user.id
         where
         article.released_at > DATE_SUB(now(), interval '7' DAY)
         order by
@@ -33,6 +41,6 @@
     </select>
 
     <select id="search" resultMap="articleResultMap">
-        SELECT * FROM article WHERE title LIKE CONCAT(#{query}, '%')
+        SELECT *, user.account_name user_account_name FROM article, user WHERE title LIKE CONCAT(#{query}, '%')
     </select>
 </mapper>

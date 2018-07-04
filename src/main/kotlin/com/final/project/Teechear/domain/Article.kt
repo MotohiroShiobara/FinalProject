@@ -5,4 +5,6 @@ data class Article(
         val userId: Int? = null,
         val releasedAt: java.time.LocalDateTime? = null,
         val markdownText: String? = null,
-        val id: Int? = null)
+        val id: Int? = null,
+        val userAccountName: String? = null,
+        val likeCount: Int? = null)
