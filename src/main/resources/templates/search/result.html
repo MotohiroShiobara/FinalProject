@@ -32,6 +32,7 @@
             <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg"
                      height="50"
                      width="100"></td>
+            <td th:text="${#dates.format(result.releasedAt)}"></td>
             <td><h3 th:text="${result.title}"></h3></td>
         </tr>
         </tbody>
