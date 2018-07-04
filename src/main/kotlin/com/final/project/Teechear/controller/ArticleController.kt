@@ -34,10 +34,6 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val nowDateTime = LocalDateTime.now()
-        println("article Formの中身")
-        println(articleForm.title)
-        println(articleForm.markdownText)
-        nowDateTime.toq
         val article = Article(articleForm.title, currentUser.id, nowDateTime, articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
