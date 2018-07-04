@@ -40,6 +40,18 @@
                 </tr>
                 </tbody>
             </table>
+
+            <table class="table table-condensed">
+                <tbody th:remove="all-but-first" th:each="result : ${articleList}">
+                <tr>
+                    <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg"
+                             height="50"
+                             width="100"></td>
+                    <td th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"></td>
+                    <td><h3 th:text="${result.title}"></h3></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
