@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import java.security.Principal
 import java.time.LocalDateTime
+import java.util.*
 
 @Controller
 @RequestMapping("/article")
@@ -33,8 +34,7 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
             bindingResult: BindingResult
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
-        val nowDateTime = LocalDateTime.now()
-        val article = Article(articleForm.title, currentUser.id, nowDateTime, articleForm.markdownText)
+        val article = Article(articleForm.title, currentUser.id, Date(), articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
     }

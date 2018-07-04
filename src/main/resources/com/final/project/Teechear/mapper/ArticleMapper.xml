@@ -7,8 +7,7 @@
     <resultMap id="articleResultMap" type="com.final.project.Teechear.domain.Article">
         <result property="title" column="title"/>
         <result property="userId" column="user_id"/>
-        <result property="releasedAt" column="released_at"
-                typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="releasedAt" column="released_at" />
         <result property="markdownText" column="markdown_text"/>
         <result property="id" column="id"/>
         <result property="userAccountName" column="user_account_name" />
