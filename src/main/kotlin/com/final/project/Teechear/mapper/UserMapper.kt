@@ -8,7 +8,7 @@ interface UserMapper {
     
     fun insert(user: User)
 
-    fun select(id: Int): User
+    fun select(id: Int): User?
 
     fun selectByUserName(accountName: String): User
 
