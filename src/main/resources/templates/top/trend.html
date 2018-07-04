@@ -20,6 +20,10 @@
 <body>
 <h1>Trendページ</h1>
 <a href="/article/new">投稿する</a>
+<form th:action="@{/logout}" method="post">
+    <button class="btn btn-primary">ログアウト</button>
+</form>
+
 <form id="searchForm" method="get" th:action="@{/search}">
 　　　　<input type="text" class="form-control" placeholder="キーワードを入力" name="q">
 </form>
