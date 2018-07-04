@@ -29,4 +29,15 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
 
         return "error/404.html"
     }
+
+    @GetMapping("/{userId}/edit")
+    fun edit(@PathVariable("userId") userId: Int, model: Model, principal: Principal): String {
+        val currentUser = userMapper.findByEmailOrName(principal.name)
+        if (userId != currentUser.id) {
+            return "redirect:/trend"
+        }
+
+        model.addAttribute("user", currentUser)
+        return "user/edit"
+    }
 }
