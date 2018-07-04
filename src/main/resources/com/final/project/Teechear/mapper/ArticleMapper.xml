@@ -31,4 +31,8 @@
         order by
         like_count desc LIMIT 20;
     </select>
+
+    <select id="search" resultMap="articleResultMap">
+        SELECT * FROM article WHERE title LIKE CONCAT(#{query}, '%')
+    </select>
 </mapper>

@@ -14,4 +14,10 @@ interface ArticleMapper {
      * 一週間以内に投稿された記事の中からいいね数が多いものから20件取得する
      */
     fun trend(): List<Article>
+
+    /**
+     * titleカラムの後方一致
+     * TODO 全文検索をしたい(タグも含め)
+     */
+    fun search(query: String): List<Article>
 }

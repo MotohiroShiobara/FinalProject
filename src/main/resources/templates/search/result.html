@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>TOPページ</title>
+    <title th:text="|${query}の検索結果|"></title>
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/login.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -18,24 +18,19 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Trendページ</h1>
-<a href="/article/new">投稿する</a>
-<form id="searchForm" method="get" th:action="@{/search}">
-　　　　<input type="text" class="form-control" placeholder="キーワードを入力" name="q">
-</form>
-<div class="container">
+<div class="container header">
+    <a href="/article/new">投稿する</a>
+    <form id="searchForm" method="get" th:action="@{/search}">
+        <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
+    </form>
+</div>
+
+<div class="container body">
     <table class="table table-condensed">
-        <tbody>
-        <tr>
-            <td>
-                <b>トレンド</b>
-                最近人気の記事を毎日5時/17時に更新
-            </td>
-        </tr>
-        </tbody>
         <tbody th:remove="all-but-first" th:each="result : ${articleList}">
         <tr>
-            <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg" height="50"
+            <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg"
+                     height="50"
                      width="100"></td>
             <td><h3 th:text="${result.title}"></h3></td>
         </tr>

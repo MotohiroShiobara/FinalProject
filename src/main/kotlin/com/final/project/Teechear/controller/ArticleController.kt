@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 
 @Controller
 @RequestMapping("/article")
-class ArticleController @Autowired constructor(private val userMapper: UserMapper, private val articleMapper: ArticleMapper) {
+class ArticleController(private val userMapper: UserMapper, private val articleMapper: ArticleMapper) {
 
     @GetMapping("/new")
     fun new(model: Model): String {
