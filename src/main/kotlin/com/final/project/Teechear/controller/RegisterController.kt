@@ -38,6 +38,6 @@ class RegisterController(private val userMapper: UserMapper) {
                 registerForm.email,
                 BCryptPasswordEncoder().encode(registerForm.password))
         userMapper.insert(user)
-        return "redirect:/login"
+        return "redirect:/trend"
     }
 }
