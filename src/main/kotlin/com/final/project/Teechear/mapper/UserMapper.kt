@@ -8,9 +8,7 @@ interface UserMapper {
     
     fun insert(user: User)
 
-    fun select(id: Int): User
-
-    fun selectByUserName(accountName: String): User
+    fun select(id: Int): User?
 
     fun selectAll(): List<User>
 
@@ -18,7 +16,9 @@ interface UserMapper {
 
     fun update(user: User)
 
-    fun findByEmail(emailAddress: String): User
+    fun findByEmail(emailAddress: String): User?
+
+    fun findByAccountName(accountName: String): User?
 
     fun findByEmailOrName(loginName: String): User
 }

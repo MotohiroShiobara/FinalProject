@@ -7,8 +7,7 @@
     <resultMap id="articleResultMap" type="com.final.project.Teechear.domain.Article">
         <result property="title" column="title"/>
         <result property="userId" column="user_id"/>
-        <result property="releasedAt" column="released_at"
-                typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="releasedAt" column="released_at" />
         <result property="markdownText" column="markdown_text"/>
         <result property="id" column="id"/>
         <result property="userAccountName" column="user_account_name" />
@@ -42,5 +41,18 @@
 
     <select id="search" resultMap="articleResultMap">
         SELECT *, user.account_name user_account_name FROM article, user WHERE title LIKE CONCAT(#{query}, '%')
+    </select>
+
+    <select id="selectByUserId" resultMap="articleResultMap">
+        SELECT
+        article.*,
+        (select COUNT(*) from user_like_article ula where article.id = ula.article_id),
+        user.account_name user_account_name
+        FROM
+        user_like_article, article, user
+        WHERE
+        article.user_id = #{userId}
+        ORDER BY
+        article.released_at desc
     </select>
 </mapper>

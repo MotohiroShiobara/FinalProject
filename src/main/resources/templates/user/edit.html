@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title th:text="|${query}の検索結果|"></title>
+    <title>ユーザー編集画面</title>
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/login.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -18,25 +18,27 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container header">
-    <a href="/article/new">投稿する</a>
-    <form id="searchForm" method="get" th:action="@{/search}">
-        <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
-    </form>
-</div>
+<div class="container">
+    <form method="post" th:action="@{/user}" th:object="${userEditForm}">
 
-<div class="container body">
-    <table class="table table-condensed">
-        <tbody th:remove="all-but-first" th:each="result : ${articleList}">
-        <tr>
-            <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg"
-                     height="50"
-                     width="100"></td>
-            <td th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"></td>
-            <td><h3 th:text="${result.title}"></h3></td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="form-group">
+            <label for="accountNameForm">ユーザー名</label>
+            <input type="text" class="form-control" id="accountNameForm" th:field="*{accountName}">
+            <p th:if="${#fields.hasErrors('accountName')}" th:errors="*{accountName}" class="col-sm-offset-2 text-danger"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="profileForm">自己紹介</label>
+            <textarea class="form-control" id="profileForm" th:field="*{profile}"></textarea>
+            <p th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}" class="col-sm-offset-2 text-danger"></p>
+        </div>
+
+        <div class="button row">
+            <div class="col-md-3">
+                <button type="submit" class="btn submit-button">更新</button>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

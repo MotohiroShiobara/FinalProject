@@ -20,4 +20,6 @@ interface ArticleMapper {
      * TODO 全文検索をしたい(タグも含め)
      */
     fun search(query: String): List<Article>
+
+    fun selectByUserId(userId: Int): List<Article>
 }

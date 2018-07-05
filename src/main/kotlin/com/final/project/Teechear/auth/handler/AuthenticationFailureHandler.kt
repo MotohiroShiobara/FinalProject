@@ -27,6 +27,7 @@ class AuthenticationFailureHandler : AuthenticationFailureHandler {
         var errorId = ""
         // ExceptionからエラーIDをセットする
         if (authenticationException is BadCredentialsException) {
+            println(authenticationException.message)
             errorId = "ERR-0001"
         }
 
