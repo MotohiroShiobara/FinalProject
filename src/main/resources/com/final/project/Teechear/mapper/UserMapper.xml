@@ -14,7 +14,8 @@
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (account_name, email_address, password, profile) VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile})
+        INSERT INTO user (account_name, email_address, password, profile)
+        VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile})
     </insert>
 
     <select id="select" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
@@ -44,7 +45,7 @@
     </select>
 
     <select id="findByAccountName" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
-        SELECT * FROM user WHERE account_name=#{emailAddress} LIMIT 1
+        SELECT * FROM user WHERE account_name=#{accountName} LIMIT 1
     </select>
 
     <select id="findByEmailOrName" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">

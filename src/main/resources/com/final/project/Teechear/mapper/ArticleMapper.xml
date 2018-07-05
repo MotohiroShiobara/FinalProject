@@ -46,7 +46,7 @@
     <select id="selectByUserId" resultMap="articleResultMap">
         SELECT
         article.*,
-        (select COUNT(*) from user_like_article ula where article.id = ula.article_id),
+        (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count,
         user.account_name user_account_name
         FROM
         user_like_article, article, user
