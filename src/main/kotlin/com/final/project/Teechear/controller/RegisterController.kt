@@ -3,8 +3,6 @@ package com.final.project.Teechear.controller
 import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.validate.RegisterForm
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -20,6 +18,7 @@ class RegisterController(private val userMapper: UserMapper) {
     @GetMapping("", "/signup")
     fun register(model: Model, principal: Principal?): String {
         if (principal is Principal) {
+
             return "redirect:/trend"
         }
         val registerForm = RegisterForm()
@@ -31,12 +30,11 @@ class RegisterController(private val userMapper: UserMapper) {
     fun userRegister(
             @Validated registerForm: RegisterForm,
             bindingResult: BindingResult): String {
-        if (userMapper.findByEmail(registerForm.email) is User) {
-            println(userMapper.findByEmail(registerForm.email))
+        if (userMapper.findByEmail(registerForm.email) != null) {
             bindingResult.addError(FieldError("uniq exception", "email", "メールアドレスはすでに登録済みです"))
         }
 
-        if (userMapper.findByAccountName(registerForm.accountName) is User) {
+        if (userMapper.findByAccountName(registerForm.accountName) != null) {
             bindingResult.addError(FieldError("uniq exception", "accountName", "アカウント名はすでに登録済みです"))
         }
 

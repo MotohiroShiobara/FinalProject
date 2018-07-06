@@ -17,7 +17,7 @@ class LoginController @Autowired constructor(private val userMapper: UserMapper)
             return "redirect:/trend"
         }
 
-        model.addAttribute("hasError", error is String)
+        model.addAttribute("hasError", !error.isNullOrEmpty())
         return "login"
     }
 }
