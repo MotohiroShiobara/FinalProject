@@ -1,7 +1,12 @@
-td.data {
-    font-size: 20px;
+div.profile img {
+    vertical-align: middle;
+    width: 100%;
 }
 
 p.sub-data {
     font-size: 12px;
+}
+
+th.data p {
+    font-size: 14px;
 }
