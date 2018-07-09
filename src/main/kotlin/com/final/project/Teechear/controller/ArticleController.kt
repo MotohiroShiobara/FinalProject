@@ -22,7 +22,9 @@ import java.util.*
 class ArticleController(private val userMapper: UserMapper, private val articleMapper: ArticleMapper) {
 
     @GetMapping("/new")
-    fun new(model: Model): String {
+    fun new(model: Model, principal: Principal): String {
+        val currentUserId = userMapper.findByEmailOrName(principal.name)
+        model.addAttribute("currentUserId", currentUserId)
         model.addAttribute("articleForm", ArticleForm())
         return "article/new"
     }
