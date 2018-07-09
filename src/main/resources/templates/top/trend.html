@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="/layout/body_header :: header">
+<div th:replace="/layout/body_header :: header (${currentUserId})">
 </div>
 <div class="container body">
     <div class="menu">
