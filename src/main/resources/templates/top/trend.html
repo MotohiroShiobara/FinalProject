@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>TOPページ</title>
@@ -24,6 +24,7 @@
     <button class="btn btn-primary">ログアウト</button>
 </form>
 
+<div th:include="/layout/body_header :: header"></div>
 <form id="searchForm" method="get" th:action="@{/search}">
 　　　　<input type="text" class="form-control" placeholder="キーワードを入力" name="q">
 </form>
