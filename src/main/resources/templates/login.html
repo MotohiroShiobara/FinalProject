@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>トップページ</title>
+    <title>Teechearにログイン</title>
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/login.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="container login-form">
-    <h1 class="text-center">Teechear にログイン</h1>
+    <h1 class="text-center title"><b>T</b>eec<b>H</b>earにログイン!!</h1>
     <form id="loginForm" method="post" th:action="@{/users/login}">
         <div th:if="${hasError}" class="alert alert-danger">ユーザー名もしくはパスワードが間違っています</div>
         <div class="form-group">
@@ -34,11 +34,11 @@
 
         <div class="button row">
             <div class="col-md-3">
-                <button type="submit" class="btn submit-button">Teechearにログイン</button>
+                <button type="submit" class="btn submit-button">TeecHearにログイン</button>
             </div>
 
             <div class="col-md-9">
-                <p class="register-link">Teechearのアカウントを持っていない場合は<a th:href="@{'/signup'}">新規登録</a>から。</p>
+                <p class="register-link">TeecHearのアカウントを持っていない場合は<a th:href="@{'/signup'}">新規登録</a>から。</p>
             </div>
         </div>
     </form>
