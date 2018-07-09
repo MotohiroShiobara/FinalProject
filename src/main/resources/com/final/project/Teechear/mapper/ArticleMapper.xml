@@ -21,7 +21,7 @@
     </insert>
 
     <select id="find" resultMap="articleResultMap">
-        SELECT * FROM article WHERE id = #{id} LIMIT 1
+        SELECT article.*, user.account_name user_account_name FROM article, user WHERE user.id = #{id} LIMIT 1
     </select>
 
     <select id="trend" resultMap="articleResultMap">

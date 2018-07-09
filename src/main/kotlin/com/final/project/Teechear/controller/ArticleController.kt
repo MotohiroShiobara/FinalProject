@@ -40,12 +40,11 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
     }
 
     @GetMapping("/{articleId}")
-    fun show(@PathVariable("articleId") articleId: Int, model: Model): String {
+    fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal): String {
         val article = articleMapper.find(articleId)
-        val userId = article?.userId
-        if (userId is Int) {
+        val currentUserId = userMapper.findByEmailOrName(principal.name)
+        model.addAttribute("currentUserId", currentUserId)
 
-        }
         if (article is Article) {
             model.addAttribute("article", article)
             return "article/show"

@@ -27,8 +27,12 @@
                             <input type="text" class="form-control" placeholder="キーワード" name="q">
                         </div>
                     </form>
-                    <a href="/article/new"><span class="glyphicon glyphicon-pencil"></span>投稿する</a>
-                    <a th:href="@{'/user/' + ${userId}}"><img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4" style="height: 32px; width: 32px;"></a>
+                    <a href="/article/new"><span class="glyphicon glyphicon-pencil"></span>投稿する
+                    </a>
+                    <a th:href="@{'/user/' + ${userId}}">
+                        <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                             style="height: 32px; width: 32px;">
+                    </a>
                 </div>
             </nav>
         </div>
