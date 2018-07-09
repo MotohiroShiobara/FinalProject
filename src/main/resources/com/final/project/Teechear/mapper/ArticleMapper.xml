@@ -28,11 +28,7 @@
         select
         article.*, (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count, user.account_name user_account_name
         from
-        user_like_article, article
-        INNER JOIN
-        user
-        ON
-        article.user_id = user.id
+        article, user
         where
         article.released_at > DATE_SUB(now(), interval '7' DAY)
         order by

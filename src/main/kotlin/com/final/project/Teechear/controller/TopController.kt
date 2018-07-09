@@ -10,7 +10,6 @@ class TopController(private val articleMapper: ArticleMapper) {
 
     @GetMapping("/trend")
     fun trend(model: Model): String {
-        println(articleMapper.trend())
         model.addAttribute("articleList", articleMapper.trend())
         return "top/trend"
     }
