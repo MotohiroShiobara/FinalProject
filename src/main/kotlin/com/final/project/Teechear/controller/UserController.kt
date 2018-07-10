@@ -21,12 +21,14 @@ import javax.websocket.server.PathParam
 class UserController(private val userMapper: UserMapper, private val articleMapper: ArticleMapper) {
 
     @GetMapping("/{userId}")
-    fun show(@PathVariable("userId") userId: Int, model: Model): String {
+    fun show(@PathVariable("userId") userId: Int, model: Model, principal: Principal): String {
         val user = userMapper.select(userId)
+        val currentUser = userMapper.findByEmailOrName(principal.name)
         val articleList = articleMapper.selectByUserId(userId)
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
 
         if (user is User) {
+            model.addAttribute("currentUserId", currentUser.id)
             model.addAttribute("user", user)
             model.addAttribute("articleList", articleList)
             model.addAttribute("contribution", contribution)

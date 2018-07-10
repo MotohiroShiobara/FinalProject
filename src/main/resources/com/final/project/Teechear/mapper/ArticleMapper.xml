@@ -21,18 +21,14 @@
     </insert>
 
     <select id="find" resultMap="articleResultMap">
-        SELECT * FROM article WHERE id = #{id} LIMIT 1
+        SELECT article.*, user.account_name user_account_name FROM article, user WHERE user.id = #{id} LIMIT 1
     </select>
 
     <select id="trend" resultMap="articleResultMap">
         select
         article.*, (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count, user.account_name user_account_name
         from
-        user_like_article, article
-        INNER JOIN
-        user
-        ON
-        article.user_id = user.id
+        article, user
         where
         article.released_at > DATE_SUB(now(), interval '7' DAY)
         order by
@@ -49,7 +45,7 @@
         (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count,
         user.account_name user_account_name
         FROM
-        user_like_article, article, user
+        article, user
         WHERE
         article.user_id = #{userId}
         ORDER BY

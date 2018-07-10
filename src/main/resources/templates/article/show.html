@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <title>記事詳細</title>
 
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/new.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/show.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -18,18 +18,29 @@
             crossorigin="anonymous"></script>
 
 </head>
-<body style="background-color: lightgray;">
-<div class="container" style="background-color: white;">
-    <div>
-        <h5>${article?.userAccountName}</h5>
+<body>
+<div th:replace="/layout/bodyHeader :: header (${currentUserId})"></div>
+<div class="container main">
+    <div class="contents">
+        <div class="user-info">
+            <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                 style="height: 32px; width: 32px;">
+            <h4 th:text="${article?.userAccountName}"></h4>
+            <p class="released-at">2014年12月06日に更新</p>
+        </div>
+
+        <div class="title">
+            <h1 th:text="${article?.title}"></h1>
+        </div>
+
+        <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
+        <div id="markdown_text"></div>
     </div>
-    <h1 th:text="${article?.title}"></h1>
-    <div th:text="${article?.markdownText}" id="markdownText" style="display: none;"></div>
-    <div id="content"></div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    var plainText = document.getElementById("markdownText").innerText
+    var plainText = document.getElementById("non_display_markdown_text").innerText
 
     marked.setOptions({
         gfm: true,
@@ -41,19 +52,12 @@
         smartypants: false,
         langPrefix: 'language-',
         highlight: function (code, lang) {
-            // hogehoge
             return code;
         }
     });
 
-    document.getElementById('content').innerHTML =
+    document.getElementById('markdown_text').innerHTML =
         marked(plainText);
 </script>
-<style>
-    pre {
-        background-color: #f5f5f5;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-    }
-</style>
 </body>
 </html>

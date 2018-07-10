@@ -18,12 +18,13 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div th:replace="/layout/bodyHeader :: header (${currentUserId})"></div>
 <form id="newArticle" method="post" th:action="@{/article}" th:object="${articleForm}">
     <div class="form-group">
         <input type="text" class="form-control" placeholder="タイトル" th:field="*{title}">
     </div>
 
-    <div class="form-group">
+    <div class="form-group text-area">
         <textarea class="form-control" rows="30" th:field="*{markdownText}"></textarea>
     </div>
 

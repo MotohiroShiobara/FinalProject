@@ -18,6 +18,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div th:replace="/layout/bodyHeader :: header (${currentUserId})"></div>
 <div class="container">
     <form method="post" th:action="@{/user}" th:object="${userEditForm}">
 

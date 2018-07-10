@@ -39,3 +39,7 @@ h2 {
     position: absolute;
     height:60%;
 }
+
+div.text-area {
+    bottom: 40px;
+}
