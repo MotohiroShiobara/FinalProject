@@ -11,12 +11,9 @@
 <body>
 <div layout:decorator="layout">
     <div layout:fragment="contents">
-        <div class="container header">
-            <a href="/article/new">投稿する</a>
-            <form id="searchForm" method="get" th:action="@{/search}">
-                <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
-            </form>
-        </div>
+        <form id="searchForm" method="get" th:action="@{/search}">
+            <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
+        </form>
 
         <div class="container body">
             <table class="table table-condensed">
