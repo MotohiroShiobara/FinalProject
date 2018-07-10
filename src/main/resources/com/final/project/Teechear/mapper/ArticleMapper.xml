@@ -30,7 +30,7 @@
         ON
         article.user_id = user.id
         WHERE
-        user.id = #{id} LIMIT 1
+        article.id = #{id} LIMIT 1
     </select>
 
     <select id="trend" resultMap="articleResultMap">
