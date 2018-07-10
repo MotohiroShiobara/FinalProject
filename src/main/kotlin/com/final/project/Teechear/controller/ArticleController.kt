@@ -46,9 +46,9 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
         val article = articleMapper.find(articleId)
         println(article)
-        val currentUserId = userMapper.findByEmailOrName(principal.name)
-        model.addAttribute("currentUserId", currentUserId)
+        val currentUser = userMapper.findByEmailOrName(principal.name)
         model.addAttribute("commentForm", commentForm)
+        model.addAttribute("currentUserId", currentUser.id)
 
         if (article is Article) {
             model.addAttribute("article", article)

@@ -29,10 +29,16 @@
             </div>
 
             <div class="comment-form">
+                <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                     style="height: 32px; width: 32px;">
+                <b>コメントを投稿する</b>
                 <form id="commentForm" method="post" th:action="@{/comment/create}" th:object="${commentForm}">
                     <div class="form-group text-area">
                         <textarea class="form-control" rows="3" th:field="*{text}"></textarea>
                     </div>
+
+                    <input type="hidden" name="userId" th:value="${currentUserId}">
+                    <input type="hidden" name="articleId" th:value="${article.id}">
 
                     <div class="submit-button">
                         <button type="submit" class="btn submit-button">投稿</button>
@@ -65,7 +71,5 @@
         </script>
     </div>
 </div>
-
-
 </body>
 </html>
