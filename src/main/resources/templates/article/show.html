@@ -12,7 +12,7 @@
 <div layout:decorator="layout">
     <div layout:fragment="contents">
         <div class="container main">
-            <div class="contents">
+            <div class="main-contents">
                 <div class="user-info">
                     <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
                          style="height: 32px; width: 32px;">
@@ -27,30 +27,45 @@
                 <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
                 <div id="markdown_text"></div>
             </div>
+
+            <div class="comment-form">
+                <form id="commentForm" method="post" th:action="@{/comment/create}" th:object="${commentForm}">
+                    <div class="form-group text-area">
+                        <textarea class="form-control" rows="3" th:field="*{text}"></textarea>
+                    </div>
+
+                    <div class="submit-button">
+                        <button type="submit" class="btn submit-button">投稿</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var plainText = document.getElementById("non_display_markdown_text").innerText
+
+                marked.setOptions({
+                    gfm: true,
+                    tables: true,
+                    breaks: false,
+                    pedantic: false,
+                    sanitize: true,
+                    smartLists: true,
+                    smartypants: false,
+                    langPrefix: 'language-',
+                    highlight: function (code, lang) {
+                        return code;
+                    }
+                });
+
+                document.getElementById('markdown_text').innerHTML =
+                    marked(plainText);
+            });
+        </script>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-    var plainText = document.getElementById("non_display_markdown_text").innerText
 
-    marked.setOptions({
-        gfm: true,
-        tables: true,
-        breaks: false,
-        pedantic: false,
-        sanitize: true,
-        smartLists: true,
-        smartypants: false,
-        langPrefix: 'language-',
-        highlight: function (code, lang) {
-            return code;
-        }
-    });
-
-    document.getElementById('markdown_text').innerHTML =
-        marked(plainText);
-</script>
 </body>
 </html>

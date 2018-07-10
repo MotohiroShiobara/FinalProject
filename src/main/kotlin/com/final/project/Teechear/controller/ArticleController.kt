@@ -4,6 +4,7 @@ import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.validate.ArticleForm
+import com.final.project.Teechear.validate.CommentForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -42,10 +43,12 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
     }
 
     @GetMapping("/{articleId}")
-    fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal): String {
+    fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
         val article = articleMapper.find(articleId)
+        println(article)
         val currentUserId = userMapper.findByEmailOrName(principal.name)
         model.addAttribute("currentUserId", currentUserId)
+        model.addAttribute("commentForm", commentForm)
 
         if (article is Article) {
             model.addAttribute("article", article)
