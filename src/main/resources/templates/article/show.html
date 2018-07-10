@@ -28,6 +28,20 @@
                 <div id="markdown_text"></div>
             </div>
 
+            <div class="comment-list">
+                <div class="comment" th:each="comment, index : ${commentList}">
+                    <div class="comment-header">
+                        <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                             style="height: 32px; width: 32px;">
+                        <b th:id="|user_name-${index.index}|"></b>
+                    </div>
+
+                    <div class="comment-body">
+                        <div th:id="|markdown_comment-${index.index}|"></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="comment-form">
                 <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
                      style="height: 32px; width: 32px;">
@@ -67,6 +81,15 @@
 
                 document.getElementById('markdown_text').innerHTML =
                     marked(plainText);
+
+                $.getJSON(location.href + "/comments.json", function(commentList) {
+                    for (var i = 0; i < commentList.length; i++) {
+                        var comment = commentList[i];
+                        console.log(comment)
+                        document.getElementById('user_name-' + i).innerText = comment.userAccountName;
+                        document.getElementById('markdown_comment-' + i).innerHTML = marked(comment.markdownText);
+                    }
+                });
             });
         </script>
     </div>

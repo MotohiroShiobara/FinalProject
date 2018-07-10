@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper
 interface CommentMapper {
 
     fun insert(comment: Comment)
+
+    fun selectByArticleId(articleId: Int): List<Comment>
 }
