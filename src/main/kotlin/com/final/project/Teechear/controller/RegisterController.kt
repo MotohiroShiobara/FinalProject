@@ -2,6 +2,7 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.service.UserRegisterService
 import com.final.project.Teechear.validate.RegisterForm
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
@@ -12,15 +13,18 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import java.security.Principal
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-class RegisterController(private val userMapper: UserMapper) {
+class RegisterController(private val userMapper: UserMapper, private val userRegisterService: UserRegisterService) {
+
     @GetMapping("", "/signup")
     fun register(model: Model, principal: Principal?): String {
         if (principal is Principal) {
-
             return "redirect:/trend"
         }
+
         val registerForm = RegisterForm()
         model.addAttribute("registerForm", registerForm)
         return "register"
@@ -30,15 +34,8 @@ class RegisterController(private val userMapper: UserMapper) {
     fun userRegister(
             @Validated registerForm: RegisterForm,
             bindingResult: BindingResult): String {
-        if (userMapper.findByEmail(registerForm.email) != null) {
-            bindingResult.addError(FieldError("uniq exception", "email", "メールアドレスはすでに登録済みです"))
-        }
 
-        if (userMapper.findByAccountName(registerForm.accountName) != null) {
-            bindingResult.addError(FieldError("uniq exception", "accountName", "アカウント名はすでに登録済みです"))
-        }
-
-        if (bindingResult.hasErrors()) {
+        if (userRegisterService.validation(registerForm, bindingResult).hasErrors()) {
             return "register"
         }
 

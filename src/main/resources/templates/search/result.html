@@ -12,20 +12,24 @@
 <div layout:decorator="layout">
     <div layout:fragment="contents">
         <form id="searchForm" method="get" th:action="@{/search}">
-            <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
+            <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}" required>
         </form>
 
         <div class="container body">
             <table class="table table-condensed">
-                <tbody th:remove="all-but-first" th:each="result : ${articleList}">
-                <tr>
+                <tbody>
+                <tr th:each="result : ${articleList}" th:if="${!articleList.isEmpty()}">
                     <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg"
                              height="50"
                              width="100"></td>
                     <td th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"></td>
                     <td><h3 th:text="${result.title}"></h3></td>
                 </tr>
+                <p th:if="${articleList.isEmpty() && query.length() > 0}" th:text="|「${query}」に一致する記事は見つかりませんでした。|"></p>
+                <p th:if="${articleList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
                 </tbody>
+
+
             </table>
         </div>
     </div>
