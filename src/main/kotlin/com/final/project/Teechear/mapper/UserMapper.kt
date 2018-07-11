@@ -20,5 +20,5 @@ interface UserMapper {
 
     fun findByAccountName(accountName: String): User?
 
-    fun findByEmailOrName(loginName: String): User
+    fun findByEmailOrName(loginName: String): User?
 }

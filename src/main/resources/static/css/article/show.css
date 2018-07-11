@@ -1,28 +1,47 @@
-div.main {
+div.contents {
     background-color: #f6f6f6;
 }
 
-div.contents {
+div.main {
+    display: flex;
+    flex-direction: column;
+
+}
+
+div.main-contents {
+    margin-top: 20px;
+    padding: 10px;
     width: 100%;
     background-color: #ffffff;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
 }
 
 div#non_display_markdown_text {
     display: none;
 }
 
-pre {
-    background-color: #f5f5f5;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+div#markdown_text {
+    flex-grow: 1;
 }
 
-/*div.user-info {*/
-    /*overflow: hidden;*/
-/*}*/
+div.submit-button {
+    display: flex;
+    justify-content: flex-end;
+}
 
-/*div.user-info.img {*/
-    /*float: left;*/
-/*}*/
+div.submit-button button {
+    background-color: #55c500;
+    color: white;
+}
+
+pre {
+    padding: 5px;
+    background-color: #f5f5f5;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+}
 
 div.user-info h4 {
     display: inline-block;
@@ -31,4 +50,25 @@ div.user-info h4 {
 p.released-at {
     display: inline-block;
     color: #cccccc;
+}
+
+div.comment-list {
+    display: flex;
+    flex-direction: column;
+}
+
+div.comment {
+    margin-top: 20px;
+}
+
+div.comment-list div.comment-body {
+    padding: 5px;
+    margin-top: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+div.comment-form {
+    margin-top: 10px;
 }

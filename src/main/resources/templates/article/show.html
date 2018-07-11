@@ -1,63 +1,98 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 <head>
-    <meta charset="UTF-8"/>
     <title>記事詳細</title>
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/show.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-            crossorigin="anonymous"></script>
-
 </head>
 <body>
-<div th:replace="/layout/bodyHeader :: header (${currentUserId})"></div>
-<div class="container main">
-    <div class="contents">
-        <div class="user-info">
-            <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
-                 style="height: 32px; width: 32px;">
-            <h4 th:text="${article?.userAccountName}"></h4>
-            <p class="released-at">2014年12月06日に更新</p>
-        </div>
+<div layout:decorator="layout">
+    <div layout:fragment="contents">
+        <div class="container main">
+            <div class="main-contents">
+                <div class="user-info">
+                    <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                         style="height: 32px; width: 32px;">
+                    <h4 th:text="${article?.userAccountName}"></h4>
+                    <p class="released-at">2014年12月06日に更新</p>
+                </div>
 
-        <div class="title">
-            <h1 th:text="${article?.title}"></h1>
-        </div>
+                <div class="title">
+                    <h1 th:text="${article?.title}"></h1>
+                </div>
 
-        <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
-        <div id="markdown_text"></div>
+                <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
+                <div id="markdown_text"></div>
+            </div>
+
+            <div class="comment-list">
+                <div class="comment" th:each="comment, index : ${commentList}">
+                    <div class="comment-header">
+                        <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                             style="height: 32px; width: 32px;">
+                        <b th:id="|user_name-${index.index}|"></b>
+                    </div>
+
+                    <div class="comment-body">
+                        <div th:id="|markdown_comment-${index.index}|"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-form">
+                <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                     style="height: 32px; width: 32px;">
+                <b>コメントを投稿する</b>
+                <form id="commentForm" method="post" th:action="@{/comment/create}" th:object="${commentForm}">
+                    <div class="form-group text-area">
+                        <textarea class="form-control" rows="3" th:field="*{text}"></textarea>
+                    </div>
+
+                    <input type="hidden" name="userId" th:value="${currentUserId}">
+                    <input type="hidden" name="articleId" th:value="${article.id}">
+
+                    <div class="submit-button">
+                        <button type="submit" class="btn submit-button">投稿</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var plainText = document.getElementById("non_display_markdown_text").innerText
+
+                marked.setOptions({
+                    gfm: true,
+                    tables: true,
+                    breaks: false,
+                    pedantic: false,
+                    sanitize: true,
+                    smartLists: true,
+                    smartypants: false,
+                    langPrefix: 'language-',
+                    highlight: function (code, lang) {
+                        return code;
+                    }
+                });
+
+                document.getElementById('markdown_text').innerHTML =
+                    marked(plainText);
+
+                $.getJSON(location.href + "/comments.json", function(commentList) {
+                    for (var i = 0; i < commentList.length; i++) {
+                        var comment = commentList[i];
+                        console.log(comment)
+                        document.getElementById('user_name-' + i).innerText = comment.userAccountName;
+                        document.getElementById('markdown_comment-' + i).innerHTML = marked(comment.markdownText);
+                    }
+                });
+            });
+        </script>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-    var plainText = document.getElementById("non_display_markdown_text").innerText
-
-    marked.setOptions({
-        gfm: true,
-        tables: true,
-        breaks: false,
-        pedantic: false,
-        sanitize: true,
-        smartLists: true,
-        smartypants: false,
-        langPrefix: 'language-',
-        highlight: function (code, lang) {
-            return code;
-        }
-    });
-
-    document.getElementById('markdown_text').innerHTML =
-        marked(plainText);
-</script>
 </body>
 </html>

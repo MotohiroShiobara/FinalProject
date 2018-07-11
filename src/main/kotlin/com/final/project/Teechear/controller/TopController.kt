@@ -14,7 +14,7 @@ class TopController(private val articleMapper: ArticleMapper, private val userMa
     @GetMapping("/trend")
     fun trend(model: Model, principal: Principal): String {
         model.addAttribute("articleList", articleMapper.trend())
-        model.addAttribute("currentUserId", userMapper.findByEmailOrName(principal.name).id)
+        model.addAttribute("currentUserId", userMapper.findByEmailOrName(principal.name)?.id)
         return "top/trend"
     }
 }

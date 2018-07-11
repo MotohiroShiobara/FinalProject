@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.final.project.Teechear.mapper.CommentMapper">
+    <resultMap id="commentResultMap" type="com.final.project.Teechear.domain.Comment">
+        <result property="userId" column="user_id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="markdownText" column="markdown_text"/>
+        <result property="id" column="id" />
+        <result property="userAccountName" column="user_account_name" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comment(user_id, article_id, markdown_text) VALUES (#{userId}, #{articleId}, #{markdownText})
+    </insert>
+
+    <select id="selectByArticleId" resultMap="commentResultMap">
+        SELECT
+        comment.*, user.account_name user_account_name
+        FROM
+        comment
+        INNER JOIN
+        user
+        ON
+        comment.user_id = user.id
+        WHERE
+        comment.article_id = #{articleId}
+    </select>
+</mapper>

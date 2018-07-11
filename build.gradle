@@ -66,4 +66,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.mybatis/mybatis-typehandlers-jsr310
 	compile("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
 	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+	// https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring4
+	compile('org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE')
 }

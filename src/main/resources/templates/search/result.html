@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorator="layout">
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 
 <head>
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/search/result.css}">
@@ -11,13 +10,10 @@
 
 <body>
 <div layout:decorator="layout">
-    <div layout:fragment="content">
-        <div class="container header">
-            <a href="/article/new">投稿する</a>
-            <form id="searchForm" method="get" th:action="@{/search}">
-                <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
-            </form>
-        </div>
+    <div layout:fragment="contents">
+        <form id="searchForm" method="get" th:action="@{/search}">
+            <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}">
+        </form>
 
         <div class="container body">
             <table class="table table-condensed">
