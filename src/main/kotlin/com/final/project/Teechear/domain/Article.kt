@@ -8,5 +8,6 @@ data class Article(
         val releasedAt: Date? = null,
         val markdownText: String? = null,
         val id: Int? = null,
+        val user: User? = null,
         val userAccountName: String? = null,
         val likeCount: Int? = null)

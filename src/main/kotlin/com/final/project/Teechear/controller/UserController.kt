@@ -28,7 +28,7 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
 
         if (user is User) {
-            model.addAttribute("currentUserId", currentUser.id)
+            model.addAttribute("currentUserId", currentUser?.id)
             model.addAttribute("user", user)
             model.addAttribute("articleList", articleList)
             model.addAttribute("contribution", contribution)
@@ -40,14 +40,14 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
 
     @GetMapping("/mypage")
     fun mypage(principal: Principal): String {
-        val currentUser = userMapper.findByEmailOrName(principal.name)
-        return "redirect:/user/" + currentUser.id
+        val currentUser = userMapper.findByEmailOrName("zzzzz")
+        return "redirect:/user/" + currentUser?.id
     }
 
     @GetMapping("/{userId}/edit")
     fun edit(@PathVariable("userId") userId: Int, model: Model, principal: Principal): String {
         val currentUser = obtainCurrentUser(principal.name)
-        if (userId != currentUser.id) {
+        if (userId != currentUser?.id) {
             return "redirect:/trend"
         }
 
@@ -62,13 +62,13 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
         }
 
         val currentUser = obtainCurrentUser(principal.name)
-        val copyCurrentUser = currentUser.copy(accountName = userEditForm.accountName, profile = userEditForm.profile)
+        val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile)
 
-        userMapper.update(copyCurrentUser)
+        userMapper.update(copyCurrentUser!!)
         return "redirect:user/${currentUser.id}"
     }
 
-    private fun obtainCurrentUser(accountName: String): User {
+    private fun obtainCurrentUser(accountName: String): User? {
         return userMapper.findByEmailOrName(accountName)
     }
 }

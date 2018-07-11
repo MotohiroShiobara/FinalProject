@@ -6,7 +6,7 @@ import javax.validation.constraints.Size
 
 data class RegisterForm (
     @get:NotBlank(message = "このフィールドを入力してください")
-    @get:Size(min = 4, max = 30)
+    @get:Size(min = 4, max = 30, message = "4文字以上30文字以内で入力してください")
     var accountName: String = "",
 
     @get:NotBlank(message = "このフィールドを入力してください")

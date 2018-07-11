@@ -40,7 +40,7 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
             bindingResult: BindingResult
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
-        val article = Article(articleForm.title, currentUser.id, Date(), articleForm.markdownText)
+        val article = Article(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
     }
@@ -50,8 +50,10 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
         val article = articleMapper.find(articleId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
         model.addAttribute("commentForm", commentForm)
-        model.addAttribute("currentUserId", currentUser.id)
+        model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
+
+
 
         if (article is Article) {
             model.addAttribute("article", article)
