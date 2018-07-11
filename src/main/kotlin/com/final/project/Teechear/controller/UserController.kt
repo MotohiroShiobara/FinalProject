@@ -40,7 +40,7 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
 
     @GetMapping("/mypage")
     fun mypage(principal: Principal): String {
-        val currentUser = userMapper.findByEmailOrName("zzzzz")
+        val currentUser = userMapper.findByEmailOrName(principal.name)
         return "redirect:/user/" + currentUser?.id
     }
 
