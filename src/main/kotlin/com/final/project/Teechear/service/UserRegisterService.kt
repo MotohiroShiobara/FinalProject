@@ -1,19 +1,26 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.validate.RegisterForm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.validation.BindingResult
+import org.springframework.validation.FieldError
+import sun.jvm.hotspot.asm.Register
+import javax.naming.Binding
 
 @Service
 class UserRegisterService(private val userMapper: UserMapper) {
 
-    fun validation(email: String, accountName: String) {
-        if (userMapper.findByEmailOrName(email) != null) {
-            // TODO メールアドレスがユーザー名もしくはEmailとして登録済みであることのExceptionを発生させる
+    fun validation(registerForm: RegisterForm, bindingResult: BindingResult): BindingResult {
+        if (userMapper.findByEmail(registerForm.email) != null) {
+            bindingResult.addError(FieldError("uniq exception", "email", "メールアドレスはすでに登録済みです"))
         }
 
-        if (userMapper.findByEmailOrName(accountName) != null) {
-            // TODO ユーザー名がユーザー名もしくはEmailとしてすでに
+        if (userMapper.findByAccountName(registerForm.accountName) != null) {
+            bindingResult.addError(FieldError("uniq exception", "accountName", "アカウント名はすでに登録済みです"))
         }
+
+        return bindingResult
     }
 }
