@@ -10,5 +10,5 @@ interface UserLikeArticleMapper {
 
     fun articleLikeCount(articleId: Int): Int
 
-    fun findByUserId(articleId: Int, userId: Int): UserLikeArticle?
+    fun findByUserIdAndArticleId(articleId: Int, userId: Int): UserLikeArticle?
 }

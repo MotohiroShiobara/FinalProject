@@ -2,7 +2,6 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.Comment
-import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.domain.UserLikeArticle
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.CommentMapper
@@ -10,7 +9,6 @@ import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.validate.ArticleForm
 import com.final.project.Teechear.validate.CommentForm
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import java.security.Principal
-import java.time.LocalDateTime
 import java.util.*
 
 @Controller
@@ -63,7 +60,7 @@ class ArticleController(
             model.addAttribute("commentForm", commentForm)
             model.addAttribute("currentUserId", currentUserId)
             model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
-            model.addAttribute("userLiked", userLikeArticleMapper.findByUserId(articleId, currentUserId) is UserLikeArticle)
+            model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticle)
         }
 
         if (article is Article) {
@@ -84,7 +81,11 @@ class ArticleController(
     fun like(@PathVariable("articleId") articleId: Int, principal: Principal): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val like = UserLikeArticle(currentUser?.id, articleId)
-        userLikeArticleMapper.insert(like)
+
+        if (userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUser?.id!!) == null) {
+            userLikeArticleMapper.insert(like)
+        }
+
         return "redirect:/article/${articleId}"
     }
 }
