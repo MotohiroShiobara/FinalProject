@@ -4,6 +4,7 @@ import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.CommentMapper
+import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.validate.ArticleForm
 import com.final.project.Teechear.validate.CommentForm
@@ -23,7 +24,11 @@ import java.util.*
 
 @Controller
 @RequestMapping("/article")
-class ArticleController(private val userMapper: UserMapper, private val articleMapper: ArticleMapper, private val commentMapper: CommentMapper) {
+class ArticleController(
+        private val userMapper: UserMapper,
+        private val articleMapper: ArticleMapper,
+        private val commentMapper: CommentMapper,
+        private val userLikeArticleMapper: UserLikeArticleMapper) {
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
@@ -49,9 +54,11 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
         val article = articleMapper.find(articleId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
+        println(userLikeArticleMapper.articleLikeCount(articleId))
         model.addAttribute("commentForm", commentForm)
         model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
+
 
 
 
@@ -71,7 +78,6 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
 
     @PostMapping("/{articleId}/like")
     fun like(@PathVariable("articleId") articleId: Int): String {
-        println(articleId)
         return "redirect:/article/${articleId}"
     }
 }
