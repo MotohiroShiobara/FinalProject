@@ -12,7 +12,7 @@ data class RegisterForm (
     var accountName: String = "",
 
     @get:NotBlank(message = "このフィールドを入力してください")
-    @get:Email(message = "メールアドレス")
+    @get:Email(message = "正しいメールアドレス入力してください")
     var email: String = "",
 
     @get:NotBlank(message = "このフィールドを入力してください")
