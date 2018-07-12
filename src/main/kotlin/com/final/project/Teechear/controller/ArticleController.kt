@@ -2,6 +2,8 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.Comment
+import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.domain.UserLikeArticle
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
@@ -54,11 +56,16 @@ class ArticleController(
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
         val article = articleMapper.find(articleId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
+        val currentUserId = currentUser?.id
 
-        model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
-        model.addAttribute("commentForm", commentForm)
-        model.addAttribute("currentUserId", currentUser?.id)
-        model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
+        if (currentUserId is Int) {
+            model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
+            model.addAttribute("commentForm", commentForm)
+            model.addAttribute("currentUserId", currentUserId)
+            model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
+            model.addAttribute("userLiked", userLikeArticleMapper.findByUserId(articleId, currentUserId) is UserLikeArticle)
+        }
+
         if (article is Article) {
             model.addAttribute("article", article)
             return "article/show"
@@ -74,7 +81,10 @@ class ArticleController(
     }
 
     @PostMapping("/{articleId}/like")
-    fun like(@PathVariable("articleId") articleId: Int): String {
+    fun like(@PathVariable("articleId") articleId: Int, principal: Principal): String {
+        val currentUser = userMapper.findByEmailOrName(principal.name)
+        val like = UserLikeArticle(currentUser?.id, articleId)
+        userLikeArticleMapper.insert(like)
         return "redirect:/article/${articleId}"
     }
 }

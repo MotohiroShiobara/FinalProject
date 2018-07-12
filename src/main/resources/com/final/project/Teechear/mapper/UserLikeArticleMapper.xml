@@ -7,4 +7,19 @@
     <select id="articleLikeCount" resultType="Int">
         SELECT COUNT(*) FROM user_like_article WHERE article_id = #{articleId}
     </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_like_article (user_id, article_id) VALUES (#{userId}, #{articleId})
+    </insert>
+
+    <select id="findByUserId" resultType="com.final.project.Teechear.domain.UserLikeArticle">
+        SELECT
+        article_id articleId, user_id userId, id
+        FROM
+        user_like_article
+        WHERE
+        article_id = #{articleId}
+        AND
+        user_id = #{userId}
+    </select>
 </mapper>
