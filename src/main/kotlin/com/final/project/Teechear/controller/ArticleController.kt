@@ -7,6 +7,7 @@ import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.service.LikeService
 import com.final.project.Teechear.validate.ArticleForm
 import com.final.project.Teechear.validate.CommentForm
 import org.springframework.http.ResponseEntity
@@ -27,7 +28,8 @@ class ArticleController(
         private val userMapper: UserMapper,
         private val articleMapper: ArticleMapper,
         private val commentMapper: CommentMapper,
-        private val userLikeArticleMapper: UserLikeArticleMapper) {
+        private val userLikeArticleMapper: UserLikeArticleMapper,
+        private val likeService: LikeService) {
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
@@ -65,6 +67,7 @@ class ArticleController(
 
         if (article is Article) {
             model.addAttribute("article", article)
+            model.addAttribute("isMyArticle", article.userId == currentUserId)
             return "article/show"
         }
 
@@ -79,12 +82,7 @@ class ArticleController(
 
     @PostMapping("/{articleId}/like")
     fun like(@PathVariable("articleId") articleId: Int, principal: Principal): String {
-        val currentUser = userMapper.findByEmailOrName(principal.name)
-        val like = UserLikeArticle(currentUser?.id, articleId)
-
-        if (userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUser?.id!!) == null) {
-            userLikeArticleMapper.insert(like)
-        }
+        likeService.create(articleId, principal)
 
         return "redirect:/article/${articleId}"
     }

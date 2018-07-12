@@ -23,7 +23,7 @@
                 <div class="title">
                     <h1 th:text="${article?.title}"></h1>
                     <form id="likeForm" method="post" th:action="@{'/article/' + ${articleId} + '/like'}"
-                          th:if="${!userLiked}">
+                          th:if="${!userLiked && !isMyArticle}">
                         <button type="submit" class="fas fa-thumbs-up is-liked">いいね</button>
                         <b th:text="${likeCount}"></b>
                     </form>
