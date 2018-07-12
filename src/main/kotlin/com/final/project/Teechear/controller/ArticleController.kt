@@ -68,4 +68,10 @@ class ArticleController(private val userMapper: UserMapper, private val articleM
         val commentList = commentMapper.selectByArticleId(articleId)
         return ResponseEntity.ok(commentList)
     }
+
+    @PostMapping("/{articleId}/like")
+    fun like(@PathVariable("articleId") articleId: Int): String {
+        println(articleId)
+        return "redirect:/article/${articleId}"
+    }
 }

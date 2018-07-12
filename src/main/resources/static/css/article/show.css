@@ -72,3 +72,7 @@ div.comment-list div.comment-body {
 div.comment-form {
     margin-top: 10px;
 }
+
+i.like-button {
+    font-size: 24px;
+}
