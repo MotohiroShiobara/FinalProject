@@ -39,10 +39,14 @@
                 <a href="/article/new"><span class="glyphicon glyphicon-pencil"></span>投稿する
                 </a>
 
-                <a th:href="@{/user/mypage}">
-                    <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
-                         style="height: 32px; width: 32px;">
-                </a>
+                <div class="dropdown">
+                    <img class="user-icon dropdown-toggle" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                         style="height: 32px; width: 32px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:href="@{/user/mypage}">マイページ</a>
+                        <a class="dropdown-item" th:href="@{/logout}">ログアウト</a>
+                    </div>
+                </div>
             </div>
         </nav>
     </div>
