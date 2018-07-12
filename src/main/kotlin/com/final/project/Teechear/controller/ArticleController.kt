@@ -54,14 +54,11 @@ class ArticleController(
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
         val article = articleMapper.find(articleId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
-        println(userLikeArticleMapper.articleLikeCount(articleId))
+
+        model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
         model.addAttribute("commentForm", commentForm)
         model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
-
-
-
-
         if (article is Article) {
             model.addAttribute("article", article)
             return "article/show"
