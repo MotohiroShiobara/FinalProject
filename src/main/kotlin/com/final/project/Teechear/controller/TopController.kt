@@ -5,7 +5,6 @@ import com.final.project.Teechear.mapper.UserMapper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
-import java.nio.file.attribute.GroupPrincipal
 import java.security.Principal
 
 @Controller
