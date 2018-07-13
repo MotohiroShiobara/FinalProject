@@ -27,7 +27,13 @@
                                              class="image3">
                                         <div>
                                             <p class="title3" th:text="${result.title}"></p>
-                                            <p class="content3">byrana_kualu 2 days ago 458</p>
+                                            <div class="article-info">
+                                                <p class="content3"
+                                                   th:text="|by ${result.userName}|">
+                                                </p>
+                                                <p class="fa fa-thumbs-up"></p>
+                                                <p class="like-count" th:text="${result.likeCount}"></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

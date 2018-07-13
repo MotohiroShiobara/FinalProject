@@ -3,26 +3,30 @@ package com.final.project.Teechear.controller
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.service.ArticleService
 import com.final.project.Teechear.validate.UserEditForm
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @Controller
 @RequestMapping("/user")
-class UserController(private val userMapper: UserMapper, private val articleMapper: ArticleMapper) {
+class UserController(private val userMapper: UserMapper,
+                     private val articleMapper: ArticleMapper,
+                     private val articleService: ArticleService) {
 
     @GetMapping("/{userId}")
-    fun show(@PathVariable("userId") userId: Int, model: Model, principal: Principal): String {
+    fun show(
+            @PathVariable("userId") userId: Int,
+            model: Model,
+            principal: Principal,
+            @RequestParam("page") pageCount: Int?): String {
         val user = userMapper.select(userId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
-        val articleList = articleMapper.selectByUserId(userId)
+        val articleList = articleService.userArticleList(userId)
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
 
         if (user is UserEntity) {
@@ -30,6 +34,8 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
             model.addAttribute("user", user)
             model.addAttribute("articleList", articleList)
             model.addAttribute("contribution", contribution)
+            model.addAttribute("pageCount", pageCount!!)
+            model.addAttribute("pageList", (1..3).map{it})
             return "user/show"
         }
 
@@ -70,3 +76,4 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
         return userMapper.findByEmailOrName(accountName)
     }
 }
+

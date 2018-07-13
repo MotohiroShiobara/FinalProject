@@ -1,6 +1,7 @@
 div.profile img {
     vertical-align: middle;
-    width: 100%;
+    height: 240px;
+    width:240px;
 }
 
 p.sub-data {
@@ -9,4 +10,9 @@ p.sub-data {
 
 th.data p {
     font-size: 14px;
+}
+
+tr td img {
+    height: 48px;
+    width: 48px;
 }
