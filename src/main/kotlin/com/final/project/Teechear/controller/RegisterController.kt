@@ -1,6 +1,6 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.UserRegisterService
 import com.final.project.Teechear.validate.RegisterForm
@@ -36,7 +36,7 @@ class RegisterController(private val userMapper: UserMapper, private val userReg
             return "register"
         }
 
-        val user = User(
+        val user = UserEntity(
                 registerForm.accountName,
                 registerForm.email,
                 BCryptPasswordEncoder().encode(registerForm.password))

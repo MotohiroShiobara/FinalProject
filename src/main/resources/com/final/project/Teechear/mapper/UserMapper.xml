@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.final.project.Teechear.mapper.UserMapper">
-    <resultMap id="userResultMap" type="com.final.project.Teechear.domain.User">
+    <resultMap id="userResultMap" type="com.final.project.Teechear.entity.UserEntity">
         <result property="accountName" column="account_name"/>
         <result property="emailAddress" column="email_address"/>
         <result property="password" column="password"/>
@@ -18,7 +18,7 @@
         VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile})
     </insert>
 
-    <select id="select" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
+    <select id="select" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
         SELECT
         *,
         (SELECT COUNT(*) FROM article WHERE article.user_id = user.id) article_count
@@ -28,7 +28,7 @@
         id = #{id}
     </select>
 
-    <select id="selectAll" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
+    <select id="selectAll" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
         SELECT * FROM user;
     </select>
 
@@ -40,15 +40,15 @@
         UPDATE user SET account_name=#{accountName}, email_address=#{emailAddress}, password=#{password}, profile=#{profile} WHERE id=#{id}
     </update>
 
-    <select id="findByEmail" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
+    <select id="findByEmail" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
         SELECT * FROM user WHERE email_address=#{emailAddress} LIMIT 1
     </select>
 
-    <select id="findByAccountName" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
+    <select id="findByAccountName" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
         SELECT * FROM user WHERE account_name=#{accountName} LIMIT 1
     </select>
 
-    <select id="findByEmailOrName" resultType="com.final.project.Teechear.domain.User" resultMap="userResultMap">
+    <select id="findByEmailOrName" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
         SELECT * FROM user WHERE email_address=#{loginName} OR account_name=#{loginName} LIMIT 1
     </select>
 </mapper>

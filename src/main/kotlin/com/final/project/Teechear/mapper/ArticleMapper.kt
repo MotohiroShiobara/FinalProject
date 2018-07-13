@@ -1,25 +1,25 @@
 package com.final.project.Teechear.mapper
 
-import com.final.project.Teechear.domain.Article
+import com.final.project.Teechear.entity.ArticleEntity
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper
 interface ArticleMapper {
 
-    fun insert(article: Article)
+    fun insert(article: ArticleEntity)
 
-    fun find(id: Int): Article?
+    fun find(id: Int): ArticleEntity?
 
     /**
      * 一週間以内に投稿された記事の中からいいね数が多いものから20件取得する
      */
-    fun trend(): List<Article>
+    fun trend(): List<ArticleEntity>
 
     /**
      * titleカラムの後方一致
      * TODO 全文検索をしたい(タグも含め)
      */
-    fun search(query: String): List<Article>
+    fun search(query: String): List<ArticleEntity>
 
-    fun selectByUserId(userId: Int): List<Article>
+    fun selectByUserId(userId: Int): List<ArticleEntity>
 }

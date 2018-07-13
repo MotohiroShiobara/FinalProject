@@ -2,12 +2,4 @@ package com.final.project.Teechear.domain
 
 import java.util.*
 
-data class Article(
-        val title: String? = null,
-        val userId: Int? = null,
-        val releasedAt: Date? = null,
-        val markdownText: String? = null,
-        val id: Int? = null,
-        val user: User? = null,
-        val userAccountName: String? = null,
-        val likeCount: Int? = null)
+data class Article (val id: Int, val title: String, val releasedAt: Date, val userName: String)

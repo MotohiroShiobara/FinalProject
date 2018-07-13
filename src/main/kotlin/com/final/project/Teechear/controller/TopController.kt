@@ -1,19 +1,25 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.mapper.ArticleMapper
-import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.service.ArticleService
+import com.final.project.Teechear.service.UserService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import java.security.Principal
 
 @Controller
-class TopController(private val articleMapper: ArticleMapper, private val userMapper: UserMapper) {
+class TopController(
+        private val articleService: ArticleService,
+        private val userService: UserService
+) {
 
     @GetMapping("/trend")
     fun trend(model: Model, principal: Principal): String {
-        model.addAttribute("articleList", articleMapper.trend())
-        model.addAttribute("currentUserId", userMapper.findByEmailOrName(principal.name)?.id)
+        val articleList = articleService.trendArticleList()
+        val currentUser = userService.currentUser(principal)
+        model.addAttribute("articleList", articleList)
+        model.addAttribute("currentUserId", currentUser.id)
+
         return "top/trend"
     }
 }

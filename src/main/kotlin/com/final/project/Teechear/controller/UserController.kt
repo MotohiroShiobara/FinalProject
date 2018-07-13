@@ -1,6 +1,6 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.validate.UserEditForm
@@ -25,7 +25,7 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
         val articleList = articleMapper.selectByUserId(userId)
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
 
-        if (user is User) {
+        if (user is UserEntity) {
             model.addAttribute("currentUserId", currentUser?.id)
             model.addAttribute("user", user)
             model.addAttribute("articleList", articleList)
@@ -66,7 +66,7 @@ class UserController(private val userMapper: UserMapper, private val articleMapp
         return "redirect:user/${currentUser.id}"
     }
 
-    private fun obtainCurrentUser(accountName: String): User? {
+    private fun obtainCurrentUser(accountName: String): UserEntity? {
         return userMapper.findByEmailOrName(accountName)
     }
 }

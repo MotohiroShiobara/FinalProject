@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.final.project.Teechear.mapper.CommentMapper">
-    <resultMap id="commentResultMap" type="com.final.project.Teechear.domain.Comment">
+    <resultMap id="commentResultMap" type="com.final.project.Teechear.entity.CommentEntity">
         <result property="userId" column="user_id"/>
         <result property="articleId" column="article_id"/>
         <result property="markdownText" column="markdown_text"/>
