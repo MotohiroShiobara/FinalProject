@@ -9,7 +9,6 @@ import org.springframework.web.servlet.handler.MappedInterceptor
 class WebMvcConfig {
     @Bean
     fun mainInterceptor(): MainIntercepter {
-        println("こんにちは")
         return MainIntercepter()
     }
 

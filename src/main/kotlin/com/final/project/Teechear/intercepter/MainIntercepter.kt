@@ -7,12 +7,13 @@ import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-//@Component
+@Component
 class MainIntercepter: HandlerInterceptor {
 
     val log = LoggerFactory.getLogger(MainIntercepter::class.java);
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, dataObject: Any) : Boolean{
+        
         log.info("1. from PreHandle method.")
         return true
     }
