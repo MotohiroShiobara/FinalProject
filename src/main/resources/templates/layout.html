@@ -44,7 +44,7 @@
                          style="height: 32px; width: 32px;" id="dropdownMenuButton" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="false">
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" th:href="@{/user/mypage}">マイページ</a>
+                        <a class="dropdown-item" th:href="@{'/user/' + ${currentUser.id}}">マイページ</a>
                         <a class="dropdown-item" th:href="@{/logout}">ログアウト</a>
                     </div>
                 </div>

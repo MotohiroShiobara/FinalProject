@@ -50,12 +50,6 @@ class UserController(private val userMapper: UserMapper,
         return "error/404.html"
     }
 
-    @GetMapping("/mypage")
-    fun mypage(principal: Principal): String {
-        val currentUser = userMapper.findByEmailOrName(principal.name)
-        return "redirect:/user/" + currentUser?.id
-    }
-
     @GetMapping("/{userId}/edit")
     fun edit(@PathVariable("userId") userId: Int, model: Model, principal: Principal): String {
         val currentUser = obtainCurrentUser(principal.name)

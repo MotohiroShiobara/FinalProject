@@ -18,7 +18,6 @@ class TopController(
         val articleList = articleService.trendArticleList()
         val currentUser = userService.currentUser(principal)
         model.addAttribute("articleList", articleList)
-        model.addAttribute("currentUserId", currentUser.id)
 
         return "top/trend"
     }

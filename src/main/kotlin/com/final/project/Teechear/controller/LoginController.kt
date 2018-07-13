@@ -13,9 +13,9 @@ class LoginController @Autowired constructor(private val userMapper: UserMapper)
 
     @GetMapping("/login")
     fun login(principal: Principal?, @RequestParam(value = "error") error: String?, model: Model): String {
-        if (principal is Principal) {
-            return "redirect:/trend"
-        }
+//        if (principal is Principal) {
+//            return "redirect:/trend"
+//        }
 
         model.addAttribute("hasError", !error.isNullOrEmpty())
         return "login"

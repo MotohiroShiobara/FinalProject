@@ -22,5 +22,13 @@ class UserService(private val userMapper: UserMapper) {
         throw UserServiceException("userに必要なカラムが不足しています")
     }
 
+    fun toDomain(userEntity: UserEntity): User {
+        if (userEntity.id is Int && userEntity.accountName is String) {
+            return User(userEntity.id, userEntity.accountName)
+        }
+
+        throw UserServiceException("userに必要なカラムが不足しています")
+    }
+
     class UserServiceException(s : String): Exception()
 }
