@@ -1,28 +1,18 @@
-html {
-    background-color: #f6f6f6;
-}
-
 div.body {
     margin-top: 10px;
 }
 
-div.menu {
-    width: 200px;
-    float: left;
-}
-
 div.main {
-    width: 500px;
+    width: 80%;
     min-width: 0;
     flex-grow: 1;
-    float: left;
     background-color: #ffffff;
     box-shadow: 0 3px 6px #ccc;
     border-radius: 5px;
 }
 
 .card3 {
-    width: 400px;
+    width: 95%;
     margin: 20px;
     border-bottom: solid 1px #cccccc;
     background-color: #fff;
