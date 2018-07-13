@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -37,10 +39,14 @@
                 <a href="/article/new"><span class="glyphicon glyphicon-pencil"></span>投稿する
                 </a>
 
-                <a th:href="@{/user/mypage}">
-                    <img class="user-icon" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
-                         style="height: 32px; width: 32px;">
-                </a>
+                <div class="dropdown">
+                    <img class="user-icon dropdown-toggle" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
+                         style="height: 32px; width: 32px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:href="@{/user/mypage}">マイページ</a>
+                        <a class="dropdown-item" th:href="@{/logout}">ログアウト</a>
+                    </div>
+                </div>
             </div>
         </nav>
     </div>

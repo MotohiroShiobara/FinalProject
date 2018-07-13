@@ -2,12 +2,9 @@ package com.final.project.Teechear.service
 
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.validate.RegisterForm
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
-import sun.jvm.hotspot.asm.Register
-import javax.naming.Binding
 
 @Service
 class UserRegisterService(private val userMapper: UserMapper) {
