@@ -16,7 +16,7 @@ class ArticleService(
         private val userLikeArticleMapper: UserLikeArticleMapper) {
 
     fun userArticleList(userId: Int): List<Article> {
-        val articleEntityList = articleMapper.selectByUserIdPageNate(userId)
+        val articleEntityList = articleMapper.selectByUserId(userId)
         return articleEntityList.map { toDomain(it) }
     }
 

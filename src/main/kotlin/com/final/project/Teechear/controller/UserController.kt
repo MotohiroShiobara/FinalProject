@@ -4,6 +4,7 @@ import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.ArticleService
+import com.final.project.Teechear.service.PagiNationService
 import com.final.project.Teechear.validate.UserEditForm
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -16,7 +17,10 @@ import java.security.Principal
 @RequestMapping("/user")
 class UserController(private val userMapper: UserMapper,
                      private val articleMapper: ArticleMapper,
-                     private val articleService: ArticleService) {
+                     private val articleService: ArticleService,
+                     private val pagiNationService: PagiNationService) {
+
+    private val pagePerCount = 15
 
     @GetMapping("/{userId}")
     fun show(
@@ -27,15 +31,19 @@ class UserController(private val userMapper: UserMapper,
         val user = userMapper.select(userId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val articleList = articleService.userArticleList(userId)
+        val articleCount = articleList.size
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
+
+        val currentPage = pageCount ?: 1
+        val pageList = pagiNationService.obtainPageList(currentPage, articleCount, pagePerCount)
 
         if (user is UserEntity) {
             model.addAttribute("currentUserId", currentUser?.id)
             model.addAttribute("user", user)
             model.addAttribute("articleList", articleList)
             model.addAttribute("contribution", contribution)
-            model.addAttribute("pageCount", pageCount!!)
-            model.addAttribute("pageList", (1..3).map{it})
+            model.addAttribute("pageCount", currentPage)
+            model.addAttribute("pageList", pageList)
             return "user/show"
         }
 
