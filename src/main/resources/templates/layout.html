@@ -26,30 +26,32 @@
 </head>
 <body>
 <div>
-    <div class="header" layout:fragment="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="/trend">TeecHear</a>
+    <div class="st-header" id="global_header">
+        <div class="header-contents">
+            <div class="left-header">
+                <a class="navbar-brand" href="/trend"><img src="http://r67.cooltext.com/rendered/cooltext292796338233548.png" /></a>
                 <form class="navbar-form" action="/search">
-                    <div>
-                        <input type="text" class="form-control" placeholder="キーワード" name="q" required>
+                    <div class="search-input">
+                        <input type="text" class="form-control" placeholder="キーワードを入力" name="q" required>
                     </div>
                 </form>
-
-                <a href="/article/new"><span class="glyphicon glyphicon-pencil"></span>投稿する
-                </a>
+            </div>
+            <div class="right-header">
+                <a href="/article/new" class="post-button"><span class="fas fa-pencil-alt"></span><span>投稿する</span></a>
 
                 <div class="dropdown">
                     <img class="user-icon dropdown-toggle" src="https://avatars3.githubusercontent.com/u/38315670?v=4"
-                         style="height: 32px; width: 32px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         style="height: 32px; width: 32px;" id="dropdownMenuButton" data-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" th:href="@{/user/mypage}">マイページ</a>
+                        <a class="dropdown-item" th:href="@{'/user/' + ${currentUser.id}}">マイページ</a>
                         <a class="dropdown-item" th:href="@{/logout}">ログアウト</a>
                     </div>
                 </div>
             </div>
-        </nav>
+        </div>
     </div>
+
     <div class="contents" layout:fragment="contents"></div>
     <div class="footer" layout:fragment="footer"></div>
 </div>

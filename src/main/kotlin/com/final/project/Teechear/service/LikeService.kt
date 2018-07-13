@@ -1,6 +1,6 @@
 package com.final.project.Teechear.service
 
-import com.final.project.Teechear.domain.UserLikeArticle
+import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -18,13 +18,13 @@ class LikeService(
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val currentUserId = currentUser?.id!!
         if (validation(articleId, currentUserId)) {
-            val like = UserLikeArticle(currentUserId, articleId)
+            val like = UserLikeArticleEntity(currentUserId, articleId)
             userLikeArticleMapper.insert(like)
         }
     }
 
     private fun validation(articleId: Int, userId: Int):Boolean {
-        if (userLikeArticleMapper.findByUserIdAndArticleId(articleId, userId) is UserLikeArticle) {
+        if (userLikeArticleMapper.findByUserIdAndArticleId(articleId, userId) is UserLikeArticleEntity) {
             return false
         }
 

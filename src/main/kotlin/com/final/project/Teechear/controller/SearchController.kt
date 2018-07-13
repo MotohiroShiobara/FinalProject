@@ -1,6 +1,6 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.domain.Article
+import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -18,7 +18,7 @@ class SearchController(private val articleMapper: ArticleMapper) {
             model.addAttribute("articleList", articleMapper.search(query))
 
         } else {
-            model.addAttribute("articleList", emptyList<Article>())
+            model.addAttribute("articleList", emptyList<ArticleEntity>())
         }
         ArrayList<String>().isEmpty()
         model.addAttribute("query", query)

@@ -1,8 +1,8 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.domain.Article
-import com.final.project.Teechear.domain.Comment
-import com.final.project.Teechear.domain.UserLikeArticle
+import com.final.project.Teechear.entity.ArticleEntity
+import com.final.project.Teechear.entity.CommentEntity
+import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
@@ -46,7 +46,7 @@ class ArticleController(
             bindingResult: BindingResult
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
-        val article = Article(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
+        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
     }
@@ -62,10 +62,10 @@ class ArticleController(
             model.addAttribute("commentForm", commentForm)
             model.addAttribute("currentUserId", currentUserId)
             model.addAttribute("commentList", commentMapper.selectByArticleId(articleId))
-            model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticle)
+            model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticleEntity)
         }
 
-        if (article is Article) {
+        if (article is ArticleEntity) {
             model.addAttribute("article", article)
             model.addAttribute("isMyArticle", article.userId == currentUserId)
             return "article/show"
@@ -75,7 +75,7 @@ class ArticleController(
     }
 
     @GetMapping("/{articleId}/comments.json")
-    fun commentJson(@PathVariable("articleId") articleId: Int): ResponseEntity<List<Comment>> {
+    fun commentJson(@PathVariable("articleId") articleId: Int): ResponseEntity<List<CommentEntity>> {
         val commentList = commentMapper.selectByArticleId(articleId)
         return ResponseEntity.ok(commentList)
     }

@@ -1,24 +1,24 @@
 package com.final.project.Teechear.mapper
 
-import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.entity.UserEntity
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper
 interface UserMapper {
     
-    fun insert(user: User)
+    fun insert(user: UserEntity)
 
-    fun select(id: Int): User?
+    fun select(id: Int): UserEntity?
 
-    fun selectAll(): List<User>
+    fun selectAll(): List<UserEntity>
 
     fun delete(id: Int)
 
-    fun update(user: User)
+    fun update(user: UserEntity)
 
-    fun findByEmail(emailAddress: String): User?
+    fun findByEmail(emailAddress: String): UserEntity?
 
-    fun findByAccountName(accountName: String): User?
+    fun findByAccountName(accountName: String): UserEntity?
 
-    fun findByEmailOrName(loginName: String): User?
+    fun findByEmailOrName(loginName: String): UserEntity?
 }

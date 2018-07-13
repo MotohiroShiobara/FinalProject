@@ -12,7 +12,7 @@
         INSERT INTO user_like_article (user_id, article_id) VALUES (#{userId}, #{articleId})
     </insert>
 
-    <select id="findByUserIdAndArticleId" resultType="com.final.project.Teechear.domain.UserLikeArticle">
+    <select id="findByUserIdAndArticleId" resultType="com.final.project.Teechear.entity.UserLikeArticleEntity">
         SELECT
         article_id articleId, user_id userId, id
         FROM

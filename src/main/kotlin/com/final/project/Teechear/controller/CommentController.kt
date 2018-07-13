@@ -1,6 +1,6 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.domain.Comment
+import com.final.project.Teechear.entity.CommentEntity
 import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.validate.CommentForm
 import org.springframework.stereotype.Controller
@@ -15,7 +15,7 @@ class CommentController(private val commentMapper: CommentMapper) {
 
     @PostMapping("/create")
     fun create(@Validated commentForm: CommentForm, bindingResult: BindingResult): String {
-        commentMapper.insert(Comment(commentForm.userId, commentForm.articleId, commentForm.text))
+        commentMapper.insert(CommentEntity(commentForm.userId, commentForm.articleId, commentForm.text))
         return "redirect:/article/${commentForm.articleId}"
     }
 }
