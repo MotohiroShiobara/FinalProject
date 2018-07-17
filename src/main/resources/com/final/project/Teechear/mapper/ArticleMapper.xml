@@ -59,7 +59,11 @@
         WHERE
         title
         LIKE
-        CONCAT(#{query}, '%')
+        CONCAT('%', #{query}, '%')
+        OR
+        markdown_text
+        LIKE
+        CONCAT('%', #{query}, '%')
     </select>
 
     <select id="selectByUserId" resultMap="articleResultMap">

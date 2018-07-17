@@ -1,5 +1,11 @@
 package com.final.project.Teechear.controller
 
+import com.amazonaws.AmazonClientException
+import com.amazonaws.AmazonServiceException
+import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.model.ObjectMetadata
+import com.amazonaws.services.s3.model.PutObjectRequest
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -11,6 +17,7 @@ import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import java.security.Principal
 
 @Controller
@@ -18,7 +25,9 @@ import java.security.Principal
 class UserController(private val userMapper: UserMapper,
                      private val articleMapper: ArticleMapper,
                      private val articleService: ArticleService,
-                     private val pagiNationService: PagiNationService) {
+                     private val pagiNationService: PagiNationService,
+                     private val s3client: AmazonS3,
+                     private val amazonS3Client: AmazonS3Client) {
 
     private val pagePerCount = 15
 
@@ -57,7 +66,7 @@ class UserController(private val userMapper: UserMapper,
             return "redirect:/trend"
         }
 
-        model.addAttribute("userEditForm", UserEditForm(currentUser?.accountName, currentUser?.profile))
+        model.addAttribute("userEditForm", UserEditForm(currentUser.accountName, currentUser.profile))
         return "user/edit"
     }
 
@@ -67,8 +76,30 @@ class UserController(private val userMapper: UserMapper,
             return "user/edit"
         }
 
+        val multipartFile = userEditForm.iconImage
         val currentUser = obtainCurrentUser(principal.name)
-        val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile)
+
+        val url = if (multipartFile is MultipartFile) {
+            if (multipartFile.isEmpty) {
+                if (currentUser?.iconImage is String) currentUser.iconImage else String()
+            } else {
+                val fileName = if (multipartFile.originalFilename is String) multipartFile.originalFilename else "テストファイル.jpg" // TODO uniqな名前を生成するようにする
+                try {
+                    s3client.putObject(PutObjectRequest("teechear", fileName, multipartFile.inputStream, ObjectMetadata()))
+                    "https://s3-ap-northeast-1.amazonaws.com/teechear/" + fileName
+                } catch (e: AmazonServiceException) {
+                    println(e.message)
+                    String()
+                } catch (e: AmazonClientException) {
+                    println(e.message)
+                    String()
+                }
+            }
+        } else {
+            if (currentUser?.iconImage is String) currentUser.iconImage else ""
+        }
+
+        val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImage = url)
 
         userMapper.update(copyCurrentUser!!)
         return "redirect:user/${currentUser.id}"
