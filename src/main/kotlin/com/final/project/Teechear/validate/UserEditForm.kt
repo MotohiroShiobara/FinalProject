@@ -9,5 +9,5 @@ data class UserEditForm(
         @get:Size(min = 4, max = 30, message = "アカウント名は最大4文字以上、30文字以内です")
         var accountName: String?,
         var profile: String?,
-        var iconImage: MultipartFile? = null
+        var iconImageUrl: MultipartFile? = null
 )

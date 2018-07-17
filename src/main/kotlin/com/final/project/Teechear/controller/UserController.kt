@@ -76,12 +76,12 @@ class UserController(private val userMapper: UserMapper,
             return "user/edit"
         }
 
-        val multipartFile = userEditForm.iconImage
+        val multipartFile = userEditForm.iconImageUrl
         val currentUser = obtainCurrentUser(principal.name)
 
         val url = if (multipartFile is MultipartFile) {
             if (multipartFile.isEmpty) {
-                if (currentUser?.iconImage is String) currentUser.iconImage else String()
+                if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else String()
             } else {
                 val fileName = if (multipartFile.originalFilename is String) multipartFile.originalFilename else "テストファイル.jpg" // TODO uniqな名前を生成するようにする
                 try {
@@ -96,10 +96,10 @@ class UserController(private val userMapper: UserMapper,
                 }
             }
         } else {
-            if (currentUser?.iconImage is String) currentUser.iconImage else ""
+            if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else ""
         }
 
-        val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImage = url)
+        val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImageUrl = url)
 
         userMapper.update(copyCurrentUser!!)
         return "redirect:user/${currentUser.id}"

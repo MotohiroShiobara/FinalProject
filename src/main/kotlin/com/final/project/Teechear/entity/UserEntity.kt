@@ -7,4 +7,4 @@ data class UserEntity(
         val profile: String? = null,
         val id: Int? = null,
         val articleCount: Int? = null,
-        val iconImage: String? = null)
+        val iconImageUrl: String? = null)

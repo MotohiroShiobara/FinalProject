@@ -1,6 +1,7 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Article
+import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
@@ -13,7 +14,8 @@ import java.util.*
 class ArticleService(
         private val articleMapper: ArticleMapper,
         private val userMapper: UserMapper,
-        private val userLikeArticleMapper: UserLikeArticleMapper) {
+        private val userLikeArticleMapper: UserLikeArticleMapper,
+        private val userService: UserService) {
 
     fun userArticleList(userId: Int): List<Article> {
         val articleEntityList = articleMapper.selectByUserId(userId)
@@ -32,22 +34,15 @@ class ArticleService(
                 article.releasedAt is Date &&
                 article.userId is Int
         ) {
-            val user = userMapper.select(article.userId)
-            if (user is UserEntity) {
-                val likeCount = userLikeArticleMapper.articleLikeCount(article.id)
+            val userEntity = userMapper.select(article.userId)
+            val user = userService.toDomain(userEntity)
+            val likeCount = userLikeArticleMapper.articleLikeCount(article.id)
 
-                if (user.accountName is String) {
-                    return Article(article.id, article.title, article.releasedAt, user.accountName, likeCount)
-                }
-
-                throw ArticleServiceException("user.accountNameがnullの可能性があります")
-            }
-
-            throw ArticleServiceException("userの取得に失敗しました")
+            return Article(article.id, article.title, article.releasedAt, user.accountName, likeCount, user.iconImageUrl)
         }
 
         throw ArticleServiceException("Articleに必要なカラムが不足しています")
     }
 
-    class ArticleServiceException(s : String) : Exception()
+    class ArticleServiceException(s: String) : Exception()
 }
