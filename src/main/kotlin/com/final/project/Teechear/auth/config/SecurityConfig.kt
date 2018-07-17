@@ -31,6 +31,9 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     override fun configure(http : HttpSecurity)  {
+        // SSL許可
+        //http.requiresChannel().anyRequest().requiresSecure()
+
         // 認可の設定
         http.authorizeRequests()
                 .antMatchers("/login", "/", "/signup").permitAll() // indexは全ユーザーアクセス許可

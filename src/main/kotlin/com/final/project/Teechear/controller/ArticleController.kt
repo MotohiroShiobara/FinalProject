@@ -30,7 +30,6 @@ import java.util.*
 class ArticleController(
         private val userMapper: UserMapper,
         private val articleMapper: ArticleMapper,
-        private val commentMapper: CommentMapper,
         private val userLikeArticleMapper: UserLikeArticleMapper,
         private val likeService: LikeService,
         private val articleService: ArticleService,
@@ -47,8 +46,7 @@ class ArticleController(
     @PostMapping("")
     fun create(
             principal: Principal,
-            @Validated articleForm: ArticleForm,
-            bindingResult: BindingResult
+            @Validated articleForm: ArticleForm
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
@@ -75,8 +73,6 @@ class ArticleController(
         model.addAttribute("article", article)
         model.addAttribute("isMyArticle", article.userId == currentUserId)
         return "article/show"
-
-        return "error/404.html"
     }
 
     @GetMapping("/{articleId}/comments.json")
