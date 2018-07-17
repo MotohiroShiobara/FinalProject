@@ -11,7 +11,7 @@
         <result property="profile" column="profile"/>
         <result property="id" column="id"/>
         <result property="articleCount" column="article_count"/>
-        <result property="iconImage" column="icon_image_url"/>
+        <result property="iconImageUrl" column="icon_image_url"/>
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">

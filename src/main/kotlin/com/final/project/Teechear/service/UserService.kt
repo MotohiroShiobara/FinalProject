@@ -18,6 +18,10 @@ class UserService(private val userMapper: UserMapper) {
         return toDomain(userEntity)
     }
 
+    fun select(id: Int): User {
+        return toDomain(userMapper.select(id))
+    }
+
     fun toDomain(userEntity: UserEntity?): User {
         if (userEntity !is UserEntity) {
             throw UserServiceException("ユーザーが見つかりませんでした")
