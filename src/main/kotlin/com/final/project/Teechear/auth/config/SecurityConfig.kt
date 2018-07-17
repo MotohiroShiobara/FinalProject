@@ -24,7 +24,7 @@ open class SecurityConfig : WebSecurityConfigurerAdapter() {
         // ここに設定したものはセキュリティ設定を無視
         web.ignoring().antMatchers(
                 "/**/favicon.ico",
-                "/images/**",
+                "/image/**",
                 "/css/**",
                 "/javascript/**",
                 "/webjars/**")
