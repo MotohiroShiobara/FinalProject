@@ -11,11 +11,12 @@
         <result property="profile" column="profile"/>
         <result property="id" column="id"/>
         <result property="articleCount" column="article_count"/>
+        <result property="iconImageUrl" column="icon_image_url"/>
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (account_name, email_address, password, profile)
-        VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile})
+        INSERT INTO user (account_name, email_address, password, profile, icon_image_url)
+        VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile}, #{iconImageUrl})
     </insert>
 
     <select id="select" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
@@ -37,7 +38,10 @@
     </delete>
 
     <update id="update" useGeneratedKeys="true" keyProperty="id">
-        UPDATE user SET account_name=#{accountName}, email_address=#{emailAddress}, password=#{password}, profile=#{profile} WHERE id=#{id}
+        UPDATE user SET
+        account_name=#{accountName}, email_address=#{emailAddress}, password=#{password}, profile=#{profile}, icon_image_url=#{iconImageUrl}
+        WHERE
+        id=#{id}
     </update>
 
     <select id="findByEmail" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">

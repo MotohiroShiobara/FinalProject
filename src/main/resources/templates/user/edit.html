@@ -12,7 +12,26 @@
 <div layout:decorator="layout">
     <div layout:fragment="contents">
         <div class="container">
-            <form method="post" th:action="@{/user}" th:object="${userEditForm}">
+            <form method="post" th:action="@{/user}" th:object="${userEditForm}" enctype="multipart/form-data">
+
+                <input id="lefile" type="file" style="display:none" th:field="*{iconImageUrl}">
+                <div class="form-group">
+                    <label for="photo_cover">プロフィール画像</label>
+                    <br/>
+                    <img th:src="${currentUser.iconImageUrl}" style="height: 100px; width: 100px;">
+                    <div class="file-input-group">
+                        <input type="text" id="photo_cover" class="form-control" placeholder="画像を選択してください">
+                        <button type="button" class="btn btn-info" onclick="$('input[id=lefile]').click();">
+                            <span class="far fa-file" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <script>
+                    $('input[id=lefile]').change(function () {
+                        $('#photo_cover').val($(this).val());
+                    });
+                </script>
 
                 <div class="form-group">
                     <label for="accountNameForm">ユーザー名</label>

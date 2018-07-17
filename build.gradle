@@ -1,16 +1,16 @@
 buildscript {
-	ext {
-		kotlinVersion = '1.2.41'
-		springBootVersion = '2.0.3.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-	}
+    ext {
+        kotlinVersion = '1.2.41'
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
 }
 
 apply plugin: 'kotlin'
@@ -22,50 +22,57 @@ apply plugin: 'idea'
 
 // Spring Boot起動中にIntelliJでコード修正が反映されるように
 idea {
-	module {
-		outputDir file('build/classes/main')
-		testOutputDir file('build/classes/test')
-	}
+    module {
+        outputDir file('build/classes/main')
+        testOutputDir file('build/classes/test')
+    }
 }
 
 group = 'com.final.project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 compileKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xjsr305=strict"]
-		jvmTarget = "1.8"
-	}
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 compileTestKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xjsr305=strict"]
-		jvmTarget = "1.8"
-	}
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
-	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
-	compile group: 'org.flywaydb', name: 'flyway-core', version: '5.0.7'
-	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('com.fasterxml.jackson.module:jackson-module-kotlin')
-	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	compile("org.jetbrains.kotlin:kotlin-reflect")
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0")// mybatis
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.0.RELEASE'
-	compile("org.springframework.boot:spring-boot-devtools")
-	// https://mvnrepository.com/artifact/org.mybatis/mybatis-typehandlers-jsr310
-	compile("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
-	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
-	// https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring4
-	compile('org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE')
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '5.0.7'
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0")// mybatis
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.0.RELEASE'
+    compile("org.springframework.boot:spring-boot-devtools")
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis-typehandlers-jsr310
+    compile("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
+    compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring4
+    compile('org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE')
+    compile 'com.amazonaws:aws-java-sdk-s3'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+    }
 }

@@ -15,20 +15,28 @@ class UserService(private val userMapper: UserMapper) {
             throw UserServiceException("userが見つかりません")
         }
 
+        return toDomain(userEntity)
+    }
+
+    fun select(id: Int): User {
+        return toDomain(userMapper.select(id))
+    }
+
+    fun toDomain(userEntity: UserEntity?): User {
+        if (userEntity !is UserEntity) {
+            throw UserServiceException("ユーザーが見つかりませんでした")
+        }
+
         if (userEntity.id is Int && userEntity.accountName is String) {
-            return User(userEntity.id, userEntity.accountName)
+            return if (userEntity.iconImageUrl.isNullOrEmpty()) {
+                User(userEntity.id, userEntity.accountName, "https://avatars2.githubusercontent.com/u/38315670?s=460&v=4")
+            } else {
+                User(userEntity.id, userEntity.accountName, userEntity.iconImageUrl!!)
+            }
         }
 
         throw UserServiceException("userに必要なカラムが不足しています")
     }
 
-    fun toDomain(userEntity: UserEntity): User {
-        if (userEntity.id is Int && userEntity.accountName is String) {
-            return User(userEntity.id, userEntity.accountName)
-        }
-
-        throw UserServiceException("userに必要なカラムが不足しています")
-    }
-
-    class UserServiceException(s : String): Exception()
+    class UserServiceException(s: String) : Exception()
 }
