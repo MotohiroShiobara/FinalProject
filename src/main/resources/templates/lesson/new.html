@@ -14,7 +14,7 @@
         <div class="container">
             <form method="post" th:action="@{/lesson/create}" th:object="${lessonNewForm}" enctype="multipart/form-data">
 
-                <input id="lefile" type="file" style="display:none" th:field="*{imageUrl}">
+                <input id="lefile" type="file" style="display:none" th:field="*{multipartFile}">
                 <div class="form-group">
                     <label for="photo_cover">プロフィール画像</label>
                     <br/>

@@ -1,6 +1,7 @@
 package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.service.LessonService
+import com.final.project.Teechear.service.S3Service
 import com.final.project.Teechear.service.UserService
 import com.final.project.Teechear.validate.LessonNewForm
 import org.springframework.stereotype.Controller
@@ -10,13 +11,15 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.multipart.MultipartFile
 import java.security.Principal
 
 @Controller
 @RequestMapping("/lesson")
 class LessonController(
         private val lessonService: LessonService,
-        private val userService: UserService) {
+        private val userService: UserService,
+        private val s3Service: S3Service) {
 
     @GetMapping("new")
     fun new(lessonNewForm: LessonNewForm, model: Model):String {
@@ -28,9 +31,14 @@ class LessonController(
     @PostMapping("create")
     fun create(@Validated form: LessonNewForm, result: BindingResult, model: Model, principal: Principal): String {
         val userId = userService.currentUser(principal).id
-        lessonService.createByForm(form, userId)
-        // TODO insert文の返り値にidを持たせる
-        // TODO 作成したlessonのidでリダイレクトする (ex) return "redirect:/lesson/2"
-        return "redirect:/trend"
+        val multipartFile = form.multipartFile
+        val imageUrl = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
+            s3Service.upload(multipartFile)
+        } else {
+            ""
+        }
+
+        val lessonId = lessonService.createByForm(form, userId, imageUrl)
+        return "redirect:/lesson/${lessonId}"
     }
 }

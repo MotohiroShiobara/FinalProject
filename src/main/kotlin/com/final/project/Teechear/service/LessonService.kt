@@ -11,9 +11,8 @@ class LessonService(
         private val dateTimeService: DateTimeService,
         private val lessonMapper: LessonMapper) {
 
-    fun createByForm(form: LessonNewForm, userId: Int) {
+    fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
         val eventDateTime = form.eventDateTime
-        println(eventDateTime is LocalDateTime)
         if (eventDateTime is LocalDateTime) {
             val convertedEventDateTime = dateTimeService.toDate(eventDateTime)
             val lessonEntity = LessonEntity(
@@ -21,11 +20,16 @@ class LessonService(
                     convertedEventDateTime,
                     form.price,
                     form.description,
-                    form.imageUrl,
+                    imageUrl,
                     form.emailAddress,
                     userId,
                     true)
             lessonMapper.insert(lessonEntity)
+            if (lessonEntity.id is Int) {
+                return lessonEntity.id
+            } else {
+                throw LessonServiceException("作成に失敗しました")
+            }
         } else {
             throw LessonServiceException("LocalDateTimeをDateに変換できませんでした")
         }
