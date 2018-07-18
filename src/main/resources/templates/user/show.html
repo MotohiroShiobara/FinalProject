@@ -47,6 +47,10 @@
                         </li>
 
                         <li class="nav-item" th:if="${currentUser.id == user.id}">
+                            <a href="#closed_lesson" class="nav-link" data-toggle="tab">応募終了した講座</a>
+                        </li>
+
+                        <li class="nav-item" th:if="${currentUser.id == user.id}">
                             <a href="#apply_lesson" class="nav-link" data-toggle="tab">応募済みの講座</a>
                         </li>
                     </ul>
@@ -68,6 +72,21 @@
 
                         <!--開催中のlessonのリスト-->
                         <tbody id="lesson" class="tab-pane">
+                        <tr class="row" th:each="result : ${articleList}">
+                            <td class="col-md-1"><img
+                                    th:src="${result.iconImageUrl}"
+                                    height="50"
+                                    width="100"></td>
+                            <td class="col-md-11">
+                                <p th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"
+                                   class="sub-data"></p>
+                                <h4 th:text="${result.title}"></h4>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <!--応募が終了したlessonのリスト-->
+                        <tbody id="lesson" class="tab-pane" th:if="${currentUser.id == user.id}">
                         <tr class="row" th:each="result : ${articleList}">
                             <td class="col-md-1"><img
                                     th:src="${result.iconImageUrl}"
