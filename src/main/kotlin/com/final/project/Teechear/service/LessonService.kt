@@ -44,6 +44,10 @@ class LessonService(
         return toDomain(lessonEntity)
     }
 
+    fun selectByOwnerId(ownerId: Int): List<Lesson> {
+        return lessonMapper.selectByOwnerId(ownerId).map { toDomain(it) }
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {

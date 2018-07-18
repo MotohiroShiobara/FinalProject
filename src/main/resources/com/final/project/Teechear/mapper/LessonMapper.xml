@@ -25,4 +25,8 @@
     <select id="select" resultMap="lessonResultMap">
         SELECT * FROM lesson WHERE id=#{id} LIMIT 1
     </select>
+
+    <select id="selectByOwnerId" resultMap="lessonResultMap">
+        SELECT * FROM lesson WHERE owner_id=#{ownerId} ORDER BY event_datetime ASC
+    </select>
 </mapper>

@@ -72,13 +72,13 @@
 
                         <!--開催中のlessonのリスト-->
                         <tbody id="lesson" class="tab-pane">
-                        <tr class="row" th:each="result : ${articleList}">
+                        <tr class="row" th:each="result : ${lessonList}">
                             <td class="col-md-1"><img
-                                    th:src="${result.iconImageUrl}"
+                                    th:src="${result.imageUrl}"
                                     height="50"
                                     width="100"></td>
                             <td class="col-md-11">
-                                <p th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"
+                                <p th:text="|開催日: ${#dates.format(result.eventDatetime, 'yyyy年MM月dd日 HH:MM')} 料金: ¥${result.price}|"
                                    class="sub-data"></p>
                                 <h4 th:text="${result.title}"></h4>
                             </td>

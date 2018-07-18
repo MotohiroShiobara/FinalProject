@@ -9,4 +9,6 @@ interface LessonMapper {
     fun insert(lesson: LessonEntity)
 
     fun select(id: Int): LessonEntity?
+
+    fun selectByOwnerId(ownerId: Int): List<LessonEntity>
 }
