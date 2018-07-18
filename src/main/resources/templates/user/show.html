@@ -34,10 +34,55 @@
                                 <p>contribution</p>
                             </th>
                         </tr>
-
-
                         </thead>
-                        <tbody>
+                    </table>
+
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="#article" class="nav-link active" data-toggle="tab">最近の投稿</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#lesson" class="nav-link" data-toggle="tab">開催中の講座</a>
+                        </li>
+
+                        <li class="nav-item" th:if="${currentUser.id == user.id}">
+                            <a href="#apply_lesson" class="nav-link" data-toggle="tab">応募済みの講座</a>
+                        </li>
+                    </ul>
+
+                    <table class="table table-condensed tab-content" >
+                        <tbody id="article" class="tab-pane active">
+                        <tr class="row" th:each="result : ${articleList}">
+                            <td class="col-md-1"><img
+                                    th:src="${result.iconImageUrl}"
+                                    height="50"
+                                    width="100"></td>
+                            <td class="col-md-11">
+                                <p th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"
+                                   class="sub-data"></p>
+                                <h4 th:text="${result.title}"></h4>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <!--開催中のlessonのリスト-->
+                        <tbody id="lesson" class="tab-pane">
+                        <tr class="row" th:each="result : ${articleList}">
+                            <td class="col-md-1"><img
+                                    th:src="${result.iconImageUrl}"
+                                    height="50"
+                                    width="100"></td>
+                            <td class="col-md-11">
+                                <p th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"
+                                   class="sub-data"></p>
+                                <h4 th:text="${result.title}"></h4>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <!--応募したlessonのリスト-->
+                        <tbody id="apply_lesson" class="tab-pane" th:if="${currentUser.id == user.id}">
                         <tr class="row" th:each="result : ${articleList}">
                             <td class="col-md-1"><img
                                     th:src="${result.iconImageUrl}"
@@ -59,7 +104,7 @@
                             </li>
                             <!--<li class="page-item"><a class="page-link" href="?page=1">1</a></li>-->
                             <!--<li class="page-item active">-->
-                                <!--<a class="page-link" href="?page=2">2 <span class="sr-only">(current)</span></a>-->
+                            <!--<a class="page-link" href="?page=2">2 <span class="sr-only">(current)</span></a>-->
                             <!--</li>-->
                             <!--<li class="page-item"><a class="page-link" href="?page=3">3</a></li>-->
                         </ul>
