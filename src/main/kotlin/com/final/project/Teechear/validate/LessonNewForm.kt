@@ -2,7 +2,7 @@ package com.final.project.Teechear.validate
 
 import java.util.*
 
-data class lessonNewForm(
+data class LessonNewForm(
         val title: String? = null,
         val price: Int? = null,
         val eventDateTime: Date? = null,
