@@ -9,15 +9,13 @@ import java.time.LocalDateTime
 @Service
 class LessonService(
         private val dateTimeService: DateTimeService,
-        private val lessonMapper: LessonMapper
-) {
+        private val lessonMapper: LessonMapper) {
 
     fun createByForm(form: LessonNewForm, userId: Int) {
         val eventDateTime = form.eventDateTime
+        println(eventDateTime is LocalDateTime)
         if (eventDateTime is LocalDateTime) {
             val convertedEventDateTime = dateTimeService.toDate(eventDateTime)
-
-
             val lessonEntity = LessonEntity(
                     form.title,
                     convertedEventDateTime,
@@ -28,10 +26,11 @@ class LessonService(
                     userId,
                     true)
             lessonMapper.insert(lessonEntity)
+        } else {
+            throw LessonServiceException("LocalDateTimeをDateに変換できませんでした")
         }
-
-        throw LessonServiceException("LocalDateTimeをDateに変換できませんでした")
     }
 
-    class LessonServiceException(message: String): Exception()
+    class LessonServiceException(s: String): Exception()
+    // TODO kotlinでのexceptionクラスの作り方に直す
 }
