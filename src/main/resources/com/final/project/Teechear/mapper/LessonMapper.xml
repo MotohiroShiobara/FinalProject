@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.final.project.Teechear.mapper.LessonMapper">
+    <resultMap id="lessonResultMap" type="com.final.project.Teechear.entity.LessonEntity">
+        <result property="title" column="title" />
+        <result property="eventDatetime" column="event_datetime" />
+        <result property="price" column="price" />
+        <result property="description" column="description" />
+        <result property="imageUrl" column="image_url" />
+        <result property="emailAddress" column="email_address" />
+        <result property="ownerId" column="owner_id" />
+        <result property="isOpen" column="is_open" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        comment(title, event_datetime, price, description, image_url, email_address, owner_id, is_open)
+        VALUES
+        (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen})
+    </insert>
+</mapper>

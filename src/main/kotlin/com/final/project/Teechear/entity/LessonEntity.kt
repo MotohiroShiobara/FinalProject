@@ -4,7 +4,7 @@ import java.util.*
 
 data class LessonEntity(
         val title: String? = null,
-        val eventDateTime: Date? = null,
+        val eventDatetime: Date? = null,
         val price: Int? = null,
         val description: String? = null,
         val imageUrl: String? = null,
