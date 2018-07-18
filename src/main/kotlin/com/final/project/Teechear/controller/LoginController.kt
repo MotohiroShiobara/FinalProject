@@ -13,7 +13,6 @@ class LoginController @Autowired constructor(private val userMapper: UserMapper)
 
     @GetMapping("/login")
     fun login(principal: Principal?, @RequestParam(value = "error") error: String?, model: Model): String {
-        println("エラーが起きてる?")
         model.addAttribute("hasError", !error.isNullOrEmpty())
         return "login"
     }
