@@ -21,7 +21,8 @@ class LessonController {
     }
 
     @PostMapping("create")
-    fun create(@Validated lessonNewForm: LessonNewForm, bindingResult: BindingResult): String {
+    fun create(@Validated form: LessonNewForm, result: BindingResult): String {
+        println(form)
         // TODO insert文の返り値にidを持たせる
         // TODO 作成したlessonのidでリダイレクトする (ex) return "redirect:/lesson/2"
         return "redirect:/trend"
