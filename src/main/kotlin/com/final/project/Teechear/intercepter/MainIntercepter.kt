@@ -30,14 +30,14 @@ class MainIntercepter : HandlerInterceptor {
         }
 
         val authentication = SecurityContextHolder.getContext().authentication
-        val principal = authentication.principal.toString()
-        if (principal == "anonymousUser") {
-            return true
-        }
-
-        if (listOf("/login", "/", "/register", "").contains(request.requestURI)) {
-            response.sendRedirect("/trend")
-            return false
+        val principal = authentication.principal as? LoginUser
+        println(principal)
+        if (principal is LoginUser) {
+            // すでにログイン済みの場合はTopページにリダイレクトさせる
+            if (listOf("/login", "/", "/register", "").contains(request.requestURI)) {
+                response.sendRedirect("/trend")
+                return false
+            }
         }
 
         return true

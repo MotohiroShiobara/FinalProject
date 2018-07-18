@@ -31,7 +31,7 @@ class RegisterController(private val userMapper: UserMapper, private val userReg
     fun userRegister(
             @Validated registerForm: RegisterForm,
             bindingResult: BindingResult): String {
-
+        println("きてる？")
         if (userRegisterService.validation(registerForm, bindingResult).hasErrors()) {
             return "register"
         }
@@ -40,7 +40,9 @@ class RegisterController(private val userMapper: UserMapper, private val userReg
                 registerForm.accountName,
                 registerForm.email,
                 BCryptPasswordEncoder().encode(registerForm.password))
+        println(user)
         userMapper.insert(user)
+        println("insert")
         return "redirect:/trend"
     }
 }

@@ -27,7 +27,7 @@
         comment.user_id = user.id
         WHERE
         comment.article_id = #{articleId}
-        ORDER
+        ORDER BY
         comment.created_at
         ASC
     </select>
