@@ -17,7 +17,7 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
-        comment(title, event_datetime, price, description, image_url, email_address, owner_id, is_open)
+        lesson(title, event_datetime, price, description, image_url, email_address, owner_id, is_open)
         VALUES
         (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen})
     </insert>
