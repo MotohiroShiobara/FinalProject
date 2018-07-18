@@ -1,5 +1,6 @@
 package com.final.project.Teechear.controller
 
+import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.service.LessonService
 import com.final.project.Teechear.service.S3Service
 import com.final.project.Teechear.service.UserService
@@ -9,6 +10,7 @@ import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.multipart.MultipartFile
@@ -40,5 +42,12 @@ class LessonController(
 
         val lessonId = lessonService.createByForm(form, userId, imageUrl)
         return "redirect:/lesson/${lessonId}"
+    }
+
+    @GetMapping("/{id}")
+    fun show(@PathVariable("id") id: Int, model: Model): String {
+        val lesson: Lesson = lessonService.select(id)
+        model.addAttribute("lesson", lesson)
+        return "lesson/show"
     }
 }

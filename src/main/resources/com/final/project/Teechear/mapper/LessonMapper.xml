@@ -21,4 +21,8 @@
         VALUES
         (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen})
     </insert>
+
+    <select id="select" resultMap="lessonResultMap">
+        SELECT * FROM lesson WHERE id=#{id} LIMIT 1
+    </select>
 </mapper>
