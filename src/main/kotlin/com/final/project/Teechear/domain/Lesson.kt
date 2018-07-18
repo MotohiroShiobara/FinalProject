@@ -10,5 +10,6 @@ data class Lesson(
         val emailAddress: String,
         val imageUrl: String,
         val userName: String,
-        val ownerId: Int
+        val ownerId: Int,
+        val userIconImageUrl: String
 )

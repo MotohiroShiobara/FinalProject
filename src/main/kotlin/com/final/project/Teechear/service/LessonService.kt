@@ -52,7 +52,7 @@ class LessonService(
                 if (lessonEntity.ownerId is Int) {
                     val user: User = userService.select(lessonEntity.ownerId)
 
-                    return Lesson(lessonEntity.title, lessonEntity.eventDatetime, lessonEntity.price, lessonEntity.description, lessonEntity.emailAddress, imageUrl, user.accountName, lessonEntity.ownerId)
+                    return Lesson(lessonEntity.title, lessonEntity.eventDatetime, lessonEntity.price, lessonEntity.description, lessonEntity.emailAddress, imageUrl, user.accountName, lessonEntity.ownerId, user.iconImageUrl)
                 }
             }
 
