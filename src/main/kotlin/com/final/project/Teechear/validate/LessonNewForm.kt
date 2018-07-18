@@ -1,12 +1,13 @@
 package com.final.project.Teechear.validate
 
-import java.util.*
+import java.time.LocalDateTime
+import javax.validation.constraints.NotBlank
 
 data class LessonNewForm(
-        val title: String? = null,
-        val price: Int? = null,
-        val eventDateTime: Date? = null,
-        val description: String? = null,
-        val emailAddress: String? = null,
-        val imageUrl: String? = null
+        @get:NotBlank var title: String? = null,
+        var price: Int? = null,
+        var eventDateTime: LocalDateTime? = null,
+        var description: String? = null,
+        var emailAddress: String? = null,
+        var imageUrl: String? = null
 )
