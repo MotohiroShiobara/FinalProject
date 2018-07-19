@@ -6,13 +6,12 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
+import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
-import com.final.project.Teechear.service.ArticleService
-import com.final.project.Teechear.service.PagiNationService
-import com.final.project.Teechear.service.UserService
+import com.final.project.Teechear.service.*
 import com.final.project.Teechear.validate.UserEditForm
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -27,8 +26,9 @@ import java.security.Principal
 class UserController(private val userMapper: UserMapper,
                      private val articleService: ArticleService,
                      private val pagiNationService: PagiNationService,
-                     private val s3client: AmazonS3,
-                     private val userService: UserService) {
+                     private val s3Service: S3Service,
+                     private val userService: UserService,
+                     private val lessonService: LessonService) {
 
     private val pagePerCount = 15
 
@@ -46,6 +46,9 @@ class UserController(private val userMapper: UserMapper,
 
         val currentPage = pageCount ?: 1
         val pageList = pagiNationService.obtainPageList(currentPage, articleCount, pagePerCount)
+        val lessonList: List<Lesson> = lessonService.selectByOwnerId(userId)
+        val applyedLessonList: List<Lesson> = lessonService.selectByApplyedUserId(userId)
+        println(applyedLessonList)
 
         model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("user", user)
@@ -53,6 +56,9 @@ class UserController(private val userMapper: UserMapper,
         model.addAttribute("contribution", contribution)
         model.addAttribute("pageCount", currentPage)
         model.addAttribute("pageList", pageList)
+        model.addAttribute("lessonList", lessonList)
+        model.addAttribute("applyedLessonList", applyedLessonList)
+
         return "user/show"
     }
 
@@ -80,24 +86,13 @@ class UserController(private val userMapper: UserMapper,
             if (multipartFile.isEmpty) {
                 if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else String()
             } else {
-                val fileName = if (multipartFile.originalFilename is String) multipartFile.originalFilename else "テストファイル.jpg" // TODO uniqな名前を生成するようにする
-                try {
-                    s3client.putObject(PutObjectRequest("teechear", fileName, multipartFile.inputStream, ObjectMetadata()))
-                    "https://s3-ap-northeast-1.amazonaws.com/teechear/" + fileName
-                } catch (e: AmazonServiceException) {
-                    println(e.message)
-                    String()
-                } catch (e: AmazonClientException) {
-                    println(e.message)
-                    String()
-                }
+                s3Service.upload(multipartFile)
             }
         } else {
             if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else ""
         }
 
         val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImageUrl = url)
-
         userMapper.update(copyCurrentUser!!)
         return "redirect:user/${currentUser.id}"
     }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.final.project.Teechear.mapper.UserApplyLessonMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_apply_lesson (user_id, lesson_id, apply_datetime) VALUES (#{userId}, #{lessonId}, #{applyDatetime})
+    </insert>
+</mapper>

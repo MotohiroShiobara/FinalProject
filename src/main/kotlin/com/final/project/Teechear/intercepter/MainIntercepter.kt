@@ -35,6 +35,7 @@ class MainIntercepter : HandlerInterceptor {
         if (principal is LoginUser) {
             // すでにログイン済みの場合はTopページにリダイレクトさせる
             if (listOf("/login", "/", "/register", "").contains(request.requestURI)) {
+                println("trendにリダイレクト")
                 response.sendRedirect("/trend")
                 return false
             }

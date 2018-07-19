@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>講座新規作成</title>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lesson/new.css}">
+</head>
+<body>
+<div layout:decorator="layout">
+    <div layout:fragment="contents">
+        <div class="container">
+            <form method="post" th:action="@{/lesson/create}" th:object="${lessonNewForm}" enctype="multipart/form-data">
+
+                <input id="lefile" type="file" style="display:none" th:field="*{multipartFile}">
+                <div class="form-group">
+                    <label for="photo_cover">プロフィール画像</label>
+                    <br/>
+                    <div class="file-input-group">
+                        <input type="text" id="photo_cover" class="form-control" placeholder="画像を選択してください">
+                        <button type="button" class="btn btn-info" onclick="$('input[id=lefile]').click();">
+                            <span class="far fa-file" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <script>
+                    $('input[id=lefile]').change(function () {
+                        $('#photo_cover').val($(this).val());
+                    });
+                </script>
+
+                <div class="form-group">
+                    <label for="titleForm">タイトル</label>
+                    <input type="text" class="form-control" id="titleForm" th:field="*{title}">
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                       class="col-sm-offset-2 text-danger"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventDateTimeForm">開催日</label>
+                    <input type="datetime-local" class="form-control" id="eventDateTimeForm" th:field="*{eventDateTime}">
+                    <p th:if="${#fields.hasErrors('eventDateTime')}" th:errors="*{eventDateTime}"
+                       class="col-sm-offset-2 text-danger"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="priceForm">料金</label>
+                    <input type="number" class="form-control" id="priceForm" th:field="*{price}">
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                       class="col-sm-offset-2 text-danger"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailForm">メールアドレス ※講座応募者とやり取りするためのメールアドレスです</label>
+                    <input type="email" class="form-control" id="emailForm" th:field="*{emailAddress}">
+                    <p th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"
+                       class="col-sm-offset-2 text-danger"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionForm">詳細</label>
+                    <textarea class="form-control" id="descriptionForm" th:field="*{description}"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                       class="col-sm-offset-2 text-danger"></p>
+                </div>
+
+                <div class="button row">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn submit-button">更新</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

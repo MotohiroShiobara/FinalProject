@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>講座詳細</title>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lesson/show.css}">
+</head>
+<body>
+<div layout:decorator="layout">
+    <div layout:fragment="contents">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-12">
+                    <img th:src="${lesson.imageUrl}">
+                    <!--ユーザーページの場合-->
+                    <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
+                          th:if="${lesson.ownerId != currentUser.id}">
+                        <button type="submit" class="btn btn-success submit-button">応募する</button>
+                    </form>
+                    <!--マイページの場合-->
+                    <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
+                          th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
+                        <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする</button>
+                    </form>
+
+                    <script>
+                        function closeConfirm() {
+                            if (window.confirm('募集終了にしてもよろしいですか？')) {
+                                return true;
+                            }
+
+                            return false;
+                        }
+                    </script>
+
+                </div>
+                <div class="col-lg-7 col-12">
+                    <div class="content-header">
+                        <h2 th:text="${lesson.title}"></h2>
+                    </div>
+
+                    <div class="data-section">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="data-title">
+                                    <i class="fas fa-money-bill-alt"></i>料金
+                                </div>
+                                <div class="data" th:text="|¥${lesson.price}|"></div>
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <div class="data-title">
+                                    <i class="fas fa-clock"></i>開催日
+                                </div>
+                                <div class="data"
+                                     th:text="${#dates.format(lesson.eventDatetime, 'yyyy年MM月dd日 HH:mm')}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-info">
+                        <a th:href="@{'/user/' + ${lesson.ownerId}}">
+                            <img th:src="${lesson.userIconImageUrl}">
+                            <div class="user-name" th:text="${lesson.userName}"></div>
+                        </a>
+                    </div>
+
+                    <div class="description">
+                        <h3>内容の詳細</h3>
+                        <pre th:text="${lesson.description}"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
