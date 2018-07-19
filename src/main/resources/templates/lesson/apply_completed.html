@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>講座新規作成</title>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lesson/apply_completed.css}">
+</head>
+<body>
+<div layout:decorator="layout">
+    <div layout:fragment="contents">
+        <div class="container text-center">
+            <h2>応募ありがとうございました</h2>
+            <h5>今後は下記のメールアドレスで主催者とのやり取りをお願いします</h5>
+            <div class="mail-address-section">
+                <h3 th:text="${emailAddress}"></h3>
+            </div>
+
+            <a th:href="@{/trend}">トップへ</a>
+            <a th:href="@{'/lesson/' + ${lessonId}}">講座詳細へ</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

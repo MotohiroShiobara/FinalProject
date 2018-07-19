@@ -57,4 +57,13 @@ class LessonController(
         lessonService.apply(id, currentUserId)
         return "redirect:/lesson/${id}/apply_completed"
     }
+
+    @GetMapping("/{id}/apply_completed")
+    fun applyCompleted(@PathVariable("id") id: Int, principal: Principal, model: Model): String {
+        val lesson = lessonService.select(id)
+        model.addAttribute("lessonId", id)
+        model.addAttribute("emailAddress", lesson.emailAddress)
+
+        return "lesson/apply_completed"
+    }
 }
