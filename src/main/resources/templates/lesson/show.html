@@ -27,11 +27,15 @@
                             <a th:if="${!canApply && !isApply}" class="btn btn-secondary btn-lg disabled">募集終了</a>
                         </div>
                         <!--マイページの場合-->
-                        <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
-                              th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
-                            <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする
-                            </button>
-                        </form>
+                        <div class="owner-section" th:if="${lesson.ownerId == currentUser.id}">
+                            <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
+                                  onsubmit="return closeConfirm();" th:if="${canApply}">
+                                <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする
+                                </button>
+                            </form>
+
+                            <a th:if="${!canApply}" class="btn btn-primary btn-lg disabled">募集終了</a>
+                        </div>
                     </div>
 
                     <script>
