@@ -110,15 +110,21 @@
 
                         <!--応募したlessonのリスト-->
                         <tbody id="apply_lesson" class="tab-pane" th:if="${currentUser.id == user.id}">
-                        <tr class="row" th:each="result : ${articleList}">
-                            <td class="col-md-1"><img
-                                    th:src="${result.iconImageUrl}"
-                                    height="50"
-                                    width="100"></td>
+                        <tr class="row" th:each="result : ${applyedLessonList}">
+                            <td class="col-md-1">
+                                <a th:href="@{'/lesson/' + ${result.id}}">
+                                    <img th:src="${result.imageUrl}"
+                                         height="50"
+                                         width="100">
+                                </a>
+                            </td>
+
                             <td class="col-md-11">
-                                <p th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"
-                                   class="sub-data"></p>
-                                <h4 th:text="${result.title}"></h4>
+                                <a th:href="@{'/lesson/' + ${result.id}}">
+                                    <p th:text="|開催日: ${#dates.format(result.eventDatetime, 'yyyy年MM月dd日 HH:MM')} 料金: ¥${result.price}|"
+                                       class="sub-data"></p>
+                                    <h4 th:text="${result.title}"></h4>
+                                </a>
                             </td>
                         </tr>
                         </tbody>

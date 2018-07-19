@@ -15,10 +15,27 @@
             <div class="row">
                 <div class="col-lg-5 col-12">
                     <img th:src="${lesson.imageUrl}">
-                    <!--応募ボタンを配置-->
-                    <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}">
+                    <!--ユーザーページの場合-->
+                    <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
+                          th:if="${lesson.ownerId != currentUser.id}">
                         <button type="submit" class="btn btn-success submit-button">応募する</button>
                     </form>
+                    <!--マイページの場合-->
+                    <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
+                          th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
+                        <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする</button>
+                    </form>
+
+                    <script>
+                        function closeConfirm() {
+                            if (window.confirm('募集終了にしてもよろしいですか？')) {
+                                return true;
+                            }
+
+                            return false;
+                        }
+                    </script>
+
                 </div>
                 <div class="col-lg-7 col-12">
                     <div class="content-header">

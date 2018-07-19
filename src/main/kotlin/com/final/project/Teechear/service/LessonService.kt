@@ -51,6 +51,11 @@ class LessonService(
         return lessonMapper.selectByOwnerId(ownerId).map { toDomain(it) }
     }
 
+    fun selectByApplyedUserId(userId: Int): List<Lesson> {
+        val lessonList = lessonMapper.selectByApplyedUserId(userId)
+        return lessonList.map { toDomain(it) }
+    }
+
     fun apply(id: Int, userId: Int) {
         val userApplyLessonEntity = UserApplyLessonEntity(id, userId, Date())
         userApplyLessonMapper.insert(userApplyLessonEntity)

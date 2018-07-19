@@ -29,4 +29,16 @@
     <select id="selectByOwnerId" resultMap="lessonResultMap">
         SELECT * FROM lesson WHERE owner_id=#{ownerId} ORDER BY event_datetime ASC
     </select>
+    
+    <select id="selectByApplyedUserId" resultMap="lessonResultMap">
+        SELECT
+        lesson.*
+        FROM
+        lesson
+        INNER JOIN
+        user_apply_lesson
+        ON
+        lesson.id = user_apply_lesson.lesson_id
+        WHERE user_apply_lesson.user_id = #{userId};
+    </select>
 </mapper>

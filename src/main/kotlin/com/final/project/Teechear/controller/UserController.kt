@@ -47,6 +47,8 @@ class UserController(private val userMapper: UserMapper,
         val currentPage = pageCount ?: 1
         val pageList = pagiNationService.obtainPageList(currentPage, articleCount, pagePerCount)
         val lessonList: List<Lesson> = lessonService.selectByOwnerId(userId)
+        val applyedLessonList: List<Lesson> = lessonService.selectByApplyedUserId(userId)
+        println(applyedLessonList)
 
         model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("user", user)
@@ -55,6 +57,8 @@ class UserController(private val userMapper: UserMapper,
         model.addAttribute("pageCount", currentPage)
         model.addAttribute("pageList", pageList)
         model.addAttribute("lessonList", lessonList)
+        model.addAttribute("applyedLessonList", applyedLessonList)
+
         return "user/show"
     }
 
