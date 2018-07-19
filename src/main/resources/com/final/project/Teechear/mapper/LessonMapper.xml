@@ -41,4 +41,8 @@
         lesson.id = user_apply_lesson.lesson_id
         WHERE user_apply_lesson.user_id = #{userId};
     </select>
+
+    <update id="close" useGeneratedKeys="true" keyProperty="id">
+        UPDATE lesson SET is_open=false WHERE id=#{id}
+    </update>
 </mapper>

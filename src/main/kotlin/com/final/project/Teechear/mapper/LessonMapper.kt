@@ -13,4 +13,6 @@ interface LessonMapper {
     fun selectByOwnerId(ownerId: Int): List<LessonEntity>
 
     fun selectByApplyedUserId(userId: Int): List<LessonEntity>
+
+    fun close(id: Int)
 }

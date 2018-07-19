@@ -47,6 +47,10 @@ class LessonService(
         return toDomain(lessonEntity)
     }
 
+    fun close(id: Int) {
+        lessonMapper.close(id)
+    }
+
     fun selectByOwnerId(ownerId: Int): List<Lesson> {
         return lessonMapper.selectByOwnerId(ownerId).map { toDomain(it) }
     }

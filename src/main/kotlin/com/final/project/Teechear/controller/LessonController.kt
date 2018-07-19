@@ -66,4 +66,10 @@ class LessonController(
 
         return "lesson/apply_completed"
     }
+
+    @PostMapping("/{id}/close")
+    fun close(@PathVariable("id") id: Int): String {
+        lessonService.close(id)
+        return "redirect:/lesson/${id}"
+    }
 }
