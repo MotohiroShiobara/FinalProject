@@ -51,7 +51,7 @@ class ArticleController(
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
         if (result.hasErrors()) {
-            return "/article/new"
+            return "article/new"
         }
 
         val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), "\n" + articleForm.markdownText)
