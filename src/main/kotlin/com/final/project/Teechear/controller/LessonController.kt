@@ -32,6 +32,10 @@ class LessonController(
 
     @PostMapping("create")
     fun create(@Validated form: LessonNewForm, result: BindingResult, model: Model, principal: Principal): String {
+        if (lessonService.validation(form, result).hasErrors()) {
+            return "/lesson/new"
+        }
+
         val userId = userService.currentUser(principal).id
         val multipartFile = form.multipartFile
         val imageUrl = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {

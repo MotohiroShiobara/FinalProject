@@ -8,6 +8,8 @@ import com.final.project.Teechear.mapper.LessonMapper
 import com.final.project.Teechear.mapper.UserApplyLessonMapper
 import com.final.project.Teechear.validate.LessonNewForm
 import org.springframework.stereotype.Service
+import org.springframework.validation.BindingResult
+import org.springframework.validation.FieldError
 import java.time.LocalDateTime
 import java.util.*
 
@@ -19,8 +21,8 @@ class LessonService(
         private val userApplyLessonMapper: UserApplyLessonMapper) {
 
     fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
-        val eventDateTime = form.eventDateTime
-        if (eventDateTime is LocalDateTime) {
+        val eventDateTime = form.eventDatetime
+        if (eventDateTime is String) {
             val convertedEventDateTime = dateTimeService.toDate(eventDateTime)
             val lessonEntity = LessonEntity(
                     form.title,
@@ -40,6 +42,20 @@ class LessonService(
         } else {
             throw LessonServiceException("LocalDateTimeをDateに変換できませんでした")
         }
+    }
+
+    fun validation(form: LessonNewForm, result: BindingResult): BindingResult {
+        // eventDatetimeは未来でなければならない
+        val eventDatetime = form.eventDatetime
+        if (eventDatetime is String) {
+            val date = dateTimeService.toDate(eventDatetime)
+            if (date.before(Date()) || date.equals(Date())) {
+                println("ここにきている？")
+                result.addError(FieldError("invalid datetime", "eventDatetime", "過去の開催日時を選択することはできません"))
+            }
+        }
+
+        return result
     }
 
     fun select(id: Int): Lesson {
@@ -69,7 +85,7 @@ class LessonService(
     {
         if (lessonEntity is LessonEntity) {
             if (lessonEntity.id is Int && lessonEntity.title is String && lessonEntity.eventDatetime is Date && lessonEntity.price is Int && lessonEntity.description is String && lessonEntity.emailAddress is String) {
-                val imageUrl = if (lessonEntity.imageUrl is String) lessonEntity.imageUrl else "https://1.bp.blogspot.com/-Iv3bczeEefY/WxvJvlRTqEI/AAAAAAABMjc/9Rw8cVYk4B8P8_bcvXoA6gpLuByjtsPdQCLcBGAs/s400/computer_school_boy.png"
+                val imageUrl = if (lessonEntity.imageUrl is String && lessonEntity.imageUrl.isNotEmpty()) lessonEntity.imageUrl else "https://1.bp.blogspot.com/-Iv3bczeEefY/WxvJvlRTqEI/AAAAAAABMjc/9Rw8cVYk4B8P8_bcvXoA6gpLuByjtsPdQCLcBGAs/s400/computer_school_boy.png"
                 if (lessonEntity.ownerId is Int) {
                     val user: User = userService.select(lessonEntity.ownerId)
 
