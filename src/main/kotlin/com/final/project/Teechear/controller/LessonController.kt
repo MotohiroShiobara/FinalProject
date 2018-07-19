@@ -52,7 +52,9 @@ class LessonController(
     }
 
     @PostMapping("/{id}/apply")
-    fun apply(@PathVariable("id") id: Int): String {
-        return "redirect:/lesson/${id}"
+    fun apply(@PathVariable("id") id: Int, principal: Principal): String {
+        val currentUserId = userService.currentUser(principal).id
+        lessonService.apply(id, currentUserId)
+        return "redirect:/lesson/${id}/apply_completed"
     }
 }

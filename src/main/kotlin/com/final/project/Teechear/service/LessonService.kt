@@ -3,7 +3,9 @@ package com.final.project.Teechear.service
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.LessonEntity
+import com.final.project.Teechear.entity.UserApplyLessonEntity
 import com.final.project.Teechear.mapper.LessonMapper
+import com.final.project.Teechear.mapper.UserApplyLessonMapper
 import com.final.project.Teechear.validate.LessonNewForm
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -13,7 +15,8 @@ import java.util.*
 class LessonService(
         private val dateTimeService: DateTimeService,
         private val lessonMapper: LessonMapper,
-        private val userService: UserService) {
+        private val userService: UserService,
+        private val userApplyLessonMapper: UserApplyLessonMapper) {
 
     fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
         val eventDateTime = form.eventDateTime
@@ -46,6 +49,11 @@ class LessonService(
 
     fun selectByOwnerId(ownerId: Int): List<Lesson> {
         return lessonMapper.selectByOwnerId(ownerId).map { toDomain(it) }
+    }
+
+    fun apply(id: Int, userId: Int) {
+        val userApplyLessonEntity = UserApplyLessonEntity(id, userId, Date())
+        userApplyLessonMapper.insert(userApplyLessonEntity)
     }
 
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
