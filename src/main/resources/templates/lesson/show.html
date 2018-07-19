@@ -15,16 +15,19 @@
             <div class="row">
                 <div class="col-lg-5 col-12">
                     <img th:src="${lesson.imageUrl}">
-                    <!--ユーザーページの場合-->
-                    <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
-                          th:if="${lesson.ownerId != currentUser.id}">
-                        <button type="submit" class="btn btn-success submit-button">応募する</button>
-                    </form>
-                    <!--マイページの場合-->
-                    <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
-                          th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
-                        <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする</button>
-                    </form>
+                    <div class="button-section">
+                        <!--ユーザーページの場合-->
+                        <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
+                              th:if="${lesson.ownerId != currentUser.id}">
+                            <button type="submit" class="btn btn-success submit-button">応募する</button>
+                        </form>
+                        <!--マイページの場合-->
+                        <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
+                              th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
+                            <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする
+                            </button>
+                        </form>
+                    </div>
 
                     <script>
                         function closeConfirm() {

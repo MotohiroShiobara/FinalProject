@@ -78,3 +78,8 @@ h2 {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
+.button-section form {
+    margin-top: 10px;
+    width: 100%;
+}
