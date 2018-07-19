@@ -19,26 +19,27 @@
                         <b>トレンド</b>最近人気の記事を毎日5時/17時に更新
                     </div>
                     <div class="item-main" th:each="result : ${articleList}">
-                        <a th:href="@{'/article/' + ${result.id}}">
-                            <div class="panel panel-default">
-                                <div class="card3">
-                                    <div class="box3">
-                                        <img th:src="${result.iconImageUrl}"
-                                             class="image3">
-                                        <div>
+                        <div class="panel panel-default">
+                            <div class="card3">
+                                <div class="box3">
+                                    <a th:href="@{'/user/' + ${result.userId}}"><img th:src="${result.iconImageUrl}"
+                                                                                     class="image3"></a>
+                                    <div>
+                                        <a th:href="@{'/article/' + ${result.id}}">
                                             <p class="title3" th:text="${result.title}"></p>
-                                            <div class="article-info">
-                                                <p class="content3"
-                                                   th:text="|by ${result.userName}|">
-                                                </p>
-                                                <p class="fa fa-thumbs-up"></p>
-                                                <p class="like-count" th:text="${result.likeCount}"></p>
-                                            </div>
+                                        </a>
+
+                                        <div class="article-info">
+                                            <a th:href="@{'/user/' + ${result.userId}}"><p class="content3"
+                                               th:text="|by ${result.userName}|">
+                                            </p></a>
+                                            <p class="fa fa-thumbs-up"></p>
+                                            <p class="like-count" th:text="${result.likeCount}"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>

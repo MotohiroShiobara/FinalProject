@@ -62,14 +62,14 @@
 
                 <div class="form-group">
                     <label for="descriptionForm">詳細</label>
-                    <textarea class="form-control" id="descriptionForm" th:field="*{description}"></textarea>
+                    <textarea class="form-control" id="descriptionForm" th:field="*{description}" rows="10"></textarea>
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                        class="col-sm-offset-2 text-danger"></p>
                 </div>
 
                 <div class="button row">
                     <div class="col-md-3">
-                        <button type="submit" class="btn submit-button">更新</button>
+                        <button type="submit" class="btn btn-success submit-button">作成</button>
                     </div>
                 </div>
             </form>

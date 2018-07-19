@@ -12,11 +12,15 @@
     <div layout:fragment="contents">
         <form id="newArticle" method="post" th:action="@{/article}" th:object="${articleForm}">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="タイトル" th:field="*{title}">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                   class="col-sm-offset-2 text-danger"></p>
+                <input type="text" class="form-control" placeholder="タイトル" th:field="*{title}" required>
             </div>
 
             <div class="form-group text-area">
-                <textarea class="form-control" rows="30" th:field="*{markdownText}"></textarea>
+                <p th:if="${#fields.hasErrors('markdownText')}" th:errors="*{title}"
+                   class="col-sm-offset-2 text-danger"></p>
+                <textarea class="form-control" rows="30" th:field="*{markdownText}" required></textarea>
             </div>
 
             <button type="submit" class="btn submit-button">投稿</button>

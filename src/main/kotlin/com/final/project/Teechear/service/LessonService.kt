@@ -45,6 +45,10 @@ class LessonService(
     }
 
     fun validation(form: LessonNewForm, result: BindingResult): BindingResult {
+        if (result.hasErrors()) {
+            return result
+        }
+
         // eventDatetimeは未来でなければならない
         val eventDatetime = form.eventDatetime
         if (eventDatetime is String) {
