@@ -6,6 +6,8 @@ img {
 
 h2 {
     font-weight: 700;
+    line-height: 1.6;
+    font-size: 22px;
 }
 
 .container {

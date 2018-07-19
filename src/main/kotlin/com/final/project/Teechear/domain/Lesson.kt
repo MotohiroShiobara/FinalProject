@@ -3,6 +3,7 @@ package com.final.project.Teechear.domain
 import java.util.*
 
 data class Lesson(
+        val id: Int,
         val title: String,
         val eventDatetime: Date,
         val price: Int,

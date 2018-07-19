@@ -16,3 +16,7 @@ tr td img {
     height: 48px;
     width: 48px;
 }
+
+a {
+    color: black !important;
+}

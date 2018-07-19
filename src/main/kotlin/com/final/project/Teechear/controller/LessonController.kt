@@ -50,4 +50,9 @@ class LessonController(
         model.addAttribute("lesson", lesson)
         return "lesson/show"
     }
+
+    @PostMapping("/{id}/apply")
+    fun apply(@PathVariable("id") id: Int): String {
+        return "redirect:/lesson/${id}"
+    }
 }

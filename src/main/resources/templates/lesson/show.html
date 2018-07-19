@@ -15,6 +15,10 @@
             <div class="row">
                 <div class="col-lg-5 col-12">
                     <img th:src="${lesson.imageUrl}">
+                    <!--応募ボタンを配置-->
+                    <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}">
+                        <button type="submit" class="btn btn-success submit-button">応募する</button>
+                    </form>
                 </div>
                 <div class="col-lg-7 col-12">
                     <div class="content-header">
@@ -34,7 +38,8 @@
                                 <div class="data-title">
                                     <i class="fas fa-clock"></i>開催日
                                 </div>
-                                <div class="data" th:text="${#dates.format(lesson.eventDatetime, 'yyyy年MM月dd日 HH:mm')}"></div>
+                                <div class="data"
+                                     th:text="${#dates.format(lesson.eventDatetime, 'yyyy年MM月dd日 HH:mm')}"></div>
                             </div>
                         </div>
                     </div>
