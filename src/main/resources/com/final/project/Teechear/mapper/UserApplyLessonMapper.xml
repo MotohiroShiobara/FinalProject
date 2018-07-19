@@ -7,4 +7,10 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_apply_lesson (user_id, lesson_id, apply_datetime) VALUES (#{userId}, #{lessonId}, #{applyDatetime})
     </insert>
+
+    <select id="selectByUserIdAndLessonId" resultType="com.final.project.Teechear.entity.UserApplyLessonEntity">
+        SELECT user_id userId, lesson_id LessonId
+        FROM user_apply_lesson
+        WHERE user_id=#{userId} AND lesson_id=#{lessonId} LIMIT 1
+    </select>
 </mapper>

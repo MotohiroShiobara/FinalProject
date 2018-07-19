@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper
 interface UserApplyLessonMapper {
 
     fun insert(userApplyLessonEntity: UserApplyLessonEntity)
+
+    fun selectByUserIdAndLessonId(lessonId: Int, userId: Int): UserApplyLessonEntity?
 }

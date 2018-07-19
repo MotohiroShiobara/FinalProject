@@ -49,8 +49,13 @@ class LessonController(
     }
 
     @GetMapping("/{id}")
-    fun show(@PathVariable("id") id: Int, model: Model): String {
+    fun show(@PathVariable("id") id: Int, model: Model, principal: Principal): String {
         val lesson: Lesson = lessonService.select(id)
+        val currentUserId = userService.currentUser(principal).id
+        val canApply = lessonService.canApply(lesson, currentUserId)
+        model.addAttribute("canApply", canApply)
+        val isApply = if (canApply) false else lessonService.isApply(lesson, currentUserId)
+        model.addAttribute("isApply", isApply)
         model.addAttribute("lesson", lesson)
         return "lesson/show"
     }

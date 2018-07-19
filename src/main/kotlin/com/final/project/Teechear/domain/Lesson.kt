@@ -12,5 +12,6 @@ data class Lesson(
         val imageUrl: String,
         val userName: String,
         val ownerId: Int,
-        val userIconImageUrl: String
+        val userIconImageUrl: String,
+        val isOpen: Boolean
 )

@@ -17,10 +17,15 @@
                     <img th:src="${lesson.imageUrl}">
                     <div class="button-section">
                         <!--ユーザーページの場合-->
-                        <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
-                              th:if="${lesson.ownerId != currentUser.id}">
-                            <button type="submit" class="btn btn-success submit-button">応募する</button>
-                        </form>
+                        <div class="user-section" th:if="${lesson.ownerId != currentUser.id}">
+                            <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
+                                  th:if="${canApply}">
+                                <button type="submit" class="btn btn-success submit-button">応募する</button>
+                            </form>
+
+                            <a th:if="${!canApply && isApply}" class="btn btn-primary btn-lg disabled">応募済み</a>
+                            <a th:if="${!canApply && !isApply}" class="btn btn-secondary btn-lg disabled">募集終了</a>
+                        </div>
                         <!--マイページの場合-->
                         <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
                               th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
