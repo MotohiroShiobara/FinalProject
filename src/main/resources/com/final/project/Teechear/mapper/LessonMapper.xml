@@ -31,7 +31,7 @@
     </select>
 
     <select id="closeByOwnerId" resultMap="lessonResultMap">
-        SELECT * FROM lesson WHERE owner_id=#{ownerId} AND is_open=false OR now() > event_datetime ORDER BY event_datetime DESC
+        SELECT * FROM lesson WHERE owner_id=#{ownerId} AND (is_open=false OR now() > event_datetime) ORDER BY event_datetime DESC
     </select>
     
     <select id="selectByApplyedUserId" resultMap="lessonResultMap">

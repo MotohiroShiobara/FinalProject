@@ -31,11 +31,9 @@ class MainIntercepter : HandlerInterceptor {
 
         val authentication = SecurityContextHolder.getContext().authentication
         val principal = authentication.principal as? LoginUser
-        println(principal)
         if (principal is LoginUser) {
             // すでにログイン済みの場合はTopページにリダイレクトさせる
             if (listOf("/login", "/", "/register", "").contains(request.requestURI)) {
-                println("trendにリダイレクト")
                 response.sendRedirect("/trend")
                 return false
             }
@@ -55,7 +53,6 @@ class MainIntercepter : HandlerInterceptor {
                 if (loginUser is UserEntity && loginUser.id is Int) {
                     val userEntity = userMapper?.select(loginUser.id)
                     val userDomain = userService?.toDomain(userEntity)
-                    println(userDomain)
                     model?.modelMap?.addAttribute("currentUser", userDomain)
                 }
             }

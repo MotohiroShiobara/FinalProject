@@ -23,8 +23,6 @@ class S3Config(private val appSettings: AppSettings) {
     @Bean
     fun s3client(): AmazonS3 {
 
-        println(appSettings.get("aws.access-key"))
-
         val awsCreds = BasicAWSCredentials(awsId!!, awsKey!!)
 
         return AmazonS3ClientBuilder.standard()

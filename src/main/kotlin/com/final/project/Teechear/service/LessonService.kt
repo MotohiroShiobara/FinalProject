@@ -50,7 +50,6 @@ class LessonService(
         if (eventDatetime is String) {
             val date = dateTimeService.toDate(eventDatetime)
             if (date.before(Date()) || date.equals(Date())) {
-                println("ここにきている？")
                 result.addError(FieldError("invalid datetime", "eventDatetime", "過去の開催日時を選択することはできません"))
             }
         }
@@ -95,7 +94,6 @@ class LessonService(
 
     fun isApply(lesson: Lesson, userId: Int): Boolean {
         val userApplyLessonEntity = userApplyLessonMapper.selectByUserIdAndLessonId(lesson.id, userId)
-        println(userApplyLessonEntity)
         if (userApplyLessonEntity is UserApplyLessonEntity) {
             return true
         }

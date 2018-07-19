@@ -20,10 +20,8 @@ class S3Service {
         try {
             s3client?.putObject(PutObjectRequest("teechear", fileName, multipartFile.inputStream, ObjectMetadata()))
         } catch (e: AmazonServiceException) {
-            println(e.message)
             return String()
         } catch (e: AmazonClientException) {
-            println(e.message)
             return String()
         }
 
