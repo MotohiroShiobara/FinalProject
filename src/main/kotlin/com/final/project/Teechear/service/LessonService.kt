@@ -67,8 +67,12 @@ class LessonService(
         lessonMapper.close(id)
     }
 
-    fun selectByOwnerId(ownerId: Int): List<Lesson> {
-        return lessonMapper.selectByOwnerId(ownerId).map { toDomain(it) }
+    fun openByOwnerId(ownerId: Int): List<Lesson> {
+        return lessonMapper.openByOwnerId(ownerId).map { toDomain(it) }
+    }
+
+    fun closeByOwnerId(ownerId: Int): List<Lesson> {
+        return lessonMapper.closeByOwnerId(ownerId).map { toDomain(it) }
     }
 
     fun selectByApplyedUserId(userId: Int): List<Lesson> {
