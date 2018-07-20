@@ -65,7 +65,7 @@
                             <td class="col-md-11">
                                 <p th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"
                                    class="sub-data"></p>
-                                <h4 th:text="${result.title}"></h4>
+                                <a th:href="@{'/article/' + ${result.id}}"><h4 th:text="${result.title}"></h4></a>
                             </td>
                         </tr>
                         </tbody>

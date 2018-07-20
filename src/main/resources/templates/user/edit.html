@@ -43,7 +43,7 @@
 
                 <div class="form-group">
                     <label for="profileForm">自己紹介</label>
-                    <textarea class="form-control" id="profileForm" th:field="*{profile}" th:value="*{profile}"></textarea>
+                    <textarea class="form-control" id="profileForm" th:field="*{profile}" maxlength="1000" th:value="*{profile}"></textarea>
                     <p th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}"
                        class="col-sm-offset-2 text-danger"></p>
                 </div>

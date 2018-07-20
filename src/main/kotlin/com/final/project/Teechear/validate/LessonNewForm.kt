@@ -18,6 +18,7 @@ data class LessonNewForm(
         var eventDatetime: String? = null,
 
         @get:NotBlank(message = "この項目は必須項目です")
+        @get:Size(max = 10000, message = "10000文字以上入力することはできません")
         var description: String? = null,
 
         @get:Email(message = "正しいメールアドレスを入力してください")
