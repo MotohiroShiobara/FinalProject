@@ -15,27 +15,20 @@
         <div class="container body">
             <div class="main">
                 <div class="item-list">
-                    <div class="item-header">
-                        <b>トレンド</b>最近人気の記事を毎日5時/17時に更新
-                    </div>
                     <div class="item-main" th:each="result : ${articleList}">
-                        <div class="panel panel-default">
-                            <div class="card3">
-                                <div class="box3">
-                                    <a th:href="@{'/user/' + ${result.userId}}"><img th:src="${result.iconImageUrl}"
-                                                                                     class="image3"></a>
-                                    <div>
-                                        <a th:href="@{'/article/' + ${result.id}}">
-                                            <p class="title3" th:text="${result.title}"></p>
-                                        </a>
+                        <div class="item-tr">
+                            <a th:href="@{'/user/' + ${result.userId}}" class="icon">
+                                <img th:src="${result.iconImageUrl}">
+                            </a>
 
-                                        <div class="article-info">
-                                            <a th:href="@{'/user/' + ${result.userId}}"><p class="content3"
-                                               th:text="|by ${result.userName}|">
-                                            </p></a>
-                                            <p class="fa fa-thumbs-up"></p>
-                                            <p class="like-count" th:text="${result.likeCount}"></p>
-                                        </div>
+                            <div class="item-body">
+                                <a class="item-title" th:href="@{'/article/' + ${result.id}}"
+                                   th:text="${result.title}"></a>
+
+                                <div class="item-meta">
+                                    <span>by <a th:href="@{'/user/' + ${result.userId}}" th:text="${result.userName}|"></a></span>
+                                    <div class="item-like">
+                                        <span class="fa fa-thumbs-up" th:text="|${result.likeCount}|"></span>
                                     </div>
                                 </div>
                             </div>
