@@ -1,21 +1,15 @@
 package com.final.project.Teechear.controller
 
-import com.amazonaws.AmazonClientException
-import com.amazonaws.AmazonServiceException
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.AmazonS3Client
-import com.amazonaws.services.s3.model.ObjectMetadata
-import com.amazonaws.services.s3.model.PutObjectRequest
 import com.final.project.Teechear.domain.Lesson
-import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.UserEntity
-import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.*
 import com.final.project.Teechear.validate.UserEditForm
+import org.apache.tomcat.util.http.fileupload.FileUploadBase
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
+import org.springframework.validation.FieldError
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -76,10 +70,6 @@ class UserController(private val userMapper: UserMapper,
 
     @PostMapping("")
     fun update(@Validated userEditForm: UserEditForm, bindingResult: BindingResult, principal: Principal): String {
-        if (bindingResult.hasErrors()) {
-            return "user/edit"
-        }
-
         val multipartFile = userEditForm.iconImageUrl
         val currentUser = obtainCurrentUser(principal.name)
 
@@ -87,10 +77,22 @@ class UserController(private val userMapper: UserMapper,
             if (multipartFile.isEmpty) {
                 if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else String()
             } else {
-                s3Service.upload(multipartFile)
+                try {
+                    s3Service.imageUpload(multipartFile)
+                } catch (e : S3Service.S3ServiceNotImage) {
+                    bindingResult.addError(FieldError("not image", "iconImageUrl", "png, jpeg, jpg以外をアップロードすることはできません"))
+                    ""
+                } catch (e : FileUploadBase.FileSizeLimitExceededException) {
+                    bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
+                    ""
+                }
             }
         } else {
             if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else ""
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "user/edit"
         }
 
         val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImageUrl = url)
