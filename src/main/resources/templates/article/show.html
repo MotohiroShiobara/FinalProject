@@ -33,7 +33,7 @@
                 </div>
 
                 <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
-                <div id="markdown_text"></div>
+                <div id="markdown_text" class="md-section"></div>
             </div>
 
             <div class="comment-list">
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="comment-body">
-                        <div th:id="|markdown_comment-${index.index}|"></div>
+                        <div th:id="|markdown_comment-${index.index}|" class="md-section"></div>
                     </div>
                 </div>
             </div>

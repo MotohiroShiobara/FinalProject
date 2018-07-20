@@ -26,8 +26,12 @@
         SELECT * FROM lesson WHERE id=#{id} LIMIT 1
     </select>
 
-    <select id="selectByOwnerId" resultMap="lessonResultMap">
-        SELECT * FROM lesson WHERE owner_id=#{ownerId} ORDER BY event_datetime ASC
+    <select id="openByOwnerId" resultMap="lessonResultMap">
+        SELECT * FROM lesson WHERE owner_id=#{ownerId} AND is_open=true AND event_datetime > now() ORDER BY event_datetime ASC
+    </select>
+
+    <select id="closeByOwnerId" resultMap="lessonResultMap">
+        SELECT * FROM lesson WHERE owner_id=#{ownerId} AND (is_open=false OR now() > event_datetime) ORDER BY event_datetime DESC
     </select>
     
     <select id="selectByApplyedUserId" resultMap="lessonResultMap">

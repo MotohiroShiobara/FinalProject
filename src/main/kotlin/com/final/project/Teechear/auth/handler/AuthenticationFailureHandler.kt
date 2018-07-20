@@ -27,12 +27,9 @@ class AuthenticationFailureHandler : AuthenticationFailureHandler {
         var errorId = ""
         // ExceptionからエラーIDをセットする
         if (authenticationException is BadCredentialsException) {
-            println(authenticationException.message)
             errorId = "ERR-0001"
         }
 
-        println("handler")
-        println(httpServletRequest.contextPath)
         // ログイン画面にリダイレクト
         httpServletResponse.sendRedirect(httpServletRequest.contextPath + "/login?error=" + errorId)
     }

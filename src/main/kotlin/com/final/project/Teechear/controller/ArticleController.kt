@@ -46,10 +46,15 @@ class ArticleController(
     @PostMapping("")
     fun create(
             principal: Principal,
-            @Validated articleForm: ArticleForm
+            @Validated articleForm: ArticleForm,
+            result: BindingResult
     ): String {
         val currentUser = userMapper.findByEmailOrName(principal.name)
-        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
+        if (result.hasErrors()) {
+            return "article/new"
+        }
+
+        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), "\n" + articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
     }

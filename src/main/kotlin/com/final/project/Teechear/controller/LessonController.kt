@@ -24,14 +24,18 @@ class LessonController(
         private val s3Service: S3Service) {
 
     @GetMapping("new")
-    fun new(lessonNewForm: LessonNewForm, model: Model):String {
-        model.addAttribute("lessonNewForm", lessonNewForm)
-
+    fun new(model: Model):String {
+        // 直近に作成したlessonがあればそのlessonのemail_addressをlessonNewFormに渡す
+        model.addAttribute("lessonNewForm", LessonNewForm())
         return "lesson/new"
     }
 
     @PostMapping("create")
     fun create(@Validated form: LessonNewForm, result: BindingResult, model: Model, principal: Principal): String {
+        if (lessonService.validation(form, result).hasErrors()) {
+            return "lesson/new"
+        }
+
         val userId = userService.currentUser(principal).id
         val multipartFile = form.multipartFile
         val imageUrl = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
@@ -45,8 +49,13 @@ class LessonController(
     }
 
     @GetMapping("/{id}")
-    fun show(@PathVariable("id") id: Int, model: Model): String {
+    fun show(@PathVariable("id") id: Int, model: Model, principal: Principal): String {
         val lesson: Lesson = lessonService.select(id)
+        val currentUserId = userService.currentUser(principal).id
+        val canApply = lessonService.canApply(lesson, currentUserId)
+        model.addAttribute("canApply", canApply)
+        val isApply = if (canApply) false else lessonService.isApply(lesson, currentUserId)
+        model.addAttribute("isApply", isApply)
         model.addAttribute("lesson", lesson)
         return "lesson/show"
     }

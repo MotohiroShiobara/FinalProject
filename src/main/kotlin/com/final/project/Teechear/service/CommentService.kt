@@ -25,7 +25,6 @@ class CommentService(
             if (commentEntity.markdownText is String && commentEntity.userId is Int) {
                 val userEntity = userMapper.select(commentEntity.userId)
                 val user = userService.toDomain(userEntity)
-                println(user)
 
                 return Comment(commentEntity.markdownText, user.accountName, user.iconImageUrl)
             }

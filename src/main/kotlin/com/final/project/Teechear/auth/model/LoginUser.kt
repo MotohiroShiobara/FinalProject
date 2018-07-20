@@ -18,7 +18,6 @@ class LoginUser (user: UserEntity): org.springframework.security.core.userdetail
      */
     var loginUser: UserEntity? = null
     init {
-        println(user.emailAddress)
         // スーパークラスのユーザーID、パスワードに値をセットする
         // 実際の認証はスーパークラスのユーザーID、パスワードで行われる
         this.loginUser = user

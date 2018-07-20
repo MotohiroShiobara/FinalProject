@@ -35,7 +35,6 @@ open class UserDetailsServiceImpl :UserDetailsService {
         if(user == null){
             throw UsernameNotFoundException("UserEntity not found for login id: " + loginName);
         }
-        println(user)
 
         // ユーザー情報が取得できたらSpring Securityで認証できる形で戻す
         return LoginUser(user)

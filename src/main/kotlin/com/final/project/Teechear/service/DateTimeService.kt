@@ -1,18 +1,18 @@
 package com.final.project.Teechear.service
 
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.text.SimpleDateFormat
 import java.util.*
+
+
 
 
 
 @Service
 class DateTimeService {
 
-    fun toDate(localDateTime: LocalDateTime): Date {
-        val ldt = LocalDateTime.now()
-        val zdt = ldt.atZone(ZoneId.systemDefault())
-        return Date.from(zdt.toInstant())
+    fun toDate(strDateTime: String): Date {
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
+        return sdf.parse(strDateTime)
     }
 }

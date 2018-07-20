@@ -46,9 +46,9 @@ class UserController(private val userMapper: UserMapper,
 
         val currentPage = pageCount ?: 1
         val pageList = pagiNationService.obtainPageList(currentPage, articleCount, pagePerCount)
-        val lessonList: List<Lesson> = lessonService.selectByOwnerId(userId)
+        val openLessonList: List<Lesson> = lessonService.openByOwnerId(userId)
+        val closedLessonList: List<Lesson> = lessonService.closeByOwnerId(userId)
         val applyedLessonList: List<Lesson> = lessonService.selectByApplyedUserId(userId)
-        println(applyedLessonList)
 
         model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("user", user)
@@ -56,7 +56,8 @@ class UserController(private val userMapper: UserMapper,
         model.addAttribute("contribution", contribution)
         model.addAttribute("pageCount", currentPage)
         model.addAttribute("pageList", pageList)
-        model.addAttribute("lessonList", lessonList)
+        model.addAttribute("openLessonList", openLessonList)
+        model.addAttribute("closedLessonList", closedLessonList)
         model.addAttribute("applyedLessonList", applyedLessonList)
 
         return "user/show"

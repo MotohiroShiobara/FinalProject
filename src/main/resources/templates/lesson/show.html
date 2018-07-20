@@ -15,16 +15,27 @@
             <div class="row">
                 <div class="col-lg-5 col-12">
                     <img th:src="${lesson.imageUrl}">
-                    <!--ユーザーページの場合-->
-                    <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
-                          th:if="${lesson.ownerId != currentUser.id}">
-                        <button type="submit" class="btn btn-success submit-button">応募する</button>
-                    </form>
-                    <!--マイページの場合-->
-                    <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
-                          th:if="${lesson.ownerId == currentUser.id}" onsubmit="return closeConfirm();">
-                        <button type="submit" class="btn btn-danger submit-button" id="close-button">募集終了にする</button>
-                    </form>
+                    <div class="button-section">
+                        <!--ユーザーページの場合-->
+                        <div class="user-section" th:if="${lesson.ownerId != currentUser.id}">
+                            <form id="applyLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/apply'}"
+                                  th:if="${canApply}">
+                                <button type="submit" class="btn btn-success submit-button">応募する</button>
+                            </form>
+
+                            <a th:if="${!canApply && isApply}" class="btn btn-primary btn-lg disabled">応募済み</a>
+                            <a th:if="${!canApply && !isApply}" class="btn btn-secondary btn-lg disabled">募集終了</a>
+                        </div>
+                        <!--マイページの場合-->
+                        <div class="owner-section" th:if="${lesson.ownerId == currentUser.id}">
+                            <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
+                                  onsubmit="return closeConfirm();" th:if="${canApply}">
+                                <button type="submit" class="btn btn-danger submit-button" id="close-button">募集停止</button>
+                            </form>
+
+                            <a th:if="${!canApply}" class="btn btn-primary btn-lg disabled">募集終了</a>
+                        </div>
+                    </div>
 
                     <script>
                         function closeConfirm() {
@@ -52,7 +63,7 @@
                             </div>
 
                             <div class="col-md-6 col-12">
-                                <div class="data-title">
+                                <div class="data-titlne">
                                     <i class="fas fa-clock"></i>開催日
                                 </div>
                                 <div class="data"

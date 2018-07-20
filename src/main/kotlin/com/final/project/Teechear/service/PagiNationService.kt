@@ -9,7 +9,6 @@ class PagiNationService {
         val stPage = if (currentPage == 1) 1 else currentPage - 1
         val endPage = currentPage + 4
         val maxPage = contentsCount / pagePerCount
-        println(maxPage)
         return if (endPage > maxPage) {
             (stPage..(maxPage)).map{it}
         } else {

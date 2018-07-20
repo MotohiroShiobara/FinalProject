@@ -2,14 +2,27 @@ package com.final.project.Teechear.validate
 
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.multipart.MultipartFile
-import java.time.LocalDateTime
-import javax.validation.constraints.NotBlank
+import javax.validation.constraints.*
 
 data class LessonNewForm(
-        @get:NotBlank var title: String? = null,
+        @get:NotBlank(message = "この項目は必須項目です")
+        var title: String? = null,
+
+        @get:Min(0, message = "0円以上の金額で設定してください")
+        @get:Max(10000, message = "設定できる料金は一万円以下です")
+        @get:NotNull(message = "この項目は必須項目です")
         var price: Int? = null,
-        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") var eventDateTime: LocalDateTime? = null,
+
+        @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm")
+        @get:NotBlank(message = "この項目は必須項目です")
+        var eventDatetime: String? = null,
+
+        @get:NotBlank(message = "この項目は必須項目です")
         var description: String? = null,
+
+        @get:Email(message = "正しいメールアドレスを入力してください")
+        @get:NotBlank(message = "この項目は必須項目です")
         var emailAddress: String? = null,
+
         var multipartFile: MultipartFile? = null
 )

@@ -7,7 +7,9 @@ import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.validate.ArticleForm
 import org.springframework.stereotype.Service
+import org.springframework.validation.BindingResult
 import java.lang.IllegalArgumentException
 import java.util.*
 

@@ -25,21 +25,59 @@ h2 {
 }
 
 .editor {
-    padding: 10px;
-    width: 50%;
     position: absolute;
-    left: 0px;
-    height:60%;
+    top: 70px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #f8faf7;
+    width: 100%;
 }
 
-.preview {
-    padding: 10px;
-    right: 0px;
-    width: 50%;
+.editor .editor-title {
     position: absolute;
-    height:60%;
+    width: 100%;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    height: 44px;
 }
 
-div.text-area {
+.editor .text-area {
+    position: absolute;
+    width: 100%;
+    left: 5px;
+    right: 5px;
+    top: 76px;
     bottom: 40px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+
+textarea {
+    height: 100%;
+}
+
+.editor-footer {
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 41px;
+    position: fixed!important;
+    padding: 4px 10px;
+    background: #eee;
+    border-top: 1px solid #ddd;
+}
+
+.submit-button-section {
+    float: right;
+    vertical-align: middle;
+}
+
+.post-button {
+    color: #fff;
+    background-color: #59bb0c;
+    border-color: #4ea30a;
 }
