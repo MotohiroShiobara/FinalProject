@@ -35,11 +35,8 @@ class UserController(private val userMapper: UserMapper,
         val user = userService.select(userId)
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val articleList = articleService.userArticleList(userId)
-        val articleCount = articleList.size
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
 
-        val currentPage = pageCount ?: 1
-        val pageList = pagiNationService.obtainPageList(currentPage, articleCount, pagePerCount)
         val openLessonList: List<Lesson> = lessonService.openByOwnerId(userId)
         val closedLessonList: List<Lesson> = lessonService.closeByOwnerId(userId)
         val applyedLessonList: List<Lesson> = lessonService.selectByApplyedUserId(userId)
@@ -48,8 +45,6 @@ class UserController(private val userMapper: UserMapper,
         model.addAttribute("user", user)
         model.addAttribute("articleList", articleList)
         model.addAttribute("contribution", contribution)
-        model.addAttribute("pageCount", currentPage)
-        model.addAttribute("pageList", pageList)
         model.addAttribute("openLessonList", openLessonList)
         model.addAttribute("closedLessonList", closedLessonList)
         model.addAttribute("applyedLessonList", applyedLessonList)

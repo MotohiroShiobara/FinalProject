@@ -138,19 +138,6 @@
                         </tr>
                         </tbody>
                     </table>
-
-                    <nav aria-label="">
-                        <ul class="pagination">
-                            <li th:class="'page-item ' + ${n == pageCount ? 'active' : ''}" th:each="n : ${pageList}">
-                                <a th:class="page-link" th:href="'?page=' + ${n}" th:text="${n}"></a>
-                            </li>
-                            <!--<li class="page-item"><a class="page-link" href="?page=1">1</a></li>-->
-                            <!--<li class="page-item active">-->
-                            <!--<a class="page-link" href="?page=2">2 <span class="sr-only">(current)</span></a>-->
-                            <!--</li>-->
-                            <!--<li class="page-item"><a class="page-link" href="?page=3">3</a></li>-->
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>
