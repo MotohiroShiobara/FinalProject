@@ -21,3 +21,12 @@ a {
     color: black !important;
 }
 
+.profile span {
+    font-size: 1.2em;
+}
+
+.profile a {
+    font-size: .8em;
+    color: #6a737d;
+}
+

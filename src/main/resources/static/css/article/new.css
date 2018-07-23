@@ -774,6 +774,22 @@ pre code {
     border: 0;
 }
 
+em::before {
+    content: none;
+}
+
+em::after {
+    content: none;
+}
+
+strong::before {
+    content: none;
+}
+
+strong::after {
+    content: none;
+}
+
 code::before {
     content: none;
 }

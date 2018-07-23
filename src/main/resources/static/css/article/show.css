@@ -144,6 +144,13 @@ a.user-info b {
     color: #1b1f23;
 }
 
+#likeForm button::before {
+    display: inline-block;
+}
+
+#deleteLikeForm button::before {
+    display: inline-block;
+}
 
 /*github-markdown-css*/
 
