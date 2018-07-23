@@ -60,7 +60,14 @@ class ArticleController(
 
     @GetMapping("/{articleId}")
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
-        val article = articleService.find(articleId)
+        val article = try {
+            articleService.find(articleId)
+        } catch (e: ArticleService.ArticleServiceException) {
+            return "error/404.html"
+        } catch (e: ArticleService.ArticleNotFoundException) {
+            return "error/404.html"
+        }
+
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val currentUserId = currentUser?.id
 

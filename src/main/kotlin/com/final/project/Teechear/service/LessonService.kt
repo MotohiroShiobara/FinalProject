@@ -120,9 +120,14 @@ class LessonService(
             throw LessonServiceException("必要なカラムにnullが含まれています")
         }
 
-        throw LessonServiceException("lessonが見つかりませんでした")
+        throw LessonNotFoundException("lessonが見つかりませんでした")
     }
 
+    /**
+     * データベースの構造上起こることはありえないException
+     */
     class LessonServiceException(s: String) : Exception()
     // TODO kotlinでのexceptionクラスの作り方に直す
+
+    class LessonNotFoundException(s: String): Exception()
 }

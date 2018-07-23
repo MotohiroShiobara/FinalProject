@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.MultipartFile
 import java.security.Principal
 
@@ -19,12 +20,9 @@ import java.security.Principal
 @RequestMapping("/user")
 class UserController(private val userMapper: UserMapper,
                      private val articleService: ArticleService,
-                     private val pagiNationService: PagiNationService,
                      private val s3Service: S3Service,
                      private val userService: UserService,
                      private val lessonService: LessonService) {
-
-    private val pagePerCount = 15
 
     @GetMapping("/{userId}")
     fun show(
@@ -32,7 +30,14 @@ class UserController(private val userMapper: UserMapper,
             model: Model,
             principal: Principal,
             @RequestParam("page") pageCount: Int?): String {
-        val user = userService.select(userId)
+        val user = try {
+            userService.select(userId)
+        } catch (e: UserService.UserServiceException) {
+            return "error/404.html"
+        } catch (e: UserService.UserNotFoundException) {
+            return "error/404.html"
+        }
+
         val currentUser = userMapper.findByEmailOrName(principal.name)
         val articleList = articleService.userArticleList(userId)
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
@@ -54,8 +59,16 @@ class UserController(private val userMapper: UserMapper,
 
     @GetMapping("/{userId}/edit")
     fun edit(@PathVariable("userId") userId: Int, model: Model, principal: Principal): String {
-        val currentUser = obtainCurrentUser(principal.name)
-        if (userId != currentUser?.id) {
+        val currentUser = try {
+            userService.currentUser(principal)
+        } catch (e: UserService.UserServiceException) {
+            return "error/404.html"
+        } catch (e: UserService.UserNotFoundException) {
+            return "error/404.html"
+        }
+
+        // 編集するユーザーとログインユーザーが違う場合はリダイレクト
+        if (userId != currentUser.id) {
             return "redirect:/trend"
         }
 
@@ -66,33 +79,27 @@ class UserController(private val userMapper: UserMapper,
     @PostMapping("")
     fun update(@Validated userEditForm: UserEditForm, bindingResult: BindingResult, principal: Principal): String {
         val multipartFile = userEditForm.iconImageUrl
-        val currentUser = obtainCurrentUser(principal.name)
+        val currentUser = userService.currentUser(principal)
 
-        val url = if (multipartFile is MultipartFile) {
-            if (multipartFile.isEmpty) {
-                if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else String()
-            } else {
-                try {
-                    s3Service.imageUpload(multipartFile)
-                } catch (e : FileUploadBase.FileSizeLimitExceededException) {
-                    bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
-                    ""
-                }
+        val url = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
+            try {
+                s3Service.imageUpload(multipartFile)
+            } catch (e: FileUploadBase.FileSizeLimitExceededException) {
+                bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
+                ""
+            } catch (e: MaxUploadSizeExceededException) {
+                bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
+                ""
             }
         } else {
-            if (currentUser?.iconImageUrl is String) currentUser.iconImageUrl else ""
+            currentUser.iconImageUrl
         }
 
         if (bindingResult.hasErrors()) {
             return "user/edit"
         }
 
-        val copyCurrentUser = currentUser?.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImageUrl = url)
-        userMapper.update(copyCurrentUser!!)
+        userService.update(currentUser.id, userEditForm, iconImageUrl = url)
         return "redirect:user/${currentUser.id}"
-    }
-
-    private fun obtainCurrentUser(accountName: String): UserEntity? {
-        return userMapper.findByEmailOrName(accountName)
     }
 }

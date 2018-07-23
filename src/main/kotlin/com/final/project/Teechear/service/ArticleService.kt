@@ -53,9 +53,11 @@ class ArticleService(
 
             throw ArticleServiceException("Articleに必要なカラムが不足しています")
         } else {
-            throw IllegalArgumentException("artcleが存在しません")
+            throw ArticleNotFoundException("artcleが存在しません")
         }
     }
 
     class ArticleServiceException(s: String) : Exception()
+
+    class ArticleNotFoundException(s: String) : Exception()
 }
