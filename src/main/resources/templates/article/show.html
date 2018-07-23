@@ -58,7 +58,7 @@
                 <b>コメントを投稿する</b>
                 <form id="commentForm" method="post" th:action="@{/comment/create}" th:object="${commentForm}">
                     <div class="form-group text-area">
-                        <textarea class="form-control" rows="3" th:field="*{text}" maxlength="10000"></textarea>
+                        <textarea class="form-control" rows="3" th:field="*{text}" maxlength="10000" required></textarea>
                     </div>
 
                     <input type="hidden" name="userId" th:value="${currentUserId}">
