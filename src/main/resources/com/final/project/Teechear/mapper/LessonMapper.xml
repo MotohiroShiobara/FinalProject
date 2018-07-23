@@ -49,4 +49,8 @@
     <update id="close" useGeneratedKeys="true" keyProperty="id">
         UPDATE lesson SET is_open=false WHERE id=#{id}
     </update>
+
+    <select id="selectMostRecentByUserId" resultMap="lessonResultMap">
+        SELECT lesson.* FROM lesson WHERE owner_id=#{userId} AND event_datetime > now() AND is_open=true ORDER BY event_datetime ASC LIMIT 1
+    </select>
 </mapper>

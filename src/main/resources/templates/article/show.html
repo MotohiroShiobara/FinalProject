@@ -37,6 +37,27 @@
 
                 <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
                 <div id="markdown_text" class="md-section"></div>
+
+                <!--記事の投稿者により開設された講座の紹介欄-->
+                <div id="lesson-section" th:if="${mostRecentLesson != null}">
+                    <b>この記事の投稿者の講座</b>
+                    <div class="main-contents">
+                        <div class="lesson-img">
+                            <a th:href="@{'/lesson/' + ${mostRecentLesson.id}}">
+                                <img th:src="${mostRecentLesson.imageUrl}"/>
+                            </a>
+                        </div>
+
+                        <div class="lesson-info">
+                            <p th:text="|開催日: ${#dates.format(mostRecentLesson.eventDatetime, 'yyyy年MM月dd日 HH:MM')} 料金: ¥${mostRecentLesson.price}|"
+                               class="datetime"></p>
+                            <a th:href="@{'/lesson/' + ${mostRecentLesson.id}}">
+                                <p th:text="${mostRecentLesson.title}" class="lesson-title"></p>
+                            </a>
+                        </div>
+                    </div>
+                    <a th:href="@{'/user/' + ${article.userId}}">もっと見る</a>
+                </div>
             </div>
 
             <div class="comment-list">

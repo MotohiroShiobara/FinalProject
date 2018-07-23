@@ -1,6 +1,7 @@
 package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Comment
+import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.CommentEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
@@ -8,12 +9,9 @@ import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
-import com.final.project.Teechear.service.ArticleService
-import com.final.project.Teechear.service.CommentService
-import com.final.project.Teechear.service.LikeService
 import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.form.CommentForm
-import com.final.project.Teechear.service.UserService
+import com.final.project.Teechear.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -32,7 +30,8 @@ class ArticleController(
         private val userLikeArticleMapper: UserLikeArticleMapper,
         private val likeService: LikeService,
         private val articleService: ArticleService,
-        private val commentService: CommentService) {
+        private val commentService: CommentService,
+        private val lessonService: LessonService) {
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
@@ -68,21 +67,23 @@ class ArticleController(
             return "error/404.html"
         }
 
-        val currentUser = userMapper.findByEmailOrName(principal.name)
-        val currentUserId = currentUser?.id
+        val currentUser = userService.currentUser(principal)
+        val currentUserId = currentUser.id
 
-        if (currentUserId is Int) {
-            model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
-            model.addAttribute("commentForm", commentForm)
-            model.addAttribute("currentUserId", currentUserId)
+        model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
+        model.addAttribute("commentForm", commentForm)
+        model.addAttribute("currentUserId", currentUserId)
 
-            val commentList = commentService.commentListByArticle(articleId)
-            model.addAttribute("commentList", commentList)
-            model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticleEntity)
-        }
+        val commentList = commentService.commentListByArticle(articleId)
+        model.addAttribute("commentList", commentList)
+        model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticleEntity)
 
         model.addAttribute("article", article)
         model.addAttribute("isMyArticle", article.userId == currentUserId)
+
+        // 記事投稿者の直近の講座
+        val mostRecentLesson: Lesson? = lessonService.mostRecentLessonByUserId(article.userId)
+        model.addAttribute("mostRecentLesson", mostRecentLesson)
         return "article/show"
     }
 
