@@ -1,4 +1,4 @@
-package com.final.project.Teechear.validate
+package com.final.project.Teechear.form
 
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size

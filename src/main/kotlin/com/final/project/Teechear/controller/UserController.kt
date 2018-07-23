@@ -4,7 +4,7 @@ import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.*
-import com.final.project.Teechear.validate.UserEditForm
+import com.final.project.Teechear.form.UserEditForm
 import org.apache.tomcat.util.http.fileupload.FileUploadBase
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -79,9 +79,6 @@ class UserController(private val userMapper: UserMapper,
             } else {
                 try {
                     s3Service.imageUpload(multipartFile)
-                } catch (e : S3Service.S3ServiceNotImage) {
-                    bindingResult.addError(FieldError("not image", "iconImageUrl", "png, jpeg, jpg以外をアップロードすることはできません"))
-                    ""
                 } catch (e : FileUploadBase.FileSizeLimitExceededException) {
                     bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
                     ""
@@ -104,4 +101,3 @@ class UserController(private val userMapper: UserMapper,
         return userMapper.findByEmailOrName(accountName)
     }
 }
-

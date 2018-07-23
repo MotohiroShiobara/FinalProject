@@ -3,7 +3,7 @@ package com.final.project.Teechear.controller
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.UserRegisterService
-import com.final.project.Teechear.validate.RegisterForm
+import com.final.project.Teechear.form.RegisterForm
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

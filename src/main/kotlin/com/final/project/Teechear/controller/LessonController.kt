@@ -1,10 +1,10 @@
 package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Lesson
+import com.final.project.Teechear.form.LessonNewForm
 import com.final.project.Teechear.service.LessonService
 import com.final.project.Teechear.service.S3Service
 import com.final.project.Teechear.service.UserService
-import com.final.project.Teechear.validate.LessonNewForm
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
@@ -24,7 +24,7 @@ class LessonController(
         private val s3Service: S3Service) {
 
     @GetMapping("new")
-    fun new(model: Model):String {
+    fun new(model: Model): String {
         // 直近に作成したlessonがあればそのlessonのemail_addressをlessonNewFormに渡す
         model.addAttribute("lessonNewForm", LessonNewForm())
         return "lesson/new"
@@ -32,22 +32,16 @@ class LessonController(
 
     @PostMapping("create")
     fun create(@Validated form: LessonNewForm, result: BindingResult, model: Model, principal: Principal): String {
-
+        if (lessonService.validation(form, result).hasErrors()) {
+            return "lesson/new"
+        }
 
         val userId = userService.currentUser(principal).id
         val multipartFile = form.multipartFile
         val imageUrl = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
-            try {
-                s3Service.imageUpload(multipartFile)
-            } catch (e : S3Service.S3ServiceNotImage) {
-                ""
-            }
+            s3Service.imageUpload(multipartFile)
         } else {
             ""
-        }
-
-        if (lessonService.validation(form, result).hasErrors()) {
-            return "lesson/new"
         }
 
         val lessonId = lessonService.createByForm(form, userId, imageUrl)

@@ -1,15 +1,11 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Article
-import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.ArticleEntity
-import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
-import com.final.project.Teechear.validate.ArticleForm
 import org.springframework.stereotype.Service
-import org.springframework.validation.BindingResult
 import java.lang.IllegalArgumentException
 import java.util.*
 
@@ -33,6 +29,10 @@ class ArticleService(
     fun trendArticleList(): List<Article> {
         val articleEntityList = articleMapper.trend()
         return articleEntityList.map { toDomain(it) }
+    }
+
+    fun search(query: String): List<Article> {
+        return articleMapper.search(query).map { toDomain(it) }
     }
 
     private fun toDomain(article: ArticleEntity?): Article {

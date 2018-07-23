@@ -18,10 +18,11 @@
                          height="200"
                          width="200">
                     <h2 th:text="${user.accountName}"></h2>
+                    <pre th:text="${user.profile}"></pre>
                     <a th:if="${user.id == currentUserId}" th:href="@{'/user/' + ${currentUserId} + '/edit'}">プロフィールを編集する</a>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9 article-section">
                     <table class="table table-condensed">
                         <thead>
                         <tr class="row">

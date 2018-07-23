@@ -1,7 +1,7 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.mapper.UserMapper
-import com.final.project.Teechear.validate.RegisterForm
+import com.final.project.Teechear.form.RegisterForm
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError

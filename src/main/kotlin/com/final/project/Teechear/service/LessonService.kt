@@ -6,7 +6,7 @@ import com.final.project.Teechear.entity.LessonEntity
 import com.final.project.Teechear.entity.UserApplyLessonEntity
 import com.final.project.Teechear.mapper.LessonMapper
 import com.final.project.Teechear.mapper.UserApplyLessonMapper
-import com.final.project.Teechear.validate.LessonNewForm
+import com.final.project.Teechear.form.LessonNewForm
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError

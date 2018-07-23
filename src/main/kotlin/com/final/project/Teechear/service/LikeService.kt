@@ -1,5 +1,6 @@
 package com.final.project.Teechear.service
 
+import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
@@ -21,6 +22,10 @@ class LikeService(
             val like = UserLikeArticleEntity(currentUserId, articleId)
             userLikeArticleMapper.insert(like)
         }
+    }
+
+    fun delete(articleId: Int, user: User) {
+        userLikeArticleMapper.delete(articleId, user.id)
     }
 
     private fun validation(articleId: Int, userId: Int):Boolean {

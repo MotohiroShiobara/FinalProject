@@ -13,7 +13,6 @@
     <div layout:fragment="contents">
         <div class="container">
             <form method="post" th:action="@{/lesson/create}" th:object="${lessonNewForm}" enctype="multipart/form-data">
-
                 <input id="lefile" type="file" style="display:none" th:field="*{multipartFile}">
                 <div class="form-group">
                     <label for="photo_cover">プロフィール画像</label>
@@ -24,6 +23,8 @@
                             <span class="far fa-file" aria-hidden="true"></span>
                         </button>
                     </div>
+                    <p th:if="${#fields.hasErrors('multipartFile')}" th:errors="*{multipartFile}"
+                       class="col-sm-offset-2 text-danger"></p>
                 </div>
 
                 <script>

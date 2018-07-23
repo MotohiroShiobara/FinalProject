@@ -1,5 +1,6 @@
-package com.final.project.Teechear.validate
+package com.final.project.Teechear.form
 
+import com.final.project.Teechear.validate.NotImage
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.multipart.MultipartFile
 import javax.validation.constraints.*
@@ -25,5 +26,6 @@ data class LessonNewForm(
         @get:NotBlank(message = "この項目は必須項目です")
         var emailAddress: String? = null,
 
+        @NotImage()
         var multipartFile: MultipartFile? = null
 )

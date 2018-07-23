@@ -22,4 +22,8 @@
         AND
         user_id = #{userId}
     </select>
+
+    <delete id="delete">
+        DELETE FROM user_like_article WHERE user_id=#{userId} AND article_id=#{articleId}
+    </delete>
 </mapper>

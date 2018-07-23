@@ -15,24 +15,33 @@
             <form id="searchForm" method="get" th:action="@{/search}">
                 <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}" required>
             </form>
+        </div>
 
-            <div class="container body">
-                <table class="table table-condensed">
-                    <tbody>
-                    <tr th:each="result : ${articleList}" th:if="${!articleList.isEmpty()}">
-                        <td><img src="http://diamond.jp/mwimgs/7/1/400/img_71c53c1d81500a1cf73a4f543e72413f27838.jpg"
-                                 height="50"
-                                 width="100"></td>
-                        <td th:text="|${#dates.format(result.releasedAt, 'yyyy年MM月dd日')}に投稿|"></td>
-                        <td><a th:href="@{'/article/' + ${result.id}}"><h4 th:text="${result.title}"></h4></a></td>
-                    </tr>
-                    <p th:if="${articleList.isEmpty() && query.length() > 0}"
-                       th:text="|「${query}」に一致する記事は見つかりませんでした。|"></p>
-                    <p th:if="${articleList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
-                    </tbody>
+        <div class="main">
+            <div class="item-list">
+                <div class="item-main" th:each="result : ${articleList}" th:if="${!articleList.isEmpty()}">
+                    <div class="item-tr">
+                        <a th:href="@{'/user/' + ${result.userId}}" class="icon">
+                            <img th:src="${result.iconImageUrl}">
+                        </a>
 
+                        <div class="item-body">
+                            <a class="item-title" th:href="@{'/article/' + ${result.id}}"
+                               th:text="${result.title}"></a>
 
-                </table>
+                            <div class="item-meta">
+                                <span>by <a th:href="@{'/user/' + ${result.userId}}" th:text="${result.userName}|"></a></span>
+                                <div class="item-like">
+                                    <span class="fa fa-thumbs-up" th:text="|${result.likeCount}|"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p th:if="${articleList.isEmpty() && query.length() > 0}"
+                   th:text="|「${query}」に一致する記事は見つかりませんでした。|"></p>
+                <p th:if="${articleList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
             </div>
         </div>
     </div>

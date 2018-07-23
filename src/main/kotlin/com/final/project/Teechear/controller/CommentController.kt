@@ -2,7 +2,7 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.entity.CommentEntity
 import com.final.project.Teechear.mapper.CommentMapper
-import com.final.project.Teechear.validate.CommentForm
+import com.final.project.Teechear.form.CommentForm
 import org.springframework.stereotype.Controller
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated

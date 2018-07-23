@@ -1,4 +1,4 @@
-package com.final.project.Teechear.validate
+package com.final.project.Teechear.form
 
 import org.springframework.web.multipart.MultipartFile
 import javax.validation.constraints.NotBlank

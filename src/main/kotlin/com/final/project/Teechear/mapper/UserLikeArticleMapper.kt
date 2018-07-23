@@ -11,4 +11,6 @@ interface UserLikeArticleMapper {
     fun articleLikeCount(articleId: Int): Int
 
     fun findByUserIdAndArticleId(articleId: Int, userId: Int): UserLikeArticleEntity?
+
+    fun delete(articleId: Int, userId: Int)
 }

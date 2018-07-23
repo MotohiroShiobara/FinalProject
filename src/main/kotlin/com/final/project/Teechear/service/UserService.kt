@@ -29,9 +29,9 @@ class UserService(private val userMapper: UserMapper) {
 
         if (userEntity.id is Int && userEntity.accountName is String) {
             return if (userEntity.iconImageUrl.isNullOrEmpty()) {
-                User(userEntity.id, userEntity.accountName, "https://avatars2.githubusercontent.com/u/38315670?s=460&v=4")
+                User(userEntity.id, userEntity.accountName, "https://avatars2.githubusercontent.com/u/38315670?s=460&v=4", userEntity.profile ?: "")
             } else {
-                User(userEntity.id, userEntity.accountName, userEntity.iconImageUrl!!)
+                User(userEntity.id, userEntity.accountName, userEntity.iconImageUrl!!, userEntity.profile ?: "")
             }
         }
 
