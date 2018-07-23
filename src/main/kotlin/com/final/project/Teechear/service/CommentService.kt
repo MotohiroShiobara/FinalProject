@@ -26,7 +26,7 @@ class CommentService(
                 val userEntity = userMapper.select(commentEntity.userId)
                 val user = userService.toDomain(userEntity)
 
-                return Comment(commentEntity.markdownText, user.accountName, user.iconImageUrl)
+                return Comment(commentEntity.markdownText, user.accountName, user.iconImageUrl, user.id)
             }
 
             throw CommentServiceException("commentに必要なカラムが不足している")
