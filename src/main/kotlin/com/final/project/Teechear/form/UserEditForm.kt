@@ -1,5 +1,6 @@
 package com.final.project.Teechear.form
 
+import com.final.project.Teechear.validate.NotImage
 import org.springframework.web.multipart.MultipartFile
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
@@ -14,5 +15,6 @@ data class UserEditForm(
         @get:Size(max = 1000, message = "1000文字以上入力することはできません")
         var profile: String?,
 
+        @NotImage()
         var iconImageUrl: MultipartFile? = null
 )

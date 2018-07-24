@@ -78,8 +78,13 @@ class UserController(private val userMapper: UserMapper,
 
     @PostMapping("")
     fun update(@Validated userEditForm: UserEditForm, bindingResult: BindingResult, principal: Principal): String {
+        println("こっちに先に来て欲しい")
         val multipartFile = userEditForm.iconImageUrl
         val currentUser = userService.currentUser(principal)
+
+        if (bindingResult.hasErrors()) {
+            return "user/edit"
+        }
 
         val url = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
             try {
@@ -93,10 +98,6 @@ class UserController(private val userMapper: UserMapper,
             }
         } else {
             currentUser.iconImageUrl
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "user/edit"
         }
 
         userService.update(currentUser.id, userEditForm, iconImageUrl = url)

@@ -14,7 +14,7 @@
         <div class="container">
             <form method="post" th:action="@{/user}" th:object="${userEditForm}" enctype="multipart/form-data">
 
-                <input id="lefile" type="file" style="display:none" th:field="*{iconImageUrl}">
+                <input id="lefile" type="file" style="display:none" th:field="*{iconImageUrl}" accept='.jpg,.png, .jpeg, image/jpeg,image/png, image/jpg'>
                 <div class="form-group">
                     <label for="photo_cover">プロフィール画像</label>
                     <br/>
@@ -31,6 +31,7 @@
 
                 <script>
                     $('input[id=lefile]').change(function () {
+                        console.log($(this).val())
                         $('#photo_cover').val($(this).val());
                     });
                 </script>
