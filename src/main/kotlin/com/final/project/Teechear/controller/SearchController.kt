@@ -32,7 +32,7 @@ class SearchController(
         } else {
             model.addAttribute("lessonList", emptyList<Lesson>())
             model.addAttribute("articleList", emptyList<Article>())
-            model.addAttribute("type", "article")
+            model.addAttribute("type", if (type == "lesson") "lesson" else "article" )
         }
 
         model.addAttribute("query", query)
