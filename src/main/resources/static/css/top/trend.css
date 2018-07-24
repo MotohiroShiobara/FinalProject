@@ -1,3 +1,7 @@
+.container {
+    background-color: #f6f6f6;
+}
+
 .main {
     display: flex;
     flex-flow: row wrap;
@@ -5,6 +9,33 @@
     max-width: 1100px;
     margin-right: auto;
     margin-left: auto;
+}
+
+.tab-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-section a {
+    color: #888;
+    padding: 8px;
+    padding-left: 16px;
+}
+
+.tab-section a:hover {
+    background-color: #eee;
+    text-decoration: none;
+}
+
+.tab-section a.active {
+    background-color: #55c500;
+    color: #fff;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.tab-section a.active:hover {
+    background-color: #4aac00;
 }
 
 .item-list {
@@ -61,7 +92,7 @@
     flex-wrap: wrap;
     align-items: center;
     color: #999;
-    font-size: .9em;
+    font-size: .8em;
 }
 
 .item-meta span a {

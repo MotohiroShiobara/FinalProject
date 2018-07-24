@@ -53,4 +53,8 @@
     <select id="selectMostRecentByUserId" resultMap="lessonResultMap">
         SELECT lesson.* FROM lesson WHERE owner_id=#{userId} AND event_datetime > now() AND is_open=true ORDER BY event_datetime ASC LIMIT 1
     </select>
+
+    <select id="trend" resultMap="lessonResultMap">
+        SELECT lesson.* FROM lesson WHERE event_datetime > now() AND is_open=true ORDER BY event_datetime ASC LIMIT 20
+    </select>
 </mapper>

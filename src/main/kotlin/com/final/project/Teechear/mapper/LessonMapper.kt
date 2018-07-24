@@ -19,4 +19,6 @@ interface LessonMapper {
     fun close(id: Int)
 
     fun selectMostRecentByUserId(userId: Int): LessonEntity?
+
+    fun trend(): List<LessonEntity>
 }

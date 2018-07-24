@@ -113,6 +113,13 @@ class LessonService(
         return null
     }
 
+    /**
+     * 直近のレッスンを20件取得する
+     */
+    fun trend(): List<Lesson> {
+        return lessonMapper.trend().map { toDomain(it) }
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {
