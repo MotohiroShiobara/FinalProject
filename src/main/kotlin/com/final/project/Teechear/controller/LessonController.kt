@@ -1,6 +1,5 @@
 package com.final.project.Teechear.controller
 
-import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.form.LessonNewForm
 import com.final.project.Teechear.service.LessonService
 import com.final.project.Teechear.service.S3Service
@@ -50,7 +49,14 @@ class LessonController(
 
     @GetMapping("/{id}")
     fun show(@PathVariable("id") id: Int, model: Model, principal: Principal): String {
-        val lesson: Lesson = lessonService.select(id)
+        val lesson = try {
+            lessonService.select(id)
+        } catch (e : LessonService.LessonServiceException) {
+            return "error/404.html"
+        } catch (e : LessonService.LessonNotFoundException) {
+            return "error/404.html"
+        }
+
         val currentUserId = userService.currentUser(principal).id
         val canApply = lessonService.canApply(lesson, currentUserId)
         model.addAttribute("canApply", canApply)
@@ -69,7 +75,21 @@ class LessonController(
 
     @GetMapping("/{id}/apply_completed")
     fun applyCompleted(@PathVariable("id") id: Int, principal: Principal, model: Model): String {
-        val lesson = lessonService.select(id)
+
+        val lesson = try {
+            lessonService.select(id)
+        } catch (e : LessonService.LessonServiceException) {
+            return "error/404.html"
+        } catch (e : LessonService.LessonNotFoundException) {
+            return "error/404.html"
+        }
+
+        // 応募済みではないユーザーはこの画面にはいけないため404画面を返す
+        val currentUserId = userService.currentUser(principal).id
+        if (!lessonService.isApply(lesson, currentUserId)) {
+            return "error/404.html"
+        }
+
         model.addAttribute("lessonId", id)
         model.addAttribute("emailAddress", lesson.emailAddress)
 

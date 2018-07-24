@@ -17,4 +17,6 @@ interface LessonMapper {
     fun selectByApplyedUserId(userId: Int): List<LessonEntity>
 
     fun close(id: Int)
+
+    fun selectMostRecentByUserId(userId: Int): LessonEntity?
 }

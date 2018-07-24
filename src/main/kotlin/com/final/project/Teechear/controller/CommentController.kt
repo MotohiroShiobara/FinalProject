@@ -15,7 +15,10 @@ class CommentController(private val commentMapper: CommentMapper) {
 
     @PostMapping("/create")
     fun create(@Validated commentForm: CommentForm, bindingResult: BindingResult): String {
-        commentMapper.insert(CommentEntity(commentForm.userId, commentForm.articleId, "\n" + commentForm.text))
+        if (!bindingResult.hasErrors()) {
+            commentMapper.insert(CommentEntity(commentForm.userId, commentForm.articleId, "\n" + commentForm.text))
+        }
+
         return "redirect:/article/${commentForm.articleId}"
     }
 }

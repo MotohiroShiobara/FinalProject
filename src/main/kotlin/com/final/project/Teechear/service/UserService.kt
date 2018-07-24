@@ -2,6 +2,7 @@ package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.UserEntity
+import com.final.project.Teechear.form.UserEditForm
 import com.final.project.Teechear.mapper.UserMapper
 import org.springframework.stereotype.Service
 import java.security.Principal
@@ -22,6 +23,14 @@ class UserService(private val userMapper: UserMapper) {
         return toDomain(userMapper.select(id))
     }
 
+    fun update(userId: Int, userEditForm: UserEditForm, iconImageUrl: String) {
+        val userEntity: UserEntity? = userMapper.select(userId)
+        if (userEntity is UserEntity) {
+            val userEntityCopy = userEntity.copy(accountName = userEditForm.accountName, profile = userEditForm.profile, iconImageUrl = iconImageUrl)
+            userMapper.update(userEntityCopy)
+        }
+    }
+
     fun toDomain(userEntity: UserEntity?): User {
         if (userEntity !is UserEntity) {
             throw UserServiceException("ユーザーが見つかりませんでした")
@@ -39,4 +48,6 @@ class UserService(private val userMapper: UserMapper) {
     }
 
     class UserServiceException(s: String) : Exception()
+
+    class UserNotFoundException(s: String): Exception()
 }

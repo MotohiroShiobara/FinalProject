@@ -10,7 +10,6 @@ import com.final.project.Teechear.form.LessonNewForm
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
-import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -105,6 +104,15 @@ class LessonService(
         return false
     }
 
+    fun mostRecentLessonByUserId(userId: Int): Lesson? {
+        val lessonEntity = lessonMapper.selectMostRecentByUserId(userId)
+        if (lessonEntity is LessonEntity) {
+            return toDomain(lessonEntity)
+        }
+
+        return null
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {
@@ -120,9 +128,14 @@ class LessonService(
             throw LessonServiceException("必要なカラムにnullが含まれています")
         }
 
-        throw LessonServiceException("lessonが見つかりませんでした")
+        throw LessonNotFoundException("lessonが見つかりませんでした")
     }
 
+    /**
+     * データベースの構造上起こることはありえないException
+     */
     class LessonServiceException(s: String) : Exception()
     // TODO kotlinでのexceptionクラスの作り方に直す
+
+    class LessonNotFoundException(s: String): Exception()
 }

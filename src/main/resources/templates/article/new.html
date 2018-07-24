@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/new.css}">
 
     <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 </head>
 <body>
@@ -26,7 +26,7 @@
                    class="col-sm-offset-2 text-danger"></p>
                 <div class="form-group text-area" id="editor">
                     <textarea :value="input" @input="update" class="form-control" th:field="*{markdownText}" required
-                              maxlength="10000" @scroll="scroll">
+                              maxlength="10000" @scroll="scroll" placeholder="プログラミング知識をMarkdownで書いて共有しよう">
                     </textarea>
                     <div class="preview" v-html="compiledMarkdown" id="output"></div>
                 </div>

@@ -2,6 +2,11 @@ body {
     background-color: #f6f6f6 !important;
 }
 
+.st-header .header-contents .left-header img {
+    width: 30px;
+    height: 30px;
+}
+
 .container {
     background-color: #ffffff;
     border-radius: 10px;
@@ -53,4 +58,8 @@ body {
     font-size: 1.2rem;
     padding: 0 16px 0 12px;
     margin-right: 16px;
+}
+
+.user-icon {
+    cursor: pointer;
 }

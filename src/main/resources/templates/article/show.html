@@ -16,16 +16,17 @@
                 <div class="user-info">
                     <img class="user-icon" th:src="${article.iconImageUrl}"
                          style="height: 32px; width: 32px;">
-                    <h4 th:text="${article.userName}"></h4>
+                    <a th:href="@{'/user/' + ${article.userId}}"><h4 th:text="${article.userName}"></h4></a>
                     <p class="released-at" th:text="|${#dates.format(article.releasedAt, 'yyyy年MM月dd日')}に投稿|"></p>
                     <form id="likeForm" method="post" th:action="@{'/article/' + ${articleId} + '/like'}"
                           th:if="${!userLiked && !isMyArticle}">
-                        <button type="submit" class="fas fa-thumbs-up is-liked" th:text="|いいね ${likeCount}|">
+                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked" th:text="| いいね ${likeCount}|">
                         </button>
                     </form>
 
-                    <form id="deleteLikeForm" th:method="delete" th:action="@{'/article/' + ${articleId} + '/unlike'}" th:if="${userLiked}">
-                        <button type="submit" class="fas fa-thumbs-up is-liked" th:text="|いいねを取り消す ${likeCount}|">
+                    <form id="deleteLikeForm" th:method="delete" th:action="@{'/article/' + ${articleId} + '/unlike'}"
+                          th:if="${userLiked}">
+                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked" th:text="| いいねを取り消す ${likeCount}|">
                         </button>
                     </form>
                 </div>
@@ -36,14 +37,37 @@
 
                 <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
                 <div id="markdown_text" class="md-section"></div>
+
+                <!--記事の投稿者により開設された講座の紹介欄-->
+                <div id="lesson-section" th:if="${mostRecentLesson != null}">
+                    <b>この記事の投稿者の講座</b>
+                    <div class="main-contents">
+                        <div class="lesson-img">
+                            <a th:href="@{'/lesson/' + ${mostRecentLesson.id}}">
+                                <img th:src="${mostRecentLesson.imageUrl}"/>
+                            </a>
+                        </div>
+
+                        <div class="lesson-info">
+                            <p th:text="|開催日: ${#dates.format(mostRecentLesson.eventDatetime, 'yyyy年MM月dd日 HH:MM')} 料金: ¥${mostRecentLesson.price}|"
+                               class="datetime"></p>
+                            <a th:href="@{'/lesson/' + ${mostRecentLesson.id}}">
+                                <p th:text="${mostRecentLesson.title}" class="lesson-title"></p>
+                            </a>
+                        </div>
+                    </div>
+                    <a th:href="@{'/user/' + ${article.userId}}">もっと見る</a>
+                </div>
             </div>
 
             <div class="comment-list">
                 <div class="comment" th:each="comment, index : ${commentList}">
                     <div class="comment-header">
-                        <img class="user-icon" th:src="${comment.iconImageUrl}"
-                             style="height: 32px; width: 32px;">
-                        <b th:id="|user_name-${index.index}|"></b>
+                        <a th:id="|user-link-${index.index}|" class="user-info">
+                            <img class="user-icon" th:src="${comment.iconImageUrl}"
+                                 style="height: 32px; width: 32px;">
+                            <b th:id="|user_name-${index.index}|"></b>
+                        </a>
                     </div>
 
                     <div class="comment-body">
@@ -53,12 +77,15 @@
             </div>
 
             <div class="comment-form">
-                <img class="user-icon" th:src="${currentUser.iconImageUrl}"
-                     style="height: 32px; width: 32px;">
+                <a th:href="@{'/user/' + ${currentUser.id}}">
+                    <img class="user-icon" th:src="${currentUser.iconImageUrl}"
+                         style="height: 32px; width: 32px;">
+                </a>
                 <b>コメントを投稿する</b>
                 <form id="commentForm" method="post" th:action="@{/comment/create}" th:object="${commentForm}">
                     <div class="form-group text-area">
-                        <textarea class="form-control" rows="3" th:field="*{text}" maxlength="10000"></textarea>
+                        <textarea class="form-control" rows="3" th:field="*{text}" maxlength="10000"
+                                  required></textarea>
                     </div>
 
                     <input type="hidden" name="userId" th:value="${currentUserId}">
@@ -94,6 +121,8 @@
                         var comment = commentList[i];
                         document.getElementById('user_name-' + i).innerText = comment.accountName;
                         document.getElementById('markdown_comment-' + i).innerHTML = marked(comment.markdownText);
+                        var target = document.getElementById('user-link-' + i);
+                        target.href = "/user/" + comment.userId;
                     }
                 });
             });

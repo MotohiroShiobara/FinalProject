@@ -52,8 +52,9 @@ pre {
     border-radius: 5px;
 }
 
-div.user-info h4 {
+div.user-info a {
     display: inline-block;
+    color: #6a737d;
 }
 
 p.released-at {
@@ -88,6 +89,67 @@ i.like-button {
 
 img {
     background-color: unset !important;
+}
+
+.comment-list a {
+    color: #6a737d;
+}
+
+a.user-info {
+    display: flex;
+    flex-direction: row;
+}
+
+a.user-info img {
+    align-items: center;
+}
+
+a.user-info b {
+    padding-left: 5px;
+    align-items: center;
+}
+
+#lesson-section {
+    border-top: 1px solid #eaecef;
+    border-bottom: 1px solid #eaecef;
+    padding: 5px;
+}
+
+#lesson-section .lesson-img img {
+    height: 60px;
+    width: 60px;
+}
+
+#lesson-section .main-contents {
+    display: flex;
+    flex-direction: row;
+}
+
+#lesson-section .main-contents .lesson-info {
+    margin-left: 10px;
+    vertical-align: center;
+}
+
+#lesson-section .main-contents .lesson-info p.lesson-title {
+    font-size: 1.4rem;
+    margin-bottom: 0 !important;
+}
+
+#lesson-section .main-contents .lesson-info p.datetime {
+    font-size: .8em;
+    margin-bottom: 0 !important;
+}
+
+#lesson-section .main-contents .lesson-info a {
+    color: #1b1f23;
+}
+
+#likeForm button::before {
+    display: inline-block;
+}
+
+#deleteLikeForm button::before {
+    display: inline-block;
 }
 
 /*github-markdown-css*/
