@@ -57,4 +57,20 @@
     <select id="trend" resultMap="lessonResultMap">
         SELECT lesson.* FROM lesson WHERE event_datetime > now() AND is_open=true ORDER BY event_datetime ASC LIMIT 20
     </select>
+
+    <select id="search" resultMap="lessonResultMap">
+        SELECT
+        *
+        FROM
+        lesson
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        AND
+        event_datetime > now()
+        AND is_open=true
+        ORDER BY
+        event_datetime
+    </select>
 </mapper>

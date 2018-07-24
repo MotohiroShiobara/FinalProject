@@ -12,6 +12,16 @@
     flex-grow: 1;
 }
 
+.tab-section {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+    flex-grow: 1;
+}
+
 .main {
     display: flex;
     flex-flow: row wrap;

@@ -120,6 +120,10 @@ class LessonService(
         return lessonMapper.trend().map { toDomain(it) }
     }
 
+    fun search(query: String): List<Lesson> {
+        return lessonMapper.search(query).map { toDomain(it) }
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {
