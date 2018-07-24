@@ -3,10 +3,8 @@ package com.final.project.Teechear.controller
 import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.entity.ArticleEntity
-import com.final.project.Teechear.entity.CommentEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
-import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.form.ArticleForm
@@ -18,15 +16,8 @@ import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MaxUploadSizeExceededException
-import org.springframework.web.servlet.HandlerExceptionResolver
-import org.springframework.web.servlet.ModelAndView
-import java.lang.Exception
 import java.security.Principal
 import java.util.*
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import kotlin.collections.HashMap
 
 @Controller
 @RequestMapping("/article")

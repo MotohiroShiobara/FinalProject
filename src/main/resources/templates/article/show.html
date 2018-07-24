@@ -59,7 +59,7 @@
                     </div>
                     <div class="summary">
                         <b>サマリー</b>
-                        <pre th:text="|${mostRecentLesson.description.substring(0, 200)} ...|"></pre>
+                        <pre th:text="|${mostRecentLesson.length > 200 ? mostRecentLesson.description.substring(0, 200) : mostRecentLesson.description} ...|"></pre>
                     </div>
                     <a th:href="@{'/user/' + ${article.userId}}">もっと見る</a>
                 </div>
