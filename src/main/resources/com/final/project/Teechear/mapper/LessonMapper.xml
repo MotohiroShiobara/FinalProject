@@ -13,13 +13,14 @@
         <result property="emailAddress" column="email_address" />
         <result property="ownerId" column="owner_id" />
         <result property="isOpen" column="is_open" />
+        <result property="estimatedTime" column="estimated_time" />
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
-        lesson(title, event_datetime, price, description, image_url, email_address, owner_id, is_open)
+        lesson(title, event_datetime, price, description, image_url, email_address, owner_id, is_open, estimated_time)
         VALUES
-        (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen})
+        (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen}, #{estimatedTime})
     </insert>
 
     <select id="select" resultMap="lessonResultMap">

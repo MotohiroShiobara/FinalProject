@@ -31,7 +31,8 @@ class LessonService(
                     imageUrl,
                     form.emailAddress,
                     userId,
-                    true)
+                    true,
+                    form.estimatedTime)
             lessonMapper.insert(lessonEntity)
             if (lessonEntity.id is Int) {
                 return lessonEntity.id
@@ -132,7 +133,7 @@ class LessonService(
                 if (lessonEntity.ownerId is Int) {
                     val user: User = userService.select(lessonEntity.ownerId)
 
-                    return Lesson(lessonEntity.id, lessonEntity.title, lessonEntity.eventDatetime, lessonEntity.price, lessonEntity.description, lessonEntity.emailAddress, imageUrl, user.accountName, lessonEntity.ownerId, user.iconImageUrl, lessonEntity.isOpen)
+                    return Lesson(lessonEntity.id, lessonEntity.title, lessonEntity.eventDatetime, lessonEntity.price, lessonEntity.description, lessonEntity.emailAddress, imageUrl, user.accountName, lessonEntity.ownerId, user.iconImageUrl, lessonEntity.isOpen, lessonEntity.estimatedTime)
                 }
             }
 

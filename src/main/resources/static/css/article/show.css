@@ -152,3 +152,9 @@ a.user-info b {
 #deleteLikeForm button::before {
     display: inline-block;
 }
+
+#lesson-section .summary pre {
+    background-color: #ffffff;
+    border: none;
+    color: #6a737d;
+}

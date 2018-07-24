@@ -48,8 +48,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="priceForm">料金</label>
-                    <input type="number" class="form-control" id="priceForm" th:field="*{price}">
+                    <label for="priceForm">目安時間(分)</label>
+                    <input type="number" class="form-control" id="priceForm" th:field="*{estimatedTime}" min="1" max="3600">
+                    <p th:if="${#fields.hasErrors('estimatedTime')}" th:errors="*{estimatedTime}"
+                       class="col-sm-offset-2 text-danger"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="priceForm">料金(円)</label>
+                    <input type="number" class="form-control" id="priceForm" th:field="*{price}" min="0" max="10000">
                     <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
                        class="col-sm-offset-2 text-danger"></p>
                 </div>
