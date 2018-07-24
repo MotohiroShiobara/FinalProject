@@ -27,5 +27,9 @@ data class LessonNewForm(
         var emailAddress: String? = null,
 
         @NotImage()
-        var multipartFile: MultipartFile? = null
+        var multipartFile: MultipartFile? = null,
+
+        @get:Min(0, message = "0分以上に設定してください")
+        @get:Max(3600, message = "3600分(24時間)以上に設定することはできません")
+        var estimatedTime: Int? = null
 )

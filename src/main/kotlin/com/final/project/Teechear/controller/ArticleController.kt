@@ -3,10 +3,8 @@ package com.final.project.Teechear.controller
 import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.entity.ArticleEntity
-import com.final.project.Teechear.entity.CommentEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
-import com.final.project.Teechear.mapper.CommentMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.form.ArticleForm

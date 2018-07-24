@@ -14,11 +14,24 @@
         <div class="search-section">
             <form id="searchForm" method="get" th:action="@{/search}">
                 <input type="text" class="form-control" placeholder="キーワードを入力" name="q" th:value="${query}" required>
+                <input type="hidden" th:value="${type}" name="type">
             </form>
         </div>
 
+        <div class="tab-section">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a th:href="@{'/search?type=article&q=' + ${query}}" th:class="|nav-link ${type == 'article' ? 'active' : ''}|">記事</a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{'/search?type=lesson&q=' + ${query}}" th:class="|nav-link ${type == 'lesson' ? 'active' : ''}|">講座</a>
+                </li>
+            </ul>
+        </div>
+
         <div class="main">
-            <div class="item-list">
+            <div class="item-list" th:if="${type == 'article'}">
                 <div class="item-main" th:each="result : ${articleList}" th:if="${!articleList.isEmpty()}">
                     <div class="item-tr">
                         <a th:href="@{'/user/' + ${result.userId}}" class="icon">
@@ -42,6 +55,32 @@
                 <p th:if="${articleList.isEmpty() && query.length() > 0}"
                    th:text="|「${query}」に一致する記事は見つかりませんでした。|"></p>
                 <p th:if="${articleList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
+            </div>
+
+            <div class="item-list" th:if="${type == 'lesson'}">
+                <div class="item-main" th:each="result : ${lessonList}" th:if="${!lessonList.isEmpty()}">
+                    <div class="item-tr">
+                        <a th:href="@{'/lesson/' + ${result.id}}" class="icon">
+                            <img th:src="${result.imageUrl}">
+                        </a>
+
+                        <div class="item-body">
+                            <a class="item-title" th:href="@{'/lesson/' + ${result.id}}"
+                               th:text="${result.title}"></a>
+
+                            <div class="item-meta">
+                                <span>by <a th:href="@{'/user/' + ${result.ownerId}}" th:text="${result.userName}|"></a></span>
+                                <div class="item-like">
+                                    <span th:text="|開催日: ${#dates.format(result.eventDatetime, 'yyyy年MM月dd日 HH:MM')} ¥${result.price}|"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p th:if="${lessonList.isEmpty() && query.length() > 0}"
+                   th:text="|「${query}」に一致する記事は見つかりませんでした。|"></p>
+                <p th:if="${lessonList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
             </div>
         </div>
     </div>

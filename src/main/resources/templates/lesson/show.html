@@ -54,19 +54,26 @@
 
                     <div class="data-section">
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-3 col-12">
                                 <div class="data-title">
                                     <i class="fas fa-money-bill-alt"></i>料金
                                 </div>
                                 <div class="data" th:text="|¥${lesson.price}|"></div>
                             </div>
 
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-5 col-12">
                                 <div class="data-title">
                                     <i class="fas fa-clock"></i>開催日
                                 </div>
                                 <div class="data"
                                      th:text="${#dates.format(lesson.eventDatetime, 'yyyy年MM月dd日 HH:mm')}"></div>
+                            </div>
+
+                            <div class="col-md-4 col-12">
+                                <div class="data-title">
+                                    <i class="fas fa-clock"></i>目安時間
+                                </div>
+                                <div class="data" th:text="${lesson.estimatedTime == null ? '未定' : lesson.estimatedTime + '分'}"></div>
                             </div>
                         </div>
                     </div>

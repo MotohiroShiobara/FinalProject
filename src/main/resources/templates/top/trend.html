@@ -14,7 +14,11 @@
     <div layout:fragment="contents">
         <div class="container body">
             <div class="main">
-                <div class="item-list">
+                <div class="tab-section">
+                    <a th:class="${type == 'article' ? 'active' : ''}" href="/trend?type=article">記事トレンド</a>
+                    <a th:class="${type == 'lesson' ? 'active' : ''}" href="/trend?type=lesson">直近の講座</a>
+                </div>
+                <div class="item-list" th:if="${type == 'article'}">
                     <div class="item-main" th:each="result : ${articleList}">
                         <div class="item-tr">
                             <a th:href="@{'/user/' + ${result.userId}}" class="icon">
@@ -29,6 +33,28 @@
                                     <span>by <a th:href="@{'/user/' + ${result.userId}}" th:text="${result.userName}|"></a></span>
                                     <div class="item-like">
                                         <span class="fa fa-thumbs-up" th:text="|${result.likeCount}|"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-list" th:if="${type == 'lesson'}">
+                    <div class="item-main" th:each="result : ${lessonList}">
+                        <div class="item-tr">
+                            <a th:href="@{'/lesson/' + ${result.id}}" class="icon">
+                                <img th:src="${result.imageUrl}">
+                            </a>
+
+                            <div class="item-body">
+                                <a class="item-title" th:href="@{'/lesson/' + ${result.id}}"
+                                   th:text="${result.title}"></a>
+
+                                <div class="item-meta">
+                                    <span>by <a th:href="@{'/user/' + ${result.ownerId}}" th:text="${result.userName}|"></a></span>
+                                    <div class="item-like">
+                                        <span th:text="|開催日: ${#dates.format(result.eventDatetime, 'yyyy年MM月dd日 HH:MM')} ¥${result.price}|"></span>
                                     </div>
                                 </div>
                             </div>

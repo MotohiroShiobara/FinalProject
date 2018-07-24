@@ -13,13 +13,14 @@
         <result property="emailAddress" column="email_address" />
         <result property="ownerId" column="owner_id" />
         <result property="isOpen" column="is_open" />
+        <result property="estimatedTime" column="estimated_time" />
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
-        lesson(title, event_datetime, price, description, image_url, email_address, owner_id, is_open)
+        lesson(title, event_datetime, price, description, image_url, email_address, owner_id, is_open, estimated_time)
         VALUES
-        (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen})
+        (#{title}, #{eventDatetime}, #{price}, #{description}, #{imageUrl}, #{emailAddress}, #{ownerId}, #{isOpen}, #{estimatedTime})
     </insert>
 
     <select id="select" resultMap="lessonResultMap">
@@ -52,5 +53,25 @@
 
     <select id="selectMostRecentByUserId" resultMap="lessonResultMap">
         SELECT lesson.* FROM lesson WHERE owner_id=#{userId} AND event_datetime > now() AND is_open=true ORDER BY event_datetime ASC LIMIT 1
+    </select>
+
+    <select id="trend" resultMap="lessonResultMap">
+        SELECT lesson.* FROM lesson WHERE event_datetime > now() AND is_open=true ORDER BY event_datetime ASC LIMIT 20
+    </select>
+
+    <select id="search" resultMap="lessonResultMap">
+        SELECT
+        *
+        FROM
+        lesson
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        AND
+        event_datetime > now()
+        AND is_open=true
+        ORDER BY
+        event_datetime
     </select>
 </mapper>

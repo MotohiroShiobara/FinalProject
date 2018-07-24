@@ -21,12 +21,30 @@ a {
     color: black !important;
 }
 
+.profile img {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+
 .profile span {
+    width: 100%;
     font-size: 1.2em;
+    padding: 10px;
 }
 
 .profile a {
     font-size: .8em;
     color: #6a737d;
+}
+
+.profile pre {
+    width: 100%;
+    word-break : break-all;
+    overflow-wrap : break-word;
+    white-space: pre-wrap ;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
 }
 

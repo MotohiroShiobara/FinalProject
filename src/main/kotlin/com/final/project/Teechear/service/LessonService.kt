@@ -31,7 +31,8 @@ class LessonService(
                     imageUrl,
                     form.emailAddress,
                     userId,
-                    true)
+                    true,
+                    form.estimatedTime)
             lessonMapper.insert(lessonEntity)
             if (lessonEntity.id is Int) {
                 return lessonEntity.id
@@ -113,6 +114,17 @@ class LessonService(
         return null
     }
 
+    /**
+     * 直近のレッスンを20件取得する
+     */
+    fun trend(): List<Lesson> {
+        return lessonMapper.trend().map { toDomain(it) }
+    }
+
+    fun search(query: String): List<Lesson> {
+        return lessonMapper.search(query).map { toDomain(it) }
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {
@@ -121,7 +133,7 @@ class LessonService(
                 if (lessonEntity.ownerId is Int) {
                     val user: User = userService.select(lessonEntity.ownerId)
 
-                    return Lesson(lessonEntity.id, lessonEntity.title, lessonEntity.eventDatetime, lessonEntity.price, lessonEntity.description, lessonEntity.emailAddress, imageUrl, user.accountName, lessonEntity.ownerId, user.iconImageUrl, lessonEntity.isOpen)
+                    return Lesson(lessonEntity.id, lessonEntity.title, lessonEntity.eventDatetime, lessonEntity.price, lessonEntity.description, lessonEntity.emailAddress, imageUrl, user.accountName, lessonEntity.ownerId, user.iconImageUrl, lessonEntity.isOpen, lessonEntity.estimatedTime)
                 }
             }
 

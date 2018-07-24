@@ -11,5 +11,6 @@ data class LessonEntity(
         val emailAddress: String? = null,
         val ownerId: Int? = null,
         val isOpen: Boolean? = null,
+        val estimatedTime: Int? = null,
         val id: Int? = null
 )
