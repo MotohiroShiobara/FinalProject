@@ -7,4 +7,4 @@ id INT AUTO_INCREMENT NOT NULL PRIMARY KEY
 ,UNIQUE (user_id, lesson_id)
 ,FOREIGN KEY (user_id) REFERENCES user(id)
 ,FOREIGN KEY (lesson_id) REFERENCES lesson(id)
-)
+) character set utf8mb4;

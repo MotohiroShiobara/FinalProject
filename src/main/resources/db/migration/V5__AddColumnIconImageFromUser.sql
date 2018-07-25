@@ -1,1 +1,1 @@
-ALTER TABLE user ADD icon_image_url VARCHAR (255);
+ALTER TABLE user ADD icon_image_url VARCHAR (191);

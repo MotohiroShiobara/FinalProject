@@ -7,4 +7,4 @@ id INT AUTO_INCREMENT NOT NULL PRIMARY KEY
 ,updated_at	timestamp	not null default current_timestamp on update current_timestamp
 ,FOREIGN KEY(article_id) REFERENCES article(id)
 ,FOREIGN KEY(user_id) REFERENCES user(id)
-)
+) character set utf8mb4;
