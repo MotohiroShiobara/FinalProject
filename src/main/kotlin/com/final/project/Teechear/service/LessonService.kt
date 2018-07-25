@@ -20,7 +20,7 @@ class LessonService(
         private val userApplyLessonMapper: UserApplyLessonMapper) {
 
     fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
-        val eventDateTime = form.eventDatetime
+        val eventDateTime = form.eventDate
         if (eventDateTime is String) {
             val convertedEventDateTime = dateTimeService.toDate(eventDateTime)
             val lessonEntity = LessonEntity(
@@ -50,7 +50,7 @@ class LessonService(
         }
 
         // eventDatetimeは未来でなければならない
-        val eventDatetime = form.eventDatetime
+        val eventDatetime = form.eventDate
         if (eventDatetime is String) {
             val date = dateTimeService.toDate(eventDatetime)
             if (date.before(Date()) || date.equals(Date())) {

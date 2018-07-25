@@ -7,6 +7,16 @@
     <title>講座新規作成</title>
 
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lesson/new.css}">
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lib/default.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lib/default.date.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/lib/default.time.css}">
+
+    <script th:src="@{/javascript/lib/picker.js}"></script>
+    <script th:src="@{/javascript/lib/picker.date.js}"></script>
+    <script th:src="@{/javascript/lib/picker.time.js}"></script>
+    <script th:src="@{/javascript/lib/legacy.js}"></script>
+
 </head>
 <body>
 <div layout:decorator="layout">
@@ -41,10 +51,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="eventDateTimeForm">開催日</label>
-                    <input type="datetime-local" class="form-control" id="eventDateTimeForm" th:field="*{eventDatetime}">
-                    <p th:if="${#fields.hasErrors('eventDatetime')}" th:errors="*{eventDatetime}"
+                    <label>開催日時</label><br />
+                    <p th:if="${#fields.hasErrors('eventDate')}" th:errors="*{eventDate}"
                        class="col-sm-offset-2 text-danger"></p>
+                    <p th:if="${#fields.hasErrors('eventTime')}" th:errors="*{eventTime}"
+                       class="col-sm-offset-2 text-danger"></p>
+                    <input id='date' class="fieldset__input js__datepicker" type="text" placeholder="日付" th:field="*{eventDate}" required>
+                    <input id="time" class="fieldset__input js__datepicker" type="text" placeholder="時間" th:field="*{eventTime}" required>
                 </div>
 
                 <div class="form-group">
@@ -82,6 +95,22 @@
                 </div>
             </form>
         </div>
+
+        <script>
+            $(function() {
+                // datepicker表示イベント
+                $('#date').pickadate({format: 'yyyy-mm-dd', formatSubmit: 'yyyy-mm-dd'});
+
+                // timepicker表示イベント
+                $('#time').pickatime({
+                    format: 'HH:i', // 24時間表記
+                    interval: 30,   // 表示間隔
+                    min: [00,00],   // 予約開始時間
+                    max: [23,30]    // 予約終了時間
+                });
+            });
+
+        </script>
     </div>
 </div>
 </body>
