@@ -7,6 +7,7 @@ import javax.validation.constraints.*
 
 data class LessonNewForm(
         @get:NotBlank(message = "この項目は必須項目です")
+        @get:Size(max = 50, message = "1文字以上50文字以下で設定してください")
         var title: String? = null,
 
         @get:Min(0, message = "0円以上の金額で設定してください")

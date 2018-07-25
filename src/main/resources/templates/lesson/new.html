@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label for="titleForm">タイトル</label>
-                    <input type="text" class="form-control" id="titleForm" th:field="*{title}">
+                    <input type="text" class="form-control" id="titleForm" th:field="*{title}" maxlength="50">
                     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                        class="col-sm-offset-2 text-danger"></p>
                 </div>
