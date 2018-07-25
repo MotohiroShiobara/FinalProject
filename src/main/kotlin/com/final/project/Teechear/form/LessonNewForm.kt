@@ -14,10 +14,10 @@ data class LessonNewForm(
         @get:NotNull(message = "この項目は必須項目です")
         var price: Int? = null,
 
-        @get:NotBlank(message = "この項目は必須項目です")
+        @get:NotBlank(message = "日付を入力してください")
         var eventDate: String? = null,
 
-        @get:NotBlank(message = "この項目は必須項目です")
+        @get:NotBlank(message = "時間を入力してください")
         var eventTime: String? = null,
 
         @get:NotBlank(message = "この項目は必須項目です")

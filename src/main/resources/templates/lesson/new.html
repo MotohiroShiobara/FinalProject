@@ -56,8 +56,8 @@
                        class="col-sm-offset-2 text-danger"></p>
                     <p th:if="${#fields.hasErrors('eventTime')}" th:errors="*{eventTime}"
                        class="col-sm-offset-2 text-danger"></p>
-                    <input id='date' class="fieldset__input js__datepicker" type="text" placeholder="日付" th:field="*{eventDate}" required>
-                    <input id="time" class="fieldset__input js__datepicker" type="text" placeholder="時間" th:field="*{eventTime}" required>
+                    <input id='date' class="fieldset__input js__datepicker" type="text" placeholder="日付" th:field="*{eventDate}">
+                    <input id="time" class="fieldset__input js__datepicker" type="text" placeholder="時間" th:field="*{eventTime}">
                 </div>
 
                 <div class="form-group">
