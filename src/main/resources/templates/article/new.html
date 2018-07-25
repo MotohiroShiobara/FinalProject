@@ -19,7 +19,7 @@
                 <div class="editor-title">
                     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                        class="col-sm-offset-2 text-danger"></p>
-                    <input type="text" class="form-control" placeholder="タイトル" th:field="*{title}" required>
+                    <input type="text" class="form-control" maxlength="50" placeholder="タイトル" th:field="*{title}" required>
                 </div>
 
                 <p th:if="${#fields.hasErrors('markdownText')}" th:errors="*{markdownText}"
