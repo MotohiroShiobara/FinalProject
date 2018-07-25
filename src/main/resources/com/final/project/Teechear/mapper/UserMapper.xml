@@ -55,4 +55,20 @@
     <select id="findByEmailOrName" resultType="com.final.project.Teechear.entity.UserEntity" resultMap="userResultMap">
         SELECT * FROM user WHERE email_address=#{loginName} OR account_name=#{loginName} LIMIT 1
     </select>
+
+    <select id="participant" resultMap="userResultMap" parameterType="java.util.List">
+        SELECT
+        *
+        FROM
+        user
+        INNER JOIN user_apply_lesson ual ON
+        user.id = ual.user_id
+        WHERE
+        ual.lesson_id
+        IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY apply_datetime DESC
+    </select>
 </mapper>

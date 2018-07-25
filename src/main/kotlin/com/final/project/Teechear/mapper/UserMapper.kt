@@ -21,4 +21,6 @@ interface UserMapper {
     fun findByAccountName(accountName: String): UserEntity?
 
     fun findByEmailOrName(loginName: String): UserEntity?
+
+    fun participant(lessonIds: List<Int>): List<UserEntity>
 }

@@ -30,7 +30,6 @@ class MainIntercepter : HandlerInterceptor {
         }
 
         val authentication = SecurityContextHolder.getContext().authentication
-        println(authentication)
         val principal = authentication.principal as? LoginUser
         if (principal is LoginUser) {
             // すでにログイン済みの場合はTopページにリダイレクトさせる
