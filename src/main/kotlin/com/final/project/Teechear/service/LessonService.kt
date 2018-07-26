@@ -7,6 +7,7 @@ import com.final.project.Teechear.entity.UserApplyLessonEntity
 import com.final.project.Teechear.mapper.LessonMapper
 import com.final.project.Teechear.mapper.UserApplyLessonMapper
 import com.final.project.Teechear.form.LessonNewForm
+import com.final.project.Teechear.util.EscapeStringConverter
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
@@ -126,7 +127,8 @@ class LessonService(
     }
 
     fun search(query: String): List<Lesson> {
-        return lessonMapper.search(query).map { toDomain(it) }
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return lessonMapper.search(escapeQuery).map { toDomain(it) }
     }
 
     private fun toDomain(lessonEntity: LessonEntity?): Lesson

@@ -5,6 +5,7 @@ import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
+import com.final.project.Teechear.util.EscapeStringConverter
 import org.springframework.stereotype.Service
 import java.lang.IllegalArgumentException
 import java.util.*
@@ -32,7 +33,8 @@ class ArticleService(
     }
 
     fun search(query: String): List<Article> {
-        return articleMapper.search(query).map { toDomain(it) }
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return articleMapper.search(escapeQuery).map { toDomain(it) }
     }
 
     private fun toDomain(article: ArticleEntity?): Article {
