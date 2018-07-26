@@ -33,7 +33,7 @@ class UserService(private val userMapper: UserMapper) {
 
     fun toDomain(userEntity: UserEntity?): User {
         if (userEntity !is UserEntity) {
-            throw UserServiceException("ユーザーが見つかりませんでした")
+            throw UserNotFoundException("ユーザーが見つかりませんでした")
         }
 
         if (userEntity.id is Int && userEntity.accountName is String) {
@@ -44,7 +44,11 @@ class UserService(private val userMapper: UserMapper) {
             }
         }
 
-        throw UserServiceException("userに必要なカラムが不足しています")
+        throw UserNotFoundException("userに必要なカラムが不足しています")
+    }
+
+    fun participant(lessonIds: List<Int>): List<User> {
+        return userMapper.participant(lessonIds).map { toDomain(it) }
     }
 
     class UserServiceException(s: String) : Exception()

@@ -91,7 +91,7 @@ textarea {
     vertical-align: middle;
 }
 
-.post-button {
+.editor-footer .post-button {
     color: #fff;
     background-color: #59bb0c;
     border-color: #4ea30a;

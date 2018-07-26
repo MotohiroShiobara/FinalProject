@@ -54,7 +54,7 @@
                                 <div class="item-meta">
                                     <span>by <a th:href="@{'/user/' + ${result.ownerId}}" th:text="${result.userName}|"></a></span>
                                     <div class="item-like">
-                                        <span th:text="|開催日: ${#dates.format(result.eventDatetime, 'yyyy年MM月dd日 HH:MM')} ¥${result.price}|"></span>
+                                        <span th:text="|開催日: ${#dates.format(result.eventDatetime, 'yyyy年MM月dd日 HH:mm')} ¥${result.price}|"></span>
                                     </div>
                                 </div>
                             </div>

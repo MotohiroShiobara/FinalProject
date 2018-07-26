@@ -20,8 +20,8 @@ class LessonService(
         private val userApplyLessonMapper: UserApplyLessonMapper) {
 
     fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
-        val eventDateTime = form.eventDatetime
-        if (eventDateTime is String) {
+        if (form.eventDate is String && form.eventTime is String) {
+            val eventDateTime = form.eventDate + "T" + form.eventTime // example: 2018-07-26T19:39
             val convertedEventDateTime = dateTimeService.toDate(eventDateTime)
             val lessonEntity = LessonEntity(
                     form.title,
@@ -50,8 +50,8 @@ class LessonService(
         }
 
         // eventDatetimeは未来でなければならない
-        val eventDatetime = form.eventDatetime
-        if (eventDatetime is String) {
+        if (form.eventDate is String && form.eventTime is String) {
+            val eventDatetime = form.eventDate + "T" + form.eventTime // example: 2018-07-26T19:39
             val date = dateTimeService.toDate(eventDatetime)
             if (date.before(Date()) || date.equals(Date())) {
                 result.addError(FieldError("invalid datetime", "eventDatetime", "過去の開催日時を選択することはできません"))
@@ -68,6 +68,10 @@ class LessonService(
 
     fun close(id: Int) {
         lessonMapper.close(id)
+    }
+
+    fun selectByOwnerId(ownerId: Int): List<Lesson> {
+        return lessonMapper.selectByOwnerId(ownerId).map { toDomain(it) }
     }
 
     fun openByOwnerId(ownerId: Int): List<Lesson> {

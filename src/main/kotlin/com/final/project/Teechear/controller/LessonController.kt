@@ -37,7 +37,6 @@ class LessonController(
 
         val userId = userService.currentUser(principal).id
         val multipartFile = form.multipartFile
-        println(multipartFile)
         val imageUrl = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
             s3Service.imageUpload(multipartFile)
         } else {

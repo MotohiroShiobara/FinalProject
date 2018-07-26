@@ -5,4 +5,4 @@ id INT AUTO_INCREMENT NOT NULL PRIMARY KEY
 ,FOREIGN KEY(user_id) REFERENCES user (id)
 ,FOREIGN KEY(article_id) REFERENCES article (id)
 ,UNIQUE (user_id, article_id)
-)
+) character set utf8mb4;

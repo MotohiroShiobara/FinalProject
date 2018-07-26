@@ -107,6 +107,7 @@ a.user-info b {
     border-top: 1px solid #eaecef;
     border-bottom: 1px solid #eaecef;
     padding: 5px;
+    margin-top: 10px;
 }
 
 #lesson-section .lesson-img img {

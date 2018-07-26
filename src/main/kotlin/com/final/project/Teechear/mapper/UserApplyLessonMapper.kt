@@ -9,4 +9,6 @@ interface UserApplyLessonMapper {
     fun insert(userApplyLessonEntity: UserApplyLessonEntity)
 
     fun selectByUserIdAndLessonId(lessonId: Int, userId: Int): UserApplyLessonEntity?
+
+    fun selectByLessonIds(lessonIds: List<Int>): List<UserApplyLessonEntity>
 }

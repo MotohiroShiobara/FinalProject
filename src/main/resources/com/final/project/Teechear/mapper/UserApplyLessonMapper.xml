@@ -13,4 +13,15 @@
         FROM user_apply_lesson
         WHERE user_id=#{userId} AND lesson_id=#{lessonId} LIMIT 1
     </select>
+
+    <select id="selectByLessonIds" resultType="com.final.project.Teechear.entity.UserApplyLessonEntity">
+        select lesson_id lessonId, user_id userId, apply_datetime applyDatetime
+        from user_apply_lesson
+        inner join user on user.id=user_apply_lesson.user_id
+        where lesson_id IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY applyDatetime DESC
+    </select>
 </mapper>

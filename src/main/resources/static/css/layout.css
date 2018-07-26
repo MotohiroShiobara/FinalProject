@@ -60,6 +60,15 @@ body {
     margin-right: 16px;
 }
 
+a.navbar-brand {
+    color: white;
+}
+
+.header-contents a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 .user-icon {
     cursor: pointer;
 }

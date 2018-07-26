@@ -54,6 +54,10 @@
                         <li class="nav-item" th:if="${currentUser.id == user.id}">
                             <a href="#apply_lesson" class="nav-link" data-toggle="tab">応募済みの講座</a>
                         </li>
+
+                        <li class="nav-item" th:if="${currentUser.id == user.id}">
+                            <a href="#apply_user" class="nav-link" data-toggle="tab">応募者一覧</a>
+                        </li>
                     </ul>
 
                     <table class="table table-condensed tab-content">
@@ -134,6 +138,25 @@
                                        class="sub-data"></p>
                                     <h4 th:text="${result.title}"></h4>
                                 </a>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <!--自分の講座に応募したユーザーのリスト-->
+                        <tbody id="apply_user" class="tab-pane" th:if="${currentUser.id == user.id}">
+                        <tr class="row" th:each="result : ${applyUserList}">
+                            <td class="col-md-1">
+                                <a th:href="@{'/user/' + ${result.userId}}">
+                                    <img th:src="${result.userIconImageUrl}"
+                                         height="50"
+                                         width="100">
+                                </a>
+                            </td>
+
+                            <td class="col-md-11">
+                                <p th:text="|申込日: ${#dates.format(result.applyDatetime, 'yyyy年MM月dd日 HH:MM')} 講座名: ${result.lessonTitle}|"
+                                   class="sub-data"></p>
+                                <a th:href="@{'/user/' + ${result.userId}}"><h4 th:text="${result.userName}"></h4></a>
                             </td>
                         </tr>
                         </tbody>

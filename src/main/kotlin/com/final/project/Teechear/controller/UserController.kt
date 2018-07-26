@@ -1,6 +1,7 @@
 package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Lesson
+import com.final.project.Teechear.domain.ParticipantUser
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.*
@@ -22,7 +23,8 @@ class UserController(private val userMapper: UserMapper,
                      private val articleService: ArticleService,
                      private val s3Service: S3Service,
                      private val userService: UserService,
-                     private val lessonService: LessonService) {
+                     private val lessonService: LessonService,
+                     private val userApplyLessonService: UserApplyLessonService) {
 
     @GetMapping("/{userId}")
     fun show(
@@ -42,12 +44,20 @@ class UserController(private val userMapper: UserMapper,
         val articleList = articleService.userArticleList(userId)
         val contribution = articleList.sumBy { it.likeCount ?: 0 }
 
+        val userLesson = lessonService.selectByOwnerId(userId)
+        val applyUserList = if (userLesson.isEmpty()) {
+            emptyList()
+        } else {
+            userApplyLessonService.selectByLessonIds(userLesson.map { it.id })
+        }
+
         val openLessonList: List<Lesson> = lessonService.openByOwnerId(userId)
         val closedLessonList: List<Lesson> = lessonService.closeByOwnerId(userId)
         val applyedLessonList: List<Lesson> = lessonService.selectByApplyedUserId(userId)
 
         model.addAttribute("currentUserId", currentUser?.id)
         model.addAttribute("user", user)
+        model.addAttribute("applyUserList", applyUserList)
         model.addAttribute("articleList", articleList)
         model.addAttribute("contribution", contribution)
         model.addAttribute("openLessonList", openLessonList)
@@ -78,7 +88,6 @@ class UserController(private val userMapper: UserMapper,
 
     @PostMapping("")
     fun update(@Validated userEditForm: UserEditForm, bindingResult: BindingResult, principal: Principal): String {
-        println("こっちに先に来て欲しい")
         val multipartFile = userEditForm.iconImageUrl
         val currentUser = userService.currentUser(principal)
 
@@ -87,15 +96,7 @@ class UserController(private val userMapper: UserMapper,
         }
 
         val url = if (multipartFile is MultipartFile && !multipartFile.isEmpty) {
-            try {
-                s3Service.imageUpload(multipartFile)
-            } catch (e: FileUploadBase.FileSizeLimitExceededException) {
-                bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
-                ""
-            } catch (e: MaxUploadSizeExceededException) {
-                bindingResult.addError(FieldError("not image", "iconImageUrl", "ファイルのサイズが大きすぎます"))
-                ""
-            }
+            s3Service.imageUpload(multipartFile)
         } else {
             currentUser.iconImageUrl
         }
