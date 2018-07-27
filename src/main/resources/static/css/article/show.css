@@ -7,6 +7,10 @@ div.main {
     flex-direction: column;
 }
 
+div.title {
+    margin-bottom: 10px;
+}
+
 #likeForm {
     width: 300px;
     display: inline-block;
@@ -74,6 +78,17 @@ div.comment-list div.comment-body {
 
 div.comment-form {
     margin-top: 10px;
+}
+
+.btn-unsuccess {
+    color: #28a745;
+    background-color: #fff;
+    border-color: #28a745;
+}
+
+.btn-unsuccess:hover {
+    background-color: #28a745;
+    color: #fff;
 }
 
 i.like-button {
