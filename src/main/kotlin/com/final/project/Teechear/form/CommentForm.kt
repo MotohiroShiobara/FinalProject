@@ -5,7 +5,7 @@ import javax.validation.constraints.Size
 
 data class CommentForm (
         @get:NotBlank
-        @get:Size(max = 10000)
+        @get:Size(max = 13000)
         val text: String? = null,
         val userId: Int? = null,
         val articleId: Int? = null
