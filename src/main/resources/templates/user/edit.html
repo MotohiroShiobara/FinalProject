@@ -6,7 +6,7 @@
 <head>
     <title>ユーザー編集画面</title>
 
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/login.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/user/edit.css}">
 </head>
 <body>
 <div layout:decorator="layout">
@@ -20,13 +20,13 @@
                     <br/>
                     <img th:src="${currentUser.iconImageUrl}" style="height: 100px; width: 100px;">
                     <div class="file-input-group">
-                        <p th:if="${#fields.hasErrors('iconImageUrl')}" th:errors="*{iconImageUrl}"
-                           class="col-sm-offset-2 text-danger"></p>
                         <input type="text" id="photo_cover" class="form-control" placeholder="画像を選択してください">
                         <button type="button" class="btn btn-info" onclick="$('input[id=lefile]').click();">
                             <span class="far fa-file" aria-hidden="true"></span>
                         </button>
                     </div>
+                    <p th:if="${#fields.hasErrors('iconImageUrl')}" th:errors="*{iconImageUrl}"
+                       class="col-sm-offset-2 text-danger"></p>
                 </div>
 
                 <script>
