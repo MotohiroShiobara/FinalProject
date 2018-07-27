@@ -40,7 +40,11 @@
         </div>
         　　　　
         <script>
-            marked.setOptions({breaks : true});
+            marked.setOptions({
+                breaks : true,
+                sanitize: true
+            });
+
             new Vue({
                 el: '#editor',
                 data: {
