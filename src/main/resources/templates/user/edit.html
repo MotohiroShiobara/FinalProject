@@ -32,7 +32,7 @@
                 <script>
                     $('input[id=lefile]').change(function () {
                         console.log($(this).val())
-                        $('#photo_cover').val($(this).val());
+                        $('#photo_cover').val($(this).prop('files')[0].name);
                     });
                 </script>
 
