@@ -25,7 +25,7 @@
             <form method="post" th:action="@{/lesson/create}" th:object="${lessonNewForm}" enctype="multipart/form-data">
                 <input id="lefile" type="file" style="display:none" th:field="*{multipartFile}" accept='.jpg,.png, .jpeg, image/jpeg,image/png, image/jpg'>
                 <div class="form-group">
-                    <label for="photo_cover">プロフィール画像</label>
+                    <label for="photo_cover">画像</label>
                     <br/>
                     <div class="file-input-group">
                         <input type="text" id="photo_cover" class="form-control" placeholder="画像を選択してください">
