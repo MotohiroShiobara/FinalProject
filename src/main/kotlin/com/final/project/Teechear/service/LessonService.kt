@@ -119,13 +119,6 @@ class LessonService(
         return null
     }
 
-    /**
-     * 直近のレッスンを20件取得する
-     */
-    fun trend(): List<Lesson> {
-        return lessonMapper.trend().map { toDomain(it) }
-    }
-
     fun search(query: String): List<Lesson> {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return lessonMapper.search(escapeQuery).map { toDomain(it) }
