@@ -23,21 +23,22 @@
                          style="height: 32px; width: 32px;">
                     <a th:href="@{'/user/' + ${article.userId}}"><h4 th:text="${article.userName}"></h4></a>
                     <p class="released-at" th:text="|${#dates.format(article.releasedAt, 'yyyy年MM月dd日')}に投稿|"></p>
+
+                </div>
+
+                <div class="title">
+                    <h1 th:text="${article.title}"></h1>
                     <form id="likeForm" method="post" th:action="@{'/article/' + ${articleId} + '/like'}"
                           th:if="${!userLiked && !isMyArticle}">
-                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked" th:text="| いいね ${likeCount}|">
+                        <button type="submit" class="btn btn-unsuccess fas fa-thumbs-up is-liked" th:text="| ${likeCount}|">
                         </button>
                     </form>
 
                     <form id="deleteLikeForm" th:method="delete" th:action="@{'/article/' + ${articleId} + '/unlike'}"
                           th:if="${userLiked}">
-                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked" th:text="| いいねを取り消す ${likeCount}|">
+                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked" th:text="| ${likeCount}|">
                         </button>
                     </form>
-                </div>
-
-                <div class="title">
-                    <h1 th:text="${article.title}"></h1>
                 </div>
 
                 <div th:text="${article?.markdownText}" id="non_display_markdown_text"></div>
@@ -108,6 +109,11 @@
         </div>
 
         <script>
+            marked.setOptions({
+                breaks : true,
+                sanitize: true
+            });
+
             $(document).ready(function () {
                 var plainText = document.getElementById("non_display_markdown_text").innerText
                 new Vue({

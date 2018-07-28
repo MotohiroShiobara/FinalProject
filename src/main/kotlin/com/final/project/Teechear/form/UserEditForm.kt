@@ -12,7 +12,7 @@ data class UserEditForm(
         @get:Pattern(regexp = "^[a-zA-Z0-9\\-]+$", message = "ユーザ名は半角英数字及びハイフンのみ利用可能です")
         var accountName: String?,
 
-        @get:Size(max = 200, message = "200文字以上入力することはできません")
+        @get:Size(max = 300, message = "200文字以上入力することはできません")
         var profile: String?,
 
         @NotImage()
