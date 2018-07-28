@@ -31,15 +31,10 @@ class RegisterController(private val userMapper: UserMapper, private val userReg
     fun userRegister(
             @Validated registerForm: RegisterForm,
             bindingResult: BindingResult): String {
-        if (userRegisterService.validation(registerForm, bindingResult).hasErrors()) {
+        if (userRegisterService.create(registerForm, bindingResult).hasErrors()) {
             return "register"
         }
 
-        val user = UserEntity(
-                registerForm.accountName,
-                registerForm.email,
-                BCryptPasswordEncoder().encode(registerForm.password))
-        userMapper.insert(user)
         return "redirect:/trend"
     }
 }

@@ -13,11 +13,8 @@ import java.security.Principal
 
 @Controller
 class TopController(
-        private val articleService: ArticleService,
         private val trendService: TrendService
 ) {
-    @Autowired
-    private val userMapper: UserMapper? = null
 
     @GetMapping("/trend")
     fun trend(model: Model, principal: Principal, @RequestParam("type") type: String?): String {
@@ -28,7 +25,7 @@ class TopController(
             model.addAttribute("lessonList", lessonList)
         } else {
             model.addAttribute("type", "article")
-            val articleList = articleService.trendArticleList()
+            val articleList = trendService.articleList()
             model.addAttribute("articleList", articleList)
         }
 
