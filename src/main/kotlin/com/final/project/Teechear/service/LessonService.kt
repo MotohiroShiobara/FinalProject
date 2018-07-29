@@ -119,11 +119,6 @@ class LessonService(
         return null
     }
 
-    fun search(query: String): List<Lesson> {
-        val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return lessonMapper.search(escapeQuery).map { toDomain(it) }
-    }
-
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {
