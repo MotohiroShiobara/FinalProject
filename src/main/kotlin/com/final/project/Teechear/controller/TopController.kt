@@ -1,7 +1,10 @@
 package com.final.project.Teechear.controller
 
+import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.ArticleService
 import com.final.project.Teechear.service.LessonService
+import com.final.project.Teechear.service.TrendService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,21 +13,19 @@ import java.security.Principal
 
 @Controller
 class TopController(
-        private val articleService: ArticleService,
-        private val lessonService: LessonService
+        private val trendService: TrendService
 ) {
 
     @GetMapping("/trend")
     fun trend(model: Model, principal: Principal, @RequestParam("type") type: String?): String {
 
-
         if (type is String && type == "lesson") {
             model.addAttribute("type", "lesson")
-            val lessonList = lessonService.trend()
+            val lessonList = trendService.lessonList()
             model.addAttribute("lessonList", lessonList)
         } else {
             model.addAttribute("type", "article")
-            val articleList = articleService.trendArticleList()
+            val articleList = trendService.articleList()
             model.addAttribute("articleList", articleList)
         }
 

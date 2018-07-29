@@ -80,13 +80,13 @@ div.comment-form {
     margin-top: 10px;
 }
 
-.btn-unsuccess {
+button.btn-unsuccess {
     color: #28a745;
     background-color: #fff;
     border-color: #28a745;
 }
 
-.btn-unsuccess:hover {
+button.btn-unsuccess:hover {
     background-color: #28a745;
     color: #fff;
 }
