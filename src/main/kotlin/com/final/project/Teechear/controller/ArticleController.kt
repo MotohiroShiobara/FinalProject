@@ -50,6 +50,7 @@ class ArticleController(
         }
 
         model.addAttribute("articleForm", ArticleForm(article.title, article.markdownText))
+        model.addAttribute("articleId", articleId)
         return "article/edit"
     }
 
@@ -67,6 +68,26 @@ class ArticleController(
         val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), "\n" + articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
+    }
+
+    @PatchMapping("/update/{articleId}")
+    fun update(
+            @PathVariable("articleId") articleId: Int,
+            principal: Principal,
+            @Validated articleForm: ArticleForm,
+            result: BindingResult
+    ): String {
+        val currentUser = userService.currentUser(principal)
+        if (result.hasErrors()) {
+            return "article/edit"
+        }
+
+        if (articleService.update(articleForm, articleId, currentUser.id)) {
+            return "redirect:/article/${articleId}"
+        } else {
+            // 不正なアクセスによるupdateのため403forbiddenを返す
+            return "error/403.html"
+        }
     }
 
     @GetMapping("/{articleId}")

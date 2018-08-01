@@ -15,7 +15,7 @@
 <div layout:decorator="layout">
     <div layout:fragment="contents">
         <div class="editor">
-            <form id="newArticle" method="post" th:action="@{/article}" th:object="${articleForm}">
+            <form id="editArticle" th:method="patch" th:action="@{'/article/update/' + ${articleId}}" th:object="${articleForm}">
                 <div class="editor-title">
                     <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                        class="col-sm-offset-2 text-danger"></p>

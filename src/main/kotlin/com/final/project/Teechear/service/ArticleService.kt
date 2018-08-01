@@ -2,6 +2,7 @@ package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.entity.ArticleEntity
+import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -35,6 +36,19 @@ class ArticleService(
     fun search(query: String): List<Article> {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return articleMapper.search(escapeQuery).map { toDomain(it) }
+    }
+
+    fun update(articleForm: ArticleForm, articleId: Int, currentUserId: Int): Boolean {
+        val article = articleMapper.find(articleId)
+
+        // 現在のユーザーがカレントユーザーと異なる場合
+        if (article?.userId != currentUserId) {
+            return false
+        }
+
+        val copyArticle = article.copy(title = articleForm.title, markdownText = articleForm.markdownText)
+        articleMapper.update(copyArticle)
+        return true
     }
 
     private fun toDomain(article: ArticleEntity?): Article {
