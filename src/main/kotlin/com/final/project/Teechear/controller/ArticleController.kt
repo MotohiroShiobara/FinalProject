@@ -39,6 +39,20 @@ class ArticleController(
         return "article/new"
     }
 
+    @GetMapping("/edit/{articleId}")
+    fun edit(model: Model, principal: Principal, @PathVariable("articleId") articleId: Int): String {
+        val currentUserId = userService.currentUser(principal).id
+        val article = articleService.find(articleId)
+        model.addAttribute("jsMarkdownText", article.markdownText)
+        // もし記事の投稿者ではない場合はリダイレクトする
+        if (currentUserId != article.userId) {
+            return "redirect:/article/${articleId}"
+        }
+
+        model.addAttribute("articleForm", ArticleForm(article.title, article.markdownText))
+        return "article/edit"
+    }
+
     @PostMapping("")
     fun create(
             principal: Principal,
