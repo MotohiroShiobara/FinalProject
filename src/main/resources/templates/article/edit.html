@@ -14,7 +14,7 @@
 <body>
 <div layout:decorator="layout">
     <div layout:fragment="contents">
-        <div layout:include="/article/form :: form(articleId=${articleId}, articleForm=${articleForm}, jsMarkdownText=${jsMarkdownText})"></div>
+        <div layout:include="/article/form :: form(articleForm=${articleForm}, jsMarkdownText=${jsMarkdownText}, method='patch', url='/article/update/' + ${articleId})"></div>
     </div>
 </div>
 </body>

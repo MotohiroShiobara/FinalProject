@@ -3,9 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
-<div layout:fragment="form(articleId, articleForm, jsMarkdownText)">
+<div layout:fragment="form(articleForm, jsMarkdownText, method, url)">
     <div class="editor">
-        <form id="article-form" th:method="patch" th:action="@{'/article/update/' + ${articleId}}" th:object="${articleForm}">
+        <form id="article-form" th:method="${method}" th:action="@{${url}}" th:object="${articleForm}">
             <div class="editor-title">
                 <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                    class="col-sm-offset-2 text-danger"></p>
@@ -23,7 +23,7 @@
 
             <div class="editor-footer">
                 <div class="submit-button-section">
-                    <button type="submit" class="btn submit-button post-button">更新</button>
+                    <button type="submit" class="btn submit-button post-button">[[${url == '/article' ? 'TeecHearに投稿する' : '更新する'}]]</button>
                 </div>
             </div>
         </form>
