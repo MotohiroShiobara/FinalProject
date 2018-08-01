@@ -65,7 +65,7 @@ class ArticleController(
             return "article/new"
         }
 
-        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), "\n" + articleForm.markdownText)
+        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
     }
