@@ -23,7 +23,9 @@
                          style="height: 32px; width: 32px;">
                     <a th:href="@{'/user/' + ${article.userId}}"><h4 th:text="${article.userName}"></h4></a>
                     <p class="released-at" th:text="|${#dates.format(article.releasedAt, 'yyyy年MM月dd日')}に投稿|"></p>
-
+                    <div class="operation-section">
+                        <a th:href="@{'#'}" id="delete_article"><span class="fas fa-trash-alt"></span></a>
+                    </div>
                 </div>
 
                 <div class="title">
@@ -109,6 +111,15 @@
         </div>
 
         <script>
+            $(document).ready(function() {
+                $('#delete_article').click(function(e) {
+                    if (window.confirm('削除してもよろしいですか？')) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
             marked.setOptions({
                 breaks : true,
                 sanitize: true

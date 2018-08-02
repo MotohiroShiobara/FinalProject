@@ -54,6 +54,11 @@ div.user-info a {
     color: #6a737d;
 }
 
+div.user-info div.operation-section {
+    display: inline;
+    float: right;
+}
+
 p.released-at {
     display: inline-block;
     color: #cccccc;
