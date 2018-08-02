@@ -23,7 +23,6 @@ class NotImageValidator: ConstraintValidator<NotImage, MultipartFile> {
     }
 
     private fun isImageConetntType(contentType: String?): Boolean {
-        println(contentType)
         when (contentType) {
             "image/png", "image/jpeg", "image/jpg" -> return true
             else -> return false

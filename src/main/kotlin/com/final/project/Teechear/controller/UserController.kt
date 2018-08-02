@@ -64,7 +64,6 @@ class UserController(private val userMapper: UserMapper,
         model.addAttribute("openLessonList", openLessonList)
         model.addAttribute("closedLessonList", closedLessonList)
         model.addAttribute("applyedLessonList", applyedLessonList)
-        println(successMsg)
         model.addAttribute("successMsg", successMsg)
 
         return "user/show"
