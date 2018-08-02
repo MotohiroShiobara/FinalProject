@@ -4,6 +4,7 @@ import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
+import com.final.project.Teechear.exception.ResourceNotFound
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -17,6 +18,8 @@ import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
+import java.sql.SQLClientInfoException
+import java.sql.SQLException
 import java.util.*
 
 @Controller
@@ -82,11 +85,13 @@ class ArticleController(
             return "article/edit"
         }
 
-        if (articleService.update(articleForm, articleId, currentUser.id)) {
+        try {
+            articleService.update(articleForm, articleId, currentUser.id)
             return "redirect:/article/${articleId}"
-        } else {
-            // 不正なアクセスによるupdateのため403forbiddenを返す
-            return "error/403.html"
+        } catch (e: ResourceNotFound) {
+            return "error/404.html"
+        } catch (e: SQLException) {
+            return "article/edit"
         }
     }
 

@@ -110,4 +110,15 @@
         OFFSET
         #{offset}
     </select>
+
+    <select id="findByIdAndUserId" resultMap="articleResultMap">
+        SELECT
+        *
+        FROM
+        article
+        WHERE
+        article.user_id = #{userId}
+        AND
+        article.id = #{id}
+    </select>
 </mapper>
