@@ -12,6 +12,10 @@
 <div layout:decorator="layout">
     <div layout:fragment="contents">
         <div class="container main">
+            <div class="alert alert-success" role="alert" th:if="${successMsg != null}">
+                <strong>Success!</strong> [[${successMsg}]]
+            </div>
+
             <div class="row">
                 <div class="col-md-3 profile">
                     <img th:src="${user.iconImageUrl}"

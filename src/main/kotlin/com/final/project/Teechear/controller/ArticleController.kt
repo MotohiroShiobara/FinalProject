@@ -17,6 +17,7 @@ import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
 import java.sql.SQLException
 import java.util.*
@@ -108,7 +109,7 @@ class ArticleController(
     }
 
     @DeleteMapping("/{articleId}/delete")
-    fun delete(@PathVariable("articleId") articleId: Int, principal: Principal): String {
+    fun delete(@PathVariable("articleId") articleId: Int, principal: Principal, redirectAttributes: RedirectAttributes): String {
         val user = userService.currentUser(principal)
         try {
             articleService.delete(articleId, user.id)
@@ -118,6 +119,7 @@ class ArticleController(
             return "redirect:/article/${articleId}"
         }
 
+        redirectAttributes.addAttribute("successMsg", "記事を削除しました")
         return "redirect:/user/${user.id}"
     }
 }

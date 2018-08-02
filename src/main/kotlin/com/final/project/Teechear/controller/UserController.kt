@@ -29,6 +29,7 @@ class UserController(private val userMapper: UserMapper,
     @GetMapping("/{userId}")
     fun show(
             @PathVariable("userId") userId: Int,
+            @RequestParam("successMsg") successMsg: String?,
             model: Model,
             principal: Principal,
             @RequestParam("page") pageCount: Int?): String {
@@ -63,6 +64,8 @@ class UserController(private val userMapper: UserMapper,
         model.addAttribute("openLessonList", openLessonList)
         model.addAttribute("closedLessonList", closedLessonList)
         model.addAttribute("applyedLessonList", applyedLessonList)
+        println(successMsg)
+        model.addAttribute("successMsg", successMsg)
 
         return "user/show"
     }
