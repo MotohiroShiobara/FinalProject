@@ -2,6 +2,7 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.Lesson
+import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFound
@@ -86,7 +87,8 @@ class ArticleController(
         }
 
         try {
-            articleService.update(articleForm, articleId, currentUser.id)
+            val updateArticle = UpdateArticle(id = articleId, title = articleForm.title, markdownText = articleForm.markdownText, userId = currentUser.id)
+            articleService.update(updateArticle)
             return "redirect:/article/${articleId}"
         } catch (e: ResourceNotFound) {
             return "error/404.html"

@@ -1,6 +1,7 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Article
+import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFound
 import com.final.project.Teechear.form.ArticleForm
@@ -41,13 +42,13 @@ class ArticleService(
         return articleMapper.search(escapeQuery).map { toDomain(it) }
     }
 
-    fun update(articleForm: ArticleForm, articleId: Int, currentUserId: Int) {
-        val article = articleMapper.findByIdAndUserId(articleId, currentUserId)
+    fun update(updateArticle: UpdateArticle) {
+        val article = articleMapper.findByIdAndUserId(updateArticle.id, updateArticle.userId)
         if (article !is ArticleEntity) {
             throw ResourceNotFound("article_idが見つかりません")
         }
 
-        val copyArticle = article.copy(title = articleForm.title, markdownText = articleForm.markdownText)
+        val copyArticle = article.copy(title = updateArticle.title, markdownText = updateArticle.markdownText)
         val result = articleMapper.update(copyArticle)
         if (result != 1) {
             throw SQLException()
