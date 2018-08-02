@@ -104,4 +104,9 @@ class ArticleController(
         likeService.delete(articleId, user)
         return "redirect:/article/${articleId}"
     }
+
+    @DeleteMapping("/{articleId}/delete")
+    fun delete(@PathVariable("articleId") articleId: Int): String {
+        return "redirect:article/${articleId}"
+    }
 }
