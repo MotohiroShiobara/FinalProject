@@ -39,7 +39,7 @@ class ArticleController(
         return "article/new"
     }
 
-    @GetMapping("/edit/{articleId}")
+    @GetMapping("/{articleId}/edit")
     fun edit(model: Model, principal: Principal, @PathVariable("articleId") articleId: Int): String {
         val currentUserId = userService.currentUser(principal).id
         val article = articleService.find(articleId)

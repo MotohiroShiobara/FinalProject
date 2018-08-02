@@ -38,17 +38,21 @@ class ArticleService(
         return articleMapper.search(escapeQuery).map { toDomain(it) }
     }
 
-    fun update(articleForm: ArticleForm, articleId: Int, currentUserId: Int): Boolean {
+    fun update(articleForm: ArticleForm, articleId: Int, currentUserId: Int) {
         val article = articleMapper.find(articleId)
 
         // 現在のユーザーがカレントユーザーと異なる場合
         if (article?.userId != currentUserId) {
-            return false
+            return
+        }
+
+        if (article !is ArticleEntity) {
+            // Resourceが見つからない場合のNotFound
+            return
         }
 
         val copyArticle = article.copy(title = articleForm.title, markdownText = articleForm.markdownText)
         articleMapper.update(copyArticle)
-        return true
     }
 
     private fun toDomain(article: ArticleEntity?): Article {
