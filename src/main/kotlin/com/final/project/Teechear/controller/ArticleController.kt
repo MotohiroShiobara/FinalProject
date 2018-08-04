@@ -50,7 +50,7 @@ class ArticleController(
         model.addAttribute("jsMarkdownText", article.markdownText)
         // もし記事の投稿者ではない場合はリダイレクトする
         if (currentUserId != article.userId) {
-            return "redirect:/article/${articleId}"
+            return "error/404.html"
         }
 
         model.addAttribute("articleForm", ArticleForm(article.title, article.markdownText))
