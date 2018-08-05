@@ -1,7 +1,7 @@
 package com.final.project.Teechear.helper
 
 enum class AlertMessageType {
-    ALERT(),
+    DANGER(),
     INFO(),
     SUCCESS(),
     WARNING()

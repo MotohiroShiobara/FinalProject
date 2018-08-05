@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="alert alert-success" role="alert" th:if="${alertMessage != null}">
+    <div th:class="|alert ${alertClassName}|" role="alert" th:if="${alertMessage != null}">
         [[${alertMessage.message}]]
     </div>
 

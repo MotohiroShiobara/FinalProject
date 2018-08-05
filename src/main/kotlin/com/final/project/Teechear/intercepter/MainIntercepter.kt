@@ -2,6 +2,8 @@ package com.final.project.Teechear.intercepter
 
 import com.final.project.Teechear.auth.model.LoginUser
 import com.final.project.Teechear.entity.UserEntity
+import com.final.project.Teechear.helper.AlertMessage
+import com.final.project.Teechear.helper.AlertMessageType
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,6 +57,18 @@ class MainIntercepter : HandlerInterceptor {
                     val userDomain = userService?.toDomain(userEntity)
                     model?.modelMap?.addAttribute("currentUser", userDomain)
                 }
+            }
+
+            val alertMessage = model?.modelMap?.get("alertMessage")
+            if (alertMessage is AlertMessage) {
+                val alertClassName = when (alertMessage.type) {
+                    AlertMessageType.DANGER -> "alert-danger"
+                    AlertMessageType.SUCCESS -> "alert-success"
+                    AlertMessageType.WARNING -> "alert-warning"
+                    AlertMessageType.INFO -> "alert-info"
+                }
+
+                model.modelMap.addAttribute("alertClassName", alertClassName)
             }
         }
     }

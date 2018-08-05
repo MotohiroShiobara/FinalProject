@@ -13,6 +13,7 @@ import com.final.project.Teechear.form.CommentForm
 import com.final.project.Teechear.helper.AlertMessage
 import com.final.project.Teechear.helper.AlertMessageType
 import com.final.project.Teechear.service.*
+import org.apache.ibatis.jdbc.SQL
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -118,7 +119,7 @@ class ArticleController(
         } catch (e: ResourceNotFound) {
             return "/error/404.html"
         } catch (e: SQLException) {
-            redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事の削除に失敗しました", type = AlertMessageType.WARNING))
+            redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事の削除に失敗しました", type = AlertMessageType.DANGER))
             return "redirect:/article/${articleId}"
         }
 
