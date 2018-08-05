@@ -40,12 +40,7 @@ class ArticleService(
     }
 
     fun delete(id: Int, currentUserId: Int) {
-        val article = articleMapper.findByIdAndUserId(id, currentUserId)
-
-        if (article !is ArticleEntity) {
-            throw ResourceNotFoundException("articleが見つかりません")
-        }
-
+        val article = articleMapper.findByIdAndUserId(id, currentUserId) ?: throw ResourceNotFoundException("articleが見つかりません")
         val result =  if (article.id is Int) {
             articleMapper.delete(article.id)
         } else {
