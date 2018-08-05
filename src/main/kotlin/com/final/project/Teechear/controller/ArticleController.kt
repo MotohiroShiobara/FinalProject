@@ -84,6 +84,7 @@ class ArticleController(
             model: Model
     ): String {
         val currentUser = userService.currentUser(principal)
+        model.addAttribute("jsMarkdownText", articleForm.markdownText)
         if (result.hasErrors()) {
             return "article/edit"
         }
