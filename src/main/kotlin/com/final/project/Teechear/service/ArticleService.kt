@@ -2,7 +2,7 @@ package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.entity.ArticleEntity
-import com.final.project.Teechear.exception.ResourceNotFound
+import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -43,7 +43,7 @@ class ArticleService(
         val article = articleMapper.findByIdAndUserId(id, currentUserId)
 
         if (article !is ArticleEntity) {
-            throw ResourceNotFound("articleが見つかりません")
+            throw ResourceNotFoundException("articleが見つかりません")
         }
 
         val result =  if (article.id is Int) {

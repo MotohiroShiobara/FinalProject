@@ -4,7 +4,7 @@ import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
-import com.final.project.Teechear.exception.ResourceNotFound
+import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -116,7 +116,7 @@ class ArticleController(
         val user = userService.currentUser(principal)
         try {
             articleService.delete(articleId, user.id)
-        } catch (e: ResourceNotFound) {
+        } catch (e: ResourceNotFoundException) {
             return "/error/404.html"
         } catch (e: SQLException) {
             redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事の削除に失敗しました", type = AlertMessageType.DANGER))
