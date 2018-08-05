@@ -4,14 +4,11 @@ import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFound
-import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.util.EscapeStringConverter
 import org.springframework.stereotype.Service
-import java.lang.IllegalArgumentException
-import java.sql.SQLClientInfoException
 import java.sql.SQLException
 import java.util.*
 
