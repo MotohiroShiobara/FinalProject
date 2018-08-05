@@ -11,17 +11,22 @@ import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.form.CommentForm
+import com.final.project.Teechear.helper.AlertMessage
+import com.final.project.Teechear.helper.AlertMessageType
 import com.final.project.Teechear.service.*
+import javafx.scene.control.Alert
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
 import java.sql.SQLClientInfoException
 import java.sql.SQLException
 import java.util.*
+import kotlin.collections.HashMap
 
 @Controller
 @RequestMapping("/article")
@@ -79,7 +84,9 @@ class ArticleController(
             @PathVariable("articleId") articleId: Int,
             principal: Principal,
             @Validated articleForm: ArticleForm,
-            result: BindingResult
+            result: BindingResult,
+            redirectAttributes: RedirectAttributes,
+            model: Model
     ): String {
         val currentUser = userService.currentUser(principal)
         if (result.hasErrors()) {
@@ -93,6 +100,7 @@ class ArticleController(
         } catch (e: ResourceNotFound) {
             return "error/404.html"
         } catch (e: SQLException) {
+            model.addAttribute("jsAlertMessage", "更新に失敗しました。時間をおいて再度更新をお願いします。")
             return "article/edit"
         }
     }
