@@ -114,10 +114,12 @@ class ArticleController(
     fun delete(@PathVariable("articleId") articleId: Int, principal: Principal, redirectAttributes: RedirectAttributes): String {
         val user = userService.currentUser(principal)
         try {
+            throw SQLException()
             articleService.delete(articleId, user.id)
         } catch (e: ResourceNotFound) {
             return "/error/404.html"
         } catch (e: SQLException) {
+            redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事の削除に失敗しました", type = AlertMessageType.WARNING))
             return "redirect:/article/${articleId}"
         }
 
