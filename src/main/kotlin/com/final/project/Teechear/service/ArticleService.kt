@@ -8,7 +8,6 @@ import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.util.EscapeStringConverter
 import org.springframework.stereotype.Service
-import java.lang.IllegalArgumentException
 import java.sql.SQLException
 import java.util.*
 
@@ -41,12 +40,7 @@ class ArticleService(
 
     fun delete(id: Int, currentUserId: Int) {
         val article = articleMapper.findByIdAndUserId(id, currentUserId) ?: throw ResourceNotFoundException("articleが見つかりません")
-        val result =  if (article.id is Int) {
-            articleMapper.delete(article.id)
-        } else {
-            0
-        }
-
+        val result = articleMapper.delete(article.id!!)
         if (result != 1) {
             throw SQLException()
         }
