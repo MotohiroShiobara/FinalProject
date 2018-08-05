@@ -114,7 +114,6 @@ class ArticleController(
     fun delete(@PathVariable("articleId") articleId: Int, principal: Principal, redirectAttributes: RedirectAttributes): String {
         val user = userService.currentUser(principal)
         try {
-            throw SQLException()
             articleService.delete(articleId, user.id)
         } catch (e: ResourceNotFound) {
             return "/error/404.html"
