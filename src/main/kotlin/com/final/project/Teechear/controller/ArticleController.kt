@@ -108,7 +108,7 @@ class ArticleController(
         return "redirect:/article/${articleId}"
     }
 
-    @DeleteMapping("/{articleId}/delete")
+    @DeleteMapping("/{articleId}")
     fun delete(@PathVariable("articleId") articleId: Int, principal: Principal, redirectAttributes: RedirectAttributes): String {
         val user = userService.currentUser(principal)
         try {
