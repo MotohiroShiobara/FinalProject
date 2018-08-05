@@ -10,6 +10,8 @@ import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.form.CommentForm
+import com.final.project.Teechear.helper.AlertMessage
+import com.final.project.Teechear.helper.AlertMessageType
 import com.final.project.Teechear.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -119,7 +121,7 @@ class ArticleController(
             return "redirect:/article/${articleId}"
         }
 
-        redirectAttributes.addAttribute("successMsg", "記事を削除しました")
+        redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事を削除しました", type = AlertMessageType.SUCCESS))
         return "redirect:/user/${user.id}"
     }
 }

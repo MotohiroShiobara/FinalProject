@@ -12,8 +12,8 @@
 <div layout:decorator="layout">
     <div layout:fragment="contents">
         <div class="container main">
-            <div class="alert alert-success" role="alert" th:if="${successMsg != null}">
-                <strong>Success!</strong> [[${successMsg}]]
+            <div class="alert alert-success" role="alert" th:if="${alertMessage != null}">
+                [[${alertMessage.message}]]
             </div>
 
             <div class="row">
