@@ -43,11 +43,7 @@ class ArticleService(
     }
 
     fun update(updateArticle: UpdateArticle) {
-        val article = articleMapper.findByIdAndUserId(updateArticle.id, updateArticle.userId)
-        if (article !is ArticleEntity) {
-            throw ResourceNotFound("article_idが見つかりません")
-        }
-
+        val article = articleMapper.findByIdAndUserId(updateArticle.id, updateArticle.userId) ?: throw ResourceNotFound("article_idが見つかりません")
         val copyArticle = article.copy(title = updateArticle.title, markdownText = updateArticle.markdownText)
         val result = articleMapper.update(copyArticle)
         if (result != 1) {
