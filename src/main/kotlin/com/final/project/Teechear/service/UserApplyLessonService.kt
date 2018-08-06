@@ -1,11 +1,9 @@
 package com.final.project.Teechear.service
 
-import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.ParticipantUser
 import com.final.project.Teechear.entity.UserApplyLessonEntity
 import com.final.project.Teechear.mapper.UserApplyLessonMapper
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UserApplyLessonService(private val userApplyLessonMapper: UserApplyLessonMapper, private val lessonService: LessonService, private val userService: UserService) {

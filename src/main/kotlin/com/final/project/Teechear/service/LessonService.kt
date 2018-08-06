@@ -5,10 +5,9 @@ import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.LessonEntity
 import com.final.project.Teechear.entity.UserApplyLessonEntity
 import com.final.project.Teechear.exception.ResourceNotFoundException
+import com.final.project.Teechear.form.LessonNewForm
 import com.final.project.Teechear.mapper.LessonMapper
 import com.final.project.Teechear.mapper.UserApplyLessonMapper
-import com.final.project.Teechear.form.LessonNewForm
-import com.final.project.Teechear.util.EscapeStringConverter
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
