@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>記事を投稿する</title>
+    <title>記事を編集する</title>
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/form.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/markdown.css}">
     <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
@@ -14,7 +14,7 @@
 <body>
 <div layout:decorator="layout">
     <div layout:fragment="contents">
-        <div layout:include="/article/form :: form(articleForm=${articleForm}, jsMarkdownText='', method='post', url='/article')"></div>
+        <div layout:include="/article/form :: form(articleForm=${articleForm}, jsMarkdownText=${jsMarkdownText}, method='patch', url='/article/update/' + ${articleId})"></div>
     </div>
 </div>
 </body>

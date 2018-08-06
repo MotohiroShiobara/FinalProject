@@ -2,13 +2,15 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.Lesson
+import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
+import com.final.project.Teechear.exception.ResourceNotFound
+import com.final.project.Teechear.form.ArticleForm
+import com.final.project.Teechear.form.CommentForm
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
-import com.final.project.Teechear.form.ArticleForm
-import com.final.project.Teechear.form.CommentForm
 import com.final.project.Teechear.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -16,7 +18,9 @@ import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
+import java.sql.SQLException
 import java.util.*
 
 @Controller
@@ -39,6 +43,21 @@ class ArticleController(
         return "article/new"
     }
 
+    @GetMapping("/{articleId}/edit")
+    fun edit(model: Model, principal: Principal, @PathVariable("articleId") articleId: Int): String {
+        val currentUserId = userService.currentUser(principal).id
+        val article = articleService.find(articleId)
+        model.addAttribute("jsMarkdownText", article.markdownText)
+        // もし記事の投稿者ではない場合はリダイレクトする
+        if (currentUserId != article.userId) {
+            return "error/404.html"
+        }
+
+        model.addAttribute("articleForm", ArticleForm(article.title, article.markdownText))
+        model.addAttribute("articleId", articleId)
+        return "article/edit"
+    }
+
     @PostMapping("")
     fun create(
             principal: Principal,
@@ -50,9 +69,36 @@ class ArticleController(
             return "article/new"
         }
 
-        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), "\n" + articleForm.markdownText)
+        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
         articleMapper.insert(article)
         return "redirect:/article/${article.id}"
+    }
+
+    @PatchMapping("/update/{articleId}")
+    fun update(
+            @PathVariable("articleId") articleId: Int,
+            principal: Principal,
+            @Validated articleForm: ArticleForm,
+            result: BindingResult,
+            redirectAttributes: RedirectAttributes,
+            model: Model
+    ): String {
+        val currentUser = userService.currentUser(principal)
+        model.addAttribute("jsMarkdownText", articleForm.markdownText)
+        if (result.hasErrors()) {
+            return "article/edit"
+        }
+
+        try {
+            val updateArticle = UpdateArticle(id = articleId, title = articleForm.title, markdownText = articleForm.markdownText, userId = currentUser.id)
+            articleService.update(updateArticle)
+            return "redirect:/article/${articleId}"
+        } catch (e: ResourceNotFound) {
+            return "error/404.html"
+        } catch (e: SQLException) {
+            model.addAttribute("jsAlertMessage", "更新に失敗しました。時間をおいて再度更新をお願いします。")
+            return "article/edit"
+        }
     }
 
     @GetMapping("/{articleId}")

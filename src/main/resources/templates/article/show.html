@@ -23,7 +23,7 @@
                          style="height: 32px; width: 32px;">
                     <a th:href="@{'/user/' + ${article.userId}}"><h4 th:text="${article.userName}"></h4></a>
                     <p class="released-at" th:text="|${#dates.format(article.releasedAt, 'yyyy年MM月dd日')}に投稿|"></p>
-
+                    <a th:if="${currentUser.id == article.userId}" class="edit-link" th:href="@{'/article/' + ${article.id} + '/edit'}" ><span class="fas fa-pencil-alt"></span><span>編集する</span></a>
                 </div>
 
                 <div class="title">
