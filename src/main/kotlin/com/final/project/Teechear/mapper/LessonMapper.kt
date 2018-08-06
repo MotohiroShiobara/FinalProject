@@ -25,4 +25,6 @@ interface LessonMapper {
     fun trend(): List<LessonEntity>
 
     fun search(query: String): List<LessonEntity>
+
+    fun delete(id: Int, ownerId: Int): Int
 }
