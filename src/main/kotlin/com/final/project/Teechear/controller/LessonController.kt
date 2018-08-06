@@ -2,6 +2,8 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.form.LessonNewForm
+import com.final.project.Teechear.helper.AlertMessage
+import com.final.project.Teechear.helper.AlertMessageType
 import com.final.project.Teechear.service.LessonService
 import com.final.project.Teechear.service.S3Service
 import com.final.project.Teechear.service.UserApplyLessonService
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
 
 @Controller
@@ -51,9 +54,9 @@ class LessonController(
     fun show(@PathVariable("id") id: Int, model: Model, principal: Principal): String {
         val lesson = try {
             lessonService.select(id)
-        } catch (e : LessonService.LessonServiceException) {
+        } catch (e: LessonService.LessonServiceException) {
             return "error/404.html"
-        } catch (e : LessonService.LessonNotFoundException) {
+        } catch (e: LessonService.LessonNotFoundException) {
             return "error/404.html"
         }
 
@@ -79,9 +82,9 @@ class LessonController(
 
         val lesson = try {
             lessonService.select(id)
-        } catch (e : LessonService.LessonServiceException) {
+        } catch (e: LessonService.LessonServiceException) {
             return "error/404.html"
-        } catch (e : LessonService.LessonNotFoundException) {
+        } catch (e: LessonService.LessonNotFoundException) {
             return "error/404.html"
         }
 
@@ -104,7 +107,10 @@ class LessonController(
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable("id") id: Int, principal: Principal): String {
+    fun delete(
+            @PathVariable("id") id: Int,
+            principal: Principal,
+            redirectAttributes: RedirectAttributes): String {
         // lessonに申し込みのユーザーが一人でもいる場合は404.htmlを返す
         if (userApplyLessonService.hasParticipant(id)) {
             return "error/404.html"
@@ -117,6 +123,9 @@ class LessonController(
             return "error/404.html"
         }
 
+        redirectAttributes.addFlashAttribute(
+                "alertMessage",
+                AlertMessage(message = "講座を削除しました", type = AlertMessageType.SUCCESS))
         return "redirect:/user/$currentUserId"
     }
 }
