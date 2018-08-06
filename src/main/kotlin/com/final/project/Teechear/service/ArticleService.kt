@@ -39,10 +39,10 @@ class ArticleService(
         return articleMapper.search(escapeQuery).map { toDomain(it) }
     }
 
-    fun update(updateArticle: UpdateArticle) {
-        val article = articleMapper.findByIdAndUserId(updateArticle.id, updateArticle.userId) ?: throw ResourceNotFound("article_idが見つかりません")
-        val copyArticle = article.copy(title = updateArticle.title, markdownText = updateArticle.markdownText)
-        val result = articleMapper.update(copyArticle)
+    fun update(argUpdateArticle: UpdateArticle) {
+        val article = articleMapper.findByIdAndUserId(argUpdateArticle.id, argUpdateArticle.userId) ?: throw ResourceNotFound("article_idが見つかりません")
+        val updateArticle = article.copy(title = argUpdateArticle.title, markdownText = argUpdateArticle.markdownText)
+        val result = articleMapper.update(updateArticle)
         if (result != 1) {
             throw SQLException()
         }
