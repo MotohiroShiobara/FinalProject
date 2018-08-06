@@ -27,7 +27,7 @@
         <div class="header-contents">
             <div class="left-header">
                 <a class="navbar-brand" href="/trend">
-                    <img th:src="@{/image/logo.svg}" />
+                    <img th:src="@{/image/logo.svg}"/>
                     TeecHear
                 </a>
                 <form class="navbar-form" action="/search">
@@ -37,8 +37,10 @@
                 </form>
             </div>
             <div class="right-header">
-                <a href="/article/new" class="post-button"><span class="fas fa-pencil-alt"></span><span>記事を投稿する</span></a>
-                <a href="/lesson/new" class="post-button"><span class="fas fa-graduation-cap"></span>講座を開設する<span></span></a>
+                <a href="/article/new" class="post-button"><span
+                        class="fas fa-pencil-alt"></span><span>記事を投稿する</span></a>
+                <a href="/lesson/new" class="post-button"><span
+                        class="fas fa-graduation-cap"></span>講座を開設する<span></span></a>
 
                 <div class="dropdown">
                     <img class="user-icon dropdown-toggle" th:src="${currentUser.iconImageUrl}"
@@ -53,8 +55,10 @@
         </div>
     </div>
 
-    <div th:class="|alert ${alertClassName}|" role="alert" th:if="${alertMessage != null}">
-        [[${alertMessage.message}]]
+    <div class="alert-message-section" th:object="${alertMessage}">
+        <div th:class="|alert *{type.className}|" role="alert" th:if="${alertMessage != null}">
+            [[${alertMessage.message}]]
+        </div>
     </div>
 
     <div class="contents" layout:fragment="contents"></div>

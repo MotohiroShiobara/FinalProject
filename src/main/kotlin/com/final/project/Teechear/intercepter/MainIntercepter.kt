@@ -58,18 +58,6 @@ class MainIntercepter : HandlerInterceptor {
                     model?.modelMap?.addAttribute("currentUser", userDomain)
                 }
             }
-
-            val alertMessage = model?.modelMap?.get("alertMessage")
-            if (alertMessage is AlertMessage) {
-                val alertClassName = when (alertMessage.type) {
-                    AlertMessageType.DANGER -> "alert-danger"
-                    AlertMessageType.SUCCESS -> "alert-success"
-                    AlertMessageType.WARNING -> "alert-warning"
-                    AlertMessageType.INFO -> "alert-info"
-                }
-
-                model.modelMap.addAttribute("alertClassName", alertClassName)
-            }
         }
     }
 

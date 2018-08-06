@@ -101,14 +101,14 @@ class ArticleController(
     fun like(@PathVariable("articleId") articleId: Int, principal: Principal): String {
         likeService.create(articleId, principal)
 
-        return "redirect:/article/${articleId}"
+        return "redirect:/article/$articleId"
     }
 
     @DeleteMapping("/{articleId}/unlike")
     fun unlike(@PathVariable("articleId") articleId: Int, principal: Principal): String {
         val user = userService.currentUser(principal)
         likeService.delete(articleId, user)
-        return "redirect:/article/${articleId}"
+        return "redirect:/article/$articleId"
     }
 
     @DeleteMapping("/{articleId}")
@@ -119,11 +119,23 @@ class ArticleController(
         } catch (e: ResourceNotFoundException) {
             return "/error/404.html"
         } catch (e: SQLException) {
-            redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事の削除に失敗しました", type = AlertMessageType.DANGER))
-            return "redirect:/article/${articleId}"
+            redirectAttributes.addFlashAttribute(
+                    "alertMessage",
+                    AlertMessage(
+                            message = "記事の削除に失敗しました。時間を置いて再度実行をお願いします。",
+                            type = AlertMessageType.DANGER
+                    )
+            )
+            return "redirect:/article/$articleId"
         }
 
-        redirectAttributes.addFlashAttribute("alertMessage", AlertMessage(message = "記事を削除しました", type = AlertMessageType.SUCCESS))
+        redirectAttributes.addFlashAttribute(
+                "alertMessage",
+                AlertMessage(
+                        message = "記事を削除しました。",
+                        type = AlertMessageType.SUCCESS
+                )
+        )
         return "redirect:/user/${user.id}"
     }
 }
