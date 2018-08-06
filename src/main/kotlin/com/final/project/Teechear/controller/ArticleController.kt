@@ -5,7 +5,6 @@ import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.entity.UserLikeArticleEntity
-import com.final.project.Teechear.exception.ResourceNotFound
 import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.form.CommentForm
@@ -96,7 +95,7 @@ class ArticleController(
             val updateArticle = UpdateArticle(id = articleId, title = articleForm.title, markdownText = articleForm.markdownText, userId = currentUser.id)
             articleService.update(updateArticle)
             return "redirect:/article/${articleId}"
-        } catch (e: ResourceNotFound) {
+        } catch (e: ResourceNotFoundException) {
             return "error/404.html"
         } catch (e: SQLException) {
             model.addAttribute("jsAlertMessage", "更新に失敗しました。時間をおいて再度更新をお願いします。")
