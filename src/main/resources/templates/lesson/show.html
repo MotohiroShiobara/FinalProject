@@ -34,7 +34,7 @@
                                 </button>
                             </form>
 
-                            <a th:if="${!canApply}" class="btn btn-primary btn-lg disabled">募集終了</a>
+                            <button type="submit" th:if="${!canApply}" class="btn btn-primary submit-button disabled">募集終了</button>
 
                             <!--削除ボタン-->
                             <form id="delete_lesson" th:method="delete" th:action="@{'/lesson/' + ${lesson.id}}"
