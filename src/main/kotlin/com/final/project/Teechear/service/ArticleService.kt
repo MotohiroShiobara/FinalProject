@@ -41,7 +41,8 @@ class ArticleService(
     }
 
     fun update(argUpdateArticle: UpdateArticle) {
-        val article = articleMapper.findByIdAndUserId(argUpdateArticle.id, argUpdateArticle.userId) ?: throw ResourceNotFound("article_idが見つかりません")
+        val article = articleMapper.findByIdAndUserId(argUpdateArticle.id, argUpdateArticle.userId)
+                ?: throw ResourceNotFound("article_idが見つかりません")
         val updateArticle = article.copy(title = argUpdateArticle.title, markdownText = argUpdateArticle.markdownText)
         val result = articleMapper.update(updateArticle)
         if (result != 1) {
@@ -50,9 +51,12 @@ class ArticleService(
     }
 
     fun delete(id: Int, currentUserId: Int) {
-        val article = articleMapper.findByIdAndUserId(id, currentUserId) ?: throw ResourceNotFoundException("articleが見つかりません")
-        val result = articleMapper.delete(article.id!!)
-        if (result != 1) {
+        val article = articleMapper.findByIdAndUserId(id, currentUserId)
+                ?: throw ResourceNotFoundException("articleが見つかりません")
+        val result = articleMapper.delete(article.id!!, currentUserId)
+        if (result == 0) {
+            throw ResourceNotFound("articleが見つかりません")
+        } else if (result != 1) {
             throw SQLException()
         }
     }

@@ -123,6 +123,6 @@
     </select>
 
     <delete id="delete">
-        DELETE FROM article WHERE id=#{id}
+        DELETE FROM article WHERE id=#{id} AND user_id=#{userId}
     </delete>
 </mapper>

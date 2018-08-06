@@ -27,7 +27,7 @@ interface ArticleMapper {
 
     fun findByIdAndUserId(id: Int, userId: Int): ArticleEntity?
 
-    fun delete(id: Int): Int
+    fun delete(id: Int, userId: Int): Int
 
     fun update(article: ArticleEntity): Int
 }
