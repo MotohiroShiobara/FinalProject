@@ -64,5 +64,16 @@
     <div class="contents" layout:fragment="contents"></div>
     <div class="footer" layout:fragment="footer"></div>
 </div>
+<script type="text/javascript" th:inline="javascript">
+    //TODO スタイルの影響でBootStrapのAlertを使った表示ができない
+    $(document).ready(function() {
+        /*<![CDATA[*/
+        var alertMessage = /*[[ ${jsAlertMessage} ]]*/ "";
+        /*]]>*/
+        if (alertMessage) {
+            alert(alertMessage)
+        }
+    });
+</script>
 </body>
 </html>

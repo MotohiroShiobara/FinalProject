@@ -172,3 +172,11 @@ a.user-info b {
     border: none;
     color: #6a737d;
 }
+
+a.edit-link {
+    float: right;
+}
+
+a.edit-link span {
+    color: #333333;
+}

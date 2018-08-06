@@ -19,6 +19,13 @@
         INSERT INTO article (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
     </insert>
 
+    <update id="update" useGeneratedKeys="true" keyProperty="id">
+        UPDATE article SET
+        title=#{title}, markdown_text=#{markdownText}
+        WHERE
+        id=#{id}
+    </update>
+
     <select id="find" resultMap="articleResultMap">
         SELECT
         article.*, user.account_name user_account_name
