@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
+import java.sql.SQLException
 
 @Controller
 @RequestMapping("/lesson")
@@ -121,6 +122,15 @@ class LessonController(
             lessonService.delete(id, currentUserId)
         } catch (e: ResourceNotFoundException) {
             return "error/404.html"
+        } catch (e: SQLException) {
+            redirectAttributes.addFlashAttribute(
+                    "alertMessage",
+                    AlertMessage(
+                            message = "講座の削除に失敗しました。時間を置いて再度実行をお願いします。",
+                            type = AlertMessageType.DANGER
+                    )
+            )
+            return "redirect:/lesson/$id"
         }
 
         redirectAttributes.addFlashAttribute(

@@ -12,6 +12,7 @@ import com.final.project.Teechear.util.EscapeStringConverter
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
+import java.sql.SQLException
 import java.util.*
 
 @Service
@@ -120,11 +121,13 @@ class LessonService(
         return null
     }
 
-    @Throws(ResourceNotFoundException::class)
+    @Throws(ResourceNotFoundException::class, SQLException::class)
     fun delete(id: Int, ownerId: Int) {
         val result = lessonMapper.delete(id, ownerId)
         if (result == 0) {
             throw ResourceNotFoundException("lessonが見つかりません")
+        } else if (result != 1) {
+            throw SQLException()
         }
     }
 
