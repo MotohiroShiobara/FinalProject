@@ -119,6 +119,10 @@ class LessonService(
         return null
     }
 
+    fun delete(id: Int, ownerId: Int) {
+        val result = lessonMapper.delete(id, ownerId)
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {
