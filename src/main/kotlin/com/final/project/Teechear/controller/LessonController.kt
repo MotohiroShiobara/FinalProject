@@ -4,6 +4,7 @@ import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.form.LessonNewForm
 import com.final.project.Teechear.service.LessonService
 import com.final.project.Teechear.service.S3Service
+import com.final.project.Teechear.service.UserApplyLessonService
 import com.final.project.Teechear.service.UserService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -18,7 +19,8 @@ import java.security.Principal
 class LessonController(
         private val lessonService: LessonService,
         private val userService: UserService,
-        private val s3Service: S3Service) {
+        private val s3Service: S3Service,
+        private val userApplyLessonService: UserApplyLessonService) {
 
     @GetMapping("new")
     fun new(model: Model): String {
@@ -61,6 +63,7 @@ class LessonController(
         val isApply = if (canApply) false else lessonService.isApply(lesson, currentUserId)
         model.addAttribute("isApply", isApply)
         model.addAttribute("lesson", lesson)
+        model.addAttribute("isDeletable", lessonService.isDeletable(lesson, currentUserId))
         return "lesson/show"
     }
 
@@ -102,6 +105,11 @@ class LessonController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: Int, principal: Principal): String {
+        // lessonに申し込みのユーザーが一人でもいる場合は404.htmlを返す
+        if (userApplyLessonService.hasParticipant(id)) {
+            return "error/404.html"
+        }
+
         val currentUserId = userService.currentUser(principal).id
         try {
             lessonService.delete(id, currentUserId)

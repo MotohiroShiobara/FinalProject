@@ -38,7 +38,7 @@
 
                             <!--削除ボタン-->
                             <form id="delete_lesson" th:method="delete" th:action="@{'/lesson/' + ${lesson.id}}"
-                                  onsubmit="return submitConfirm('本当に削除してもよろしいですか?');">
+                                  onsubmit="return submitConfirm('本当に削除してもよろしいですか?');" th:if="${isDeletable}">
                                 <button type="submit" class="btn btn-danger submit-button" id="delete-button">削除
                                 </button>
                             </form>

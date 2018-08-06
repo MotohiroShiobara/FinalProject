@@ -128,6 +128,10 @@ class LessonService(
         }
     }
 
+    fun isDeletable(lesson: Lesson, currentUserId: Int): Boolean {
+        return lesson.ownerId == currentUserId && userApplyLessonMapper.selectByLessonIds(listOf(lesson.id)).count() == 0
+    }
+
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
     {
         if (lessonEntity is LessonEntity) {

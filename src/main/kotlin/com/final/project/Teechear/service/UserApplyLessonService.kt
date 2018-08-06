@@ -14,6 +14,10 @@ class UserApplyLessonService(private val userApplyLessonMapper: UserApplyLessonM
         return userApplyLessonMapper.selectByLessonIds(lessonIds).map { toDomain(it) }
     }
 
+    fun hasParticipant(lessonId: Int): Boolean {
+        return userApplyLessonMapper.selectByLessonIds(listOf(lessonId)).count() > 0
+    }
+
     private fun toDomain(userApplyLessonEntitiy: UserApplyLessonEntity?): ParticipantUser {
         if (userApplyLessonEntitiy is UserApplyLessonEntity) {
             val lesson = lessonService.select(userApplyLessonEntitiy.lessonId!!)
