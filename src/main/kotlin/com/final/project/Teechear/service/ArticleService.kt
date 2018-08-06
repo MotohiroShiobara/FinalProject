@@ -3,7 +3,7 @@ package com.final.project.Teechear.service
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
-import com.final.project.Teechear.exception.ResourceNotFound
+import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -40,10 +40,22 @@ class ArticleService(
     }
 
     fun update(argUpdateArticle: UpdateArticle) {
-        val article = articleMapper.findByIdAndUserId(argUpdateArticle.id, argUpdateArticle.userId) ?: throw ResourceNotFound("article_idが見つかりません")
+        val article = articleMapper.findByIdAndUserId(argUpdateArticle.id, argUpdateArticle.userId)
+                ?: throw ResourceNotFoundException("article_idが見つかりません")
         val updateArticle = article.copy(title = argUpdateArticle.title, markdownText = argUpdateArticle.markdownText)
         val result = articleMapper.update(updateArticle)
         if (result != 1) {
+            throw SQLException()
+        }
+    }
+
+    fun delete(id: Int, currentUserId: Int) {
+        val article = articleMapper.findByIdAndUserId(id, currentUserId)
+                ?: throw ResourceNotFoundException("articleが見つかりません")
+        val result = articleMapper.delete(article.id!!, currentUserId)
+        if (result == 0) {
+            throw ResourceNotFoundException("articleが見つかりません")
+        } else if (result != 1) {
             throw SQLException()
         }
     }

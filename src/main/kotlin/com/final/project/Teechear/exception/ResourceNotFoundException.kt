@@ -5,4 +5,4 @@ package com.final.project.Teechear.exception
  * @param message ログに出力するためのメッセージ
  * TODO messageを出力するためのLoggerを実装する
  */
-class ResourceNotFound(message: String) : Exception()
+class ResourceNotFoundException(message: String) : Exception()

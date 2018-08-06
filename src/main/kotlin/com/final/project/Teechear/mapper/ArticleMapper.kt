@@ -25,7 +25,9 @@ interface ArticleMapper {
 
     fun selectByUserIdPageNate(userId: Int, limit: Int = 15, offset: Int = 0): List<ArticleEntity>
 
-    fun update(article: ArticleEntity): Int
-
     fun findByIdAndUserId(id: Int, userId: Int): ArticleEntity?
+
+    fun delete(id: Int, userId: Int): Int
+
+    fun update(article: ArticleEntity): Int
 }

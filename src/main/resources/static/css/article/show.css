@@ -54,6 +54,19 @@ div.user-info a {
     color: #6a737d;
 }
 
+div.user-info div.operation-section {
+    display: inline;
+    float: right;
+}
+
+div.user-info div.operation-section a {
+    display: inline;
+}
+
+div.user-info div.operation-section form {
+    display: inline;
+}
+
 p.released-at {
     display: inline-block;
     color: #cccccc;
@@ -166,10 +179,6 @@ a.user-info b {
     background-color: #ffffff;
     border: none;
     color: #6a737d;
-}
-
-a.edit-link {
-    float: right;
 }
 
 a.edit-link span {

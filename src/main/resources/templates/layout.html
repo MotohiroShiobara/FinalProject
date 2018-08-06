@@ -54,6 +54,13 @@
             </div>
         </div>
     </div>
+
+    <div class="alert-message-section" th:object="${alertMessage}">
+        <div th:class="|alert *{type.className}|" role="alert" th:if="${alertMessage != null}">
+            [[${alertMessage.message}]]
+        </div>
+    </div>
+
     <div class="contents" layout:fragment="contents"></div>
     <div class="footer" layout:fragment="footer"></div>
 </div>

@@ -23,7 +23,16 @@
                          style="height: 32px; width: 32px;">
                     <a th:href="@{'/user/' + ${article.userId}}"><h4 th:text="${article.userName}"></h4></a>
                     <p class="released-at" th:text="|${#dates.format(article.releasedAt, 'yyyy年MM月dd日')}に投稿|"></p>
-                    <a th:if="${currentUser.id == article.userId}" class="edit-link" th:href="@{'/article/' + ${article.id} + '/edit'}" ><span class="fas fa-pencil-alt"></span><span>編集する</span></a>
+
+                    <!--削除・編集ボタンの欄　自分の記事の場合のみ表示がされる-->
+                    <div class="operation-section" th:if="${article.userId == currentUser.id}">
+                        <a class="edit-link" th:href="@{'/article/' + ${article.id} + '/edit'}">
+                            <span class="fas fa-pencil-alt"></span><span>編集する</span>
+                        </a>
+                        <form id="deleteArticleForm" th:method="delete" th:action="@{'/article/' + ${articleId}}">
+                            <button type="submit" id="delete_article" class="fas fa-trash-alt"></button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="title">
@@ -109,6 +118,15 @@
         </div>
 
         <script>
+            $(document).ready(function() {
+                $('#delete_article').click(function(e) {
+                    if (window.confirm('削除してもよろしいですか？')) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
             marked.setOptions({
                 breaks : true,
                 sanitize: true

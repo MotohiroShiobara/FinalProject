@@ -6,6 +6,7 @@ import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.*
 import com.final.project.Teechear.form.UserEditForm
+import com.final.project.Teechear.helper.AlertMessage
 import org.apache.tomcat.util.http.fileupload.FileUploadBase
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -30,8 +31,7 @@ class UserController(private val userMapper: UserMapper,
     fun show(
             @PathVariable("userId") userId: Int,
             model: Model,
-            principal: Principal,
-            @RequestParam("page") pageCount: Int?): String {
+            principal: Principal): String {
         val user = try {
             userService.select(userId)
         } catch (e: UserService.UserServiceException) {

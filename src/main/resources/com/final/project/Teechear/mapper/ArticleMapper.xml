@@ -121,4 +121,8 @@
         AND
         article.id = #{id}
     </select>
+
+    <delete id="delete">
+        DELETE FROM article WHERE id=#{id} AND user_id=#{userId}
+    </delete>
 </mapper>
