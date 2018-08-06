@@ -102,7 +102,7 @@ class LessonController(
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: Int, principal: Principal): String {
         val currentUserId = userService.currentUser(principal).id
-
+        lessonService.delete(id, currentUserId)
         return "redirect:/user/$currentUserId"
     }
 }
