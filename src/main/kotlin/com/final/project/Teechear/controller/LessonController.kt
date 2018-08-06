@@ -1,5 +1,6 @@
 package com.final.project.Teechear.controller
 
+import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.form.LessonNewForm
 import com.final.project.Teechear.service.LessonService
 import com.final.project.Teechear.service.S3Service
@@ -102,7 +103,12 @@ class LessonController(
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: Int, principal: Principal): String {
         val currentUserId = userService.currentUser(principal).id
-        lessonService.delete(id, currentUserId)
+        try {
+            lessonService.delete(id, currentUserId)
+        } catch (e: ResourceNotFoundException) {
+            return "error/404.html"
+        }
+
         return "redirect:/user/$currentUserId"
     }
 }
