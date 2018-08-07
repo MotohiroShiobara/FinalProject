@@ -41,9 +41,11 @@ class ArticleService(
         return articleMapper.search(escapeQuery).map { toDomain(it) }
     }
 
+    @Throws(SQLException::class)
     fun create(createArticle: CreateArticle): Int {
         val article = ArticleEntity(createArticle.title, createArticle.userId, Date(), createArticle.markdownText)
-        articleMapper.insert(article)
+        val result = articleMapper.insert(article)
+        if (!result) throw SQLException()
         return article.id!!
     }
 

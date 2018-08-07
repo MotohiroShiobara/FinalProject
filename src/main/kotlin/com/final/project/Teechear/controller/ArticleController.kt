@@ -31,7 +31,6 @@ import java.util.*
 class ArticleController(
         private val userMapper: UserMapper,
         private val userService: UserService,
-        private val articleMapper: ArticleMapper,
         private val userLikeArticleMapper: UserLikeArticleMapper,
         private val likeService: LikeService,
         private val articleService: ArticleService,
@@ -61,14 +60,12 @@ class ArticleController(
         return "article/edit"
     }
 
-    // TODO CreateArticleを作る
-    // TODO ArticleService.createを作る
-    // TODO エラーハンドリングをする
     @PostMapping("")
     fun create(
             principal: Principal,
             @Validated articleForm: ArticleForm,
-            result: BindingResult
+            result: BindingResult,
+            model: Model
     ): String {
         if (result.hasErrors()) {
             return "article/new"
@@ -76,8 +73,14 @@ class ArticleController(
 
         val currentUser = userService.currentUser(principal)
         val createArticle = CreateArticle(articleForm.title, articleForm.markdownText, currentUser.id)
-        val articleId = articleService.create(createArticle)
-        return "redirect:/article/${articleId}"
+        val articleId = try {
+            articleService.create(createArticle)
+        }  catch (e: SQLException) {
+            model.addAttribute("jsAlertMessage", "更新に失敗しました。時間をおいて再度更新をお願いします。")
+            return "article/new"
+        }
+
+        return "redirect:/article/$articleId"
     }
 
     @PatchMapping("/update/{articleId}")
