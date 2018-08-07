@@ -112,7 +112,6 @@ class LessonController(
             @PathVariable("id") id: Int,
             principal: Principal,
             redirectAttributes: RedirectAttributes): String {
-        // lessonに申し込みのユーザーが一人でもいる場合は404.htmlを返す
         if (userApplyLessonService.hasParticipant(id)) {
             redirectAttributes.addFlashAttribute(
                     "alertMessage",
