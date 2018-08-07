@@ -1,6 +1,7 @@
 package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Comment
+import com.final.project.Teechear.domain.CreateArticle
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
@@ -30,7 +31,6 @@ import java.util.*
 class ArticleController(
         private val userMapper: UserMapper,
         private val userService: UserService,
-        private val articleMapper: ArticleMapper,
         private val userLikeArticleMapper: UserLikeArticleMapper,
         private val likeService: LikeService,
         private val articleService: ArticleService,
@@ -64,16 +64,23 @@ class ArticleController(
     fun create(
             principal: Principal,
             @Validated articleForm: ArticleForm,
-            result: BindingResult
+            result: BindingResult,
+            model: Model
     ): String {
-        val currentUser = userMapper.findByEmailOrName(principal.name)
         if (result.hasErrors()) {
             return "article/new"
         }
 
-        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
-        articleMapper.insert(article)
-        return "redirect:/article/${article.id}"
+        val currentUser = userService.currentUser(principal)
+        val createArticle = CreateArticle(articleForm.title, articleForm.markdownText, currentUser.id)
+        val articleId = try {
+            articleService.create(createArticle)
+        }  catch (e: SQLException) {
+            model.addAttribute("jsAlertMessage", "更新に失敗しました。時間をおいて再度更新をお願いします。")
+            return "article/new"
+        }
+
+        return "redirect:/article/$articleId"
     }
 
     @PatchMapping("/update/{articleId}")

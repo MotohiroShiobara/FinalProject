@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface ArticleMapper {
 
-    fun insert(article: ArticleEntity)
+    fun insert(article: ArticleEntity): Boolean
 
     fun find(id: Int): ArticleEntity?
 
