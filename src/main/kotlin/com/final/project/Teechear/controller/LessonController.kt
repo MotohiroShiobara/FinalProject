@@ -114,7 +114,14 @@ class LessonController(
             redirectAttributes: RedirectAttributes): String {
         // lessonに申し込みのユーザーが一人でもいる場合は404.htmlを返す
         if (userApplyLessonService.hasParticipant(id)) {
-            return "error/404.html"
+            redirectAttributes.addFlashAttribute(
+                    "alertMessage",
+                    AlertMessage(
+                            message = "申し込み済みのユーザーが存在するため削除することができません。",
+                            type = AlertMessageType.DANGER
+                    )
+            )
+            return "redirect:/lesson/$id"
         }
 
         val currentUserId = userService.currentUser(principal).id
