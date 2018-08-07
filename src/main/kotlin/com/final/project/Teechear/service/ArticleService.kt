@@ -1,6 +1,7 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Article
+import com.final.project.Teechear.domain.CreateArticle
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFoundException
@@ -40,8 +41,8 @@ class ArticleService(
         return articleMapper.search(escapeQuery).map { toDomain(it) }
     }
 
-    fun create(currentUserId: Int, articleForm: ArticleForm): Int {
-        val article = ArticleEntity(articleForm.title, currentUserId, Date(), articleForm.markdownText)
+    fun create(createArticle: CreateArticle): Int {
+        val article = ArticleEntity(createArticle.title, createArticle.userId, Date(), createArticle.markdownText)
         articleMapper.insert(article)
         return article.id!!
     }

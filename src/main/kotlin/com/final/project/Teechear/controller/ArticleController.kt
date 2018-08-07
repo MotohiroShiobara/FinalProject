@@ -70,14 +70,13 @@ class ArticleController(
             @Validated articleForm: ArticleForm,
             result: BindingResult
     ): String {
-        val currentUser = userService.currentUser(principal)
         if (result.hasErrors()) {
             return "article/new"
         }
 
+        val currentUser = userService.currentUser(principal)
         val createArticle = CreateArticle(articleForm.title, articleForm.markdownText, currentUser.id)
-
-        val articleId = articleService.create(currentUser.id, articleForm)
+        val articleId = articleService.create(createArticle)
         return "redirect:/article/${articleId}"
     }
 
