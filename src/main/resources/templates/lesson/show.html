@@ -29,17 +29,25 @@
                         <!--マイページの場合-->
                         <div class="owner-section" th:if="${lesson.ownerId == currentUser.id}">
                             <form id="closeLesson" method="post" th:action="@{'/lesson/' + ${lesson.id} + '/close'}"
-                                  onsubmit="return closeConfirm();" th:if="${canApply}">
-                                <button type="submit" class="btn btn-danger submit-button" id="close-button">募集停止</button>
+                                  onsubmit="return submitConfirm('募集終了にしてもよろしいですか？');" th:if="${canApply}">
+                                <button type="submit" class="btn btn-danger submit-button" id="close-button">募集停止
+                                </button>
                             </form>
 
-                            <a th:if="${!canApply}" class="btn btn-primary btn-lg disabled">募集終了</a>
+                            <button type="submit" th:if="${!canApply}" class="btn btn-primary submit-button disabled">募集終了</button>
+
+                            <!--削除ボタン-->
+                            <form id="delete_lesson" th:method="delete" th:action="@{'/lesson/' + ${lesson.id}}"
+                                  onsubmit="return submitConfirm('本当に削除してもよろしいですか?');" th:if="${isDeletable}">
+                                <button type="submit" class="btn btn-danger submit-button" id="delete-button">削除
+                                </button>
+                            </form>
                         </div>
                     </div>
 
                     <script>
-                        function closeConfirm() {
-                            if (window.confirm('募集終了にしてもよろしいですか？')) {
+                        function submitConfirm(message) {
+                            if (window.confirm(message)) {
                                 return true;
                             }
                             return false;
@@ -73,7 +81,8 @@
                                 <div class="data-title">
                                     <i class="fas fa-clock"></i>目安時間
                                 </div>
-                                <div class="data" th:text="${lesson.estimatedTime == null ? '未定' : lesson.estimatedTime + '分'}"></div>
+                                <div class="data"
+                                     th:text="${lesson.estimatedTime == null ? '未定' : lesson.estimatedTime + '分'}"></div>
                             </div>
                         </div>
                     </div>

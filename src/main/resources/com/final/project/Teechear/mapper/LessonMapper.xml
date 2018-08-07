@@ -78,4 +78,8 @@
         ORDER BY
         event_datetime
     </select>
+
+    <delete id="delete">
+        DELETE FROM lesson WHERE id=#{id} AND owner_id=#{ownerId}
+    </delete>
 </mapper>

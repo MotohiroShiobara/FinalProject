@@ -4,13 +4,15 @@ import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.User
 import com.final.project.Teechear.entity.LessonEntity
 import com.final.project.Teechear.entity.UserApplyLessonEntity
+import com.final.project.Teechear.exception.ResourceNotFoundException
+import com.final.project.Teechear.form.LessonNewForm
 import com.final.project.Teechear.mapper.LessonMapper
 import com.final.project.Teechear.mapper.UserApplyLessonMapper
-import com.final.project.Teechear.form.LessonNewForm
-import com.final.project.Teechear.util.EscapeStringConverter
+import com.final.project.Teechear.repository.UserApplyLessonRepository
 import org.springframework.stereotype.Service
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
+import java.sql.SQLException
 import java.util.*
 
 @Service
@@ -18,7 +20,8 @@ class LessonService(
         private val dateTimeService: DateTimeService,
         private val lessonMapper: LessonMapper,
         private val userService: UserService,
-        private val userApplyLessonMapper: UserApplyLessonMapper) {
+        private val userApplyLessonMapper: UserApplyLessonMapper,
+        private val userApplyLessonRepository: UserApplyLessonRepository) {
 
     fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
         if (form.eventDate is String && form.eventTime is String) {
@@ -117,6 +120,20 @@ class LessonService(
         }
 
         return null
+    }
+
+    @Throws(ResourceNotFoundException::class, SQLException::class)
+    fun delete(id: Int, ownerId: Int) {
+        val result = lessonMapper.delete(id, ownerId)
+        if (result == 0) {
+            throw ResourceNotFoundException("lessonが見つかりません")
+        } else if (result != 1) {
+            throw SQLException()
+        }
+    }
+
+    fun isDeletable(lesson: Lesson, currentUserId: Int): Boolean {
+        return lesson.ownerId == currentUserId && !userApplyLessonRepository.hasParticipant(lesson.id)
     }
 
     private fun toDomain(lessonEntity: LessonEntity?): Lesson
