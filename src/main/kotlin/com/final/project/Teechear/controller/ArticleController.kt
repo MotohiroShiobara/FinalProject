@@ -60,20 +60,24 @@ class ArticleController(
         return "article/edit"
     }
 
+    // TODO CreateArticleを作る
+    // TODO ArticleService.createを作る
+    // TODO エラーハンドリングをする
     @PostMapping("")
     fun create(
             principal: Principal,
             @Validated articleForm: ArticleForm,
             result: BindingResult
     ): String {
-        val currentUser = userMapper.findByEmailOrName(principal.name)
+        val currentUser = userService.currentUser(principal)
         if (result.hasErrors()) {
             return "article/new"
         }
-
-        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
-        articleMapper.insert(article)
-        return "redirect:/article/${article.id}"
+//
+//        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
+//        articleMapper.insert(article)
+        val articleId = articleService.create(currentUser.id, articleForm)
+        return "redirect:/article/${articleId}"
     }
 
     @PatchMapping("/update/{articleId}")

@@ -4,6 +4,7 @@ import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFoundException
+import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.mapper.ArticleMapper
 import com.final.project.Teechear.mapper.UserLikeArticleMapper
 import com.final.project.Teechear.mapper.UserMapper
@@ -37,6 +38,12 @@ class ArticleService(
     fun search(query: String): List<Article> {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return articleMapper.search(escapeQuery).map { toDomain(it) }
+    }
+
+    fun create(currentUserId: Int, articleForm: ArticleForm): Int {
+        val article = ArticleEntity(articleForm.title, currentUserId, Date(), articleForm.markdownText)
+        articleMapper.insert(article)
+        return article.id!!
     }
 
     fun update(argUpdateArticle: UpdateArticle) {
