@@ -1,6 +1,7 @@
 package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Comment
+import com.final.project.Teechear.domain.CreateArticle
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.UpdateArticle
 import com.final.project.Teechear.entity.ArticleEntity
@@ -73,9 +74,9 @@ class ArticleController(
         if (result.hasErrors()) {
             return "article/new"
         }
-//
-//        val article = ArticleEntity(articleForm.title, currentUser?.id, Date(), articleForm.markdownText)
-//        articleMapper.insert(article)
+
+        val createArticle = CreateArticle(articleForm.title, articleForm.markdownText, currentUser.id)
+
         val articleId = articleService.create(currentUser.id, articleForm)
         return "redirect:/article/${articleId}"
     }
