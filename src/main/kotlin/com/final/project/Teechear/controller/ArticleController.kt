@@ -4,16 +4,11 @@ import com.final.project.Teechear.domain.Comment
 import com.final.project.Teechear.domain.CreateArticle
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.UpdateArticle
-import com.final.project.Teechear.entity.ArticleEntity
-import com.final.project.Teechear.entity.UserLikeArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.form.ArticleForm
 import com.final.project.Teechear.form.CommentForm
 import com.final.project.Teechear.helper.AlertMessage
 import com.final.project.Teechear.helper.AlertMessageType
-import com.final.project.Teechear.mapper.ArticleMapper
-import com.final.project.Teechear.mapper.UserLikeArticleMapper
-import com.final.project.Teechear.mapper.UserMapper
 import com.final.project.Teechear.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -24,15 +19,11 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
 import java.sql.SQLException
-import java.util.*
 
 @Controller
 @RequestMapping("/article")
 class ArticleController(
-        private val userMapper: UserMapper,
         private val userService: UserService,
-        private val userLikeArticleMapper: UserLikeArticleMapper,
-        private val likeService: LikeService,
         private val articleService: ArticleService,
         private val commentService: CommentService,
         private val lessonService: LessonService,
@@ -40,7 +31,7 @@ class ArticleController(
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
-        val currentUserId = userMapper.findByEmailOrName(principal.name)
+        val currentUserId = userService.findByEmailOrAccountName(principal.name)
         model.addAttribute("currentUserId", currentUserId)
         model.addAttribute("articleForm", ArticleForm())
         return "article/new"
@@ -142,21 +133,20 @@ class ArticleController(
 
     @PostMapping("/{articleId}/like")
     fun like(@PathVariable("articleId") articleId: Int, principal: Principal): String {
-        likeService.create(articleId, principal)
-
+        articleLikeService.create(articleId, principal)
         return "redirect:/article/$articleId"
     }
 
     @DeleteMapping("/{articleId}/unlike")
     fun unlike(@PathVariable("articleId") articleId: Int, principal: Principal): String {
-        val user = userService.currentUser(principal)
-        likeService.delete(articleId, user)
+        val user = userService.findByEmailOrAccountName(principal.name) ?: return "redirect:/logout"
+        articleLikeService.delete(articleId, user)
         return "redirect:/article/$articleId"
     }
 
     @DeleteMapping("/{articleId}")
     fun delete(@PathVariable("articleId") articleId: Int, principal: Principal, redirectAttributes: RedirectAttributes): String {
-        val user = userService.currentUser(principal)
+        val user = userService.findByEmailOrAccountName(principal.name) ?: return "redirect:/logout"
         try {
             articleService.delete(articleId, user.id)
         } catch (e: ResourceNotFoundException) {

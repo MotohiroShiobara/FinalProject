@@ -33,11 +33,6 @@ class ArticleService(
         return articleEntityList.map { toDomain(it) }
     }
 
-    fun trendArticleList(): List<Article> {
-        val articleEntityList = articleMapper.trend()
-        return articleEntityList.map { toDomain(it) }
-    }
-
     fun search(query: String): List<Article> {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return articleMapper.search(escapeQuery).map { toDomain(it) }
