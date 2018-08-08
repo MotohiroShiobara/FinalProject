@@ -35,7 +35,8 @@ class ArticleController(
         private val likeService: LikeService,
         private val articleService: ArticleService,
         private val commentService: CommentService,
-        private val lessonService: LessonService) {
+        private val lessonService: LessonService,
+        private val articleLikeService: ArticleLikeService) {
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
@@ -113,10 +114,10 @@ class ArticleController(
     @GetMapping("/{articleId}")
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
         val article = articleService.findById(articleId) ?: return "error/404.html"
-        val currentUser = userService.currentUser(principal)
+        val currentUser = userService.findByEmailOrAccountName(principal.name) ?: return "redirect:/logout"
         val currentUserId = currentUser.id
 
-        model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
+        model.addAttribute("likeCount", articleLikeService.likeCount(articleId))
         model.addAttribute("commentForm", commentForm)
         model.addAttribute("currentUserId", currentUserId)
 
