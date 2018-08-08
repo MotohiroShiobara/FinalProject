@@ -24,11 +24,6 @@ class ArticleService(
         private val userService: UserService,
         private val articleDomainConverter: ArticleDomainConverter) {
 
-    fun find(id: Int): Article {
-        val articleEntity = articleMapper.find(id)
-        return toDomain(articleEntity)
-    }
-
     fun findById(id: Int): Article? {
         return articleDomainConverter.toDomain(articleMapper.find(id))
     }

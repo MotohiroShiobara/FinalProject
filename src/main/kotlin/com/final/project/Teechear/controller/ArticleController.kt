@@ -48,7 +48,7 @@ class ArticleController(
     @GetMapping("/{articleId}/edit")
     fun edit(model: Model, principal: Principal, @PathVariable("articleId") articleId: Int): String {
         val currentUserId = userService.currentUser(principal).id
-        val article = articleService.find(articleId)
+        val article = articleService.findById(articleId) ?: return "error/404.html"
         model.addAttribute("jsMarkdownText", article.markdownText)
         // もし記事の投稿者ではない場合はリダイレクトする
         if (currentUserId != article.userId) {
