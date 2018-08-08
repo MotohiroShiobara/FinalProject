@@ -31,7 +31,6 @@ import java.util.*
 class ArticleController(
         private val userMapper: UserMapper,
         private val userService: UserService,
-        private val userLikeArticleMapper: UserLikeArticleMapper,
         private val likeService: LikeService,
         private val articleService: ArticleService,
         private val commentService: CommentService,
@@ -40,7 +39,7 @@ class ArticleController(
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
-        val currentUserId = userMapper.findByEmailOrName(principal.name)
+        val currentUserId = userService.findByEmailOrAccountName(principal.name)
         model.addAttribute("currentUserId", currentUserId)
         model.addAttribute("articleForm", ArticleForm())
         return "article/new"
