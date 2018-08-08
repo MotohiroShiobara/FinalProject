@@ -112,16 +112,7 @@ class ArticleController(
 
     @GetMapping("/{articleId}")
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
-//        val article = try {
-//            articleService.findById(articleId)
-//        } catch (e: ArticleService.ArticleServiceException) {
-//            return "error/404.html"
-//        } catch (e: ArticleService.ArticleNotFoundException) {
-//            return "error/404.html"
-//        }
-//
         val article = articleService.findById(articleId) ?: return "error/404.html"
-
         val currentUser = userService.currentUser(principal)
         val currentUserId = currentUser.id
 
