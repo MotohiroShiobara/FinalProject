@@ -26,6 +26,10 @@ class ArticleService(
         return toDomain(articleEntity)
     }
 
+    fun findById(id: Int): Article? {
+        return find(id)
+    }
+
     fun userArticleList(userId: Int): List<Article> {
         val articleEntityList = articleMapper.selectByUserId(userId)
         return articleEntityList.map { toDomain(it) }
