@@ -2,6 +2,7 @@ package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.domainConverter.LessonDomainConverter
 import com.final.project.Teechear.entity.LessonEntity
 import com.final.project.Teechear.entity.UserApplyLessonEntity
 import com.final.project.Teechear.exception.ResourceNotFoundException
@@ -21,7 +22,8 @@ class LessonService(
         private val lessonMapper: LessonMapper,
         private val userService: UserService,
         private val userApplyLessonMapper: UserApplyLessonMapper,
-        private val userApplyLessonRepository: UserApplyLessonRepository) {
+        private val userApplyLessonRepository: UserApplyLessonRepository,
+        private val lessonDomainConverter: LessonDomainConverter) {
 
     fun createByForm(form: LessonNewForm, userId: Int, imageUrl: String): Int {
         if (form.eventDate is String && form.eventTime is String) {
@@ -114,12 +116,7 @@ class LessonService(
     }
 
     fun mostRecentLessonByUserId(userId: Int): Lesson? {
-        val lessonEntity = lessonMapper.selectMostRecentByUserId(userId)
-        if (lessonEntity is LessonEntity) {
-            return toDomain(lessonEntity)
-        }
-
-        return null
+        return lessonDomainConverter.toDomain(lessonMapper.selectMostRecentByUserId(userId))
     }
 
     @Throws(ResourceNotFoundException::class, SQLException::class)

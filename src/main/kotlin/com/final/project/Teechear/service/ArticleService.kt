@@ -3,6 +3,8 @@ package com.final.project.Teechear.service
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.CreateArticle
 import com.final.project.Teechear.domain.UpdateArticle
+import com.final.project.Teechear.domainConverter.ArticleDomainConverter
+import com.final.project.Teechear.domainConverter.SearchResultArticleDomainConverter
 import com.final.project.Teechear.entity.ArticleEntity
 import com.final.project.Teechear.exception.ResourceNotFoundException
 import com.final.project.Teechear.form.ArticleForm
@@ -19,11 +21,11 @@ class ArticleService(
         private val articleMapper: ArticleMapper,
         private val userMapper: UserMapper,
         private val userLikeArticleMapper: UserLikeArticleMapper,
-        private val userService: UserService) {
+        private val userService: UserService,
+        private val articleDomainConverter: ArticleDomainConverter) {
 
-    fun find(id: Int): Article {
-        val articleEntity = articleMapper.find(id)
-        return toDomain(articleEntity)
+    fun findById(id: Int): Article? {
+        return articleDomainConverter.toDomain(articleMapper.find(id))
     }
 
     fun userArticleList(userId: Int): List<Article> {

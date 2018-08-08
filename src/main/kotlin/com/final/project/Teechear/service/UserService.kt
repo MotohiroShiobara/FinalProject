@@ -1,6 +1,7 @@
 package com.final.project.Teechear.service
 
 import com.final.project.Teechear.domain.User
+import com.final.project.Teechear.domainConverter.UserDomainConverter
 import com.final.project.Teechear.entity.UserEntity
 import com.final.project.Teechear.form.UserEditForm
 import com.final.project.Teechear.mapper.UserMapper
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.security.Principal
 
 @Service
-class UserService(private val userMapper: UserMapper) {
+class UserService(private val userMapper: UserMapper, private val userDomainConverter: UserDomainConverter) {
 
     fun currentUser(principal: Principal): User {
         val userEntity: UserEntity? = userMapper.findByEmailOrName(principal.name)
@@ -49,6 +50,11 @@ class UserService(private val userMapper: UserMapper) {
 
     fun participant(lessonIds: List<Int>): List<User> {
         return userMapper.participant(lessonIds).map { toDomain(it) }
+    }
+
+    fun findByEmailOrAccountName(name: String): User? {
+        val userEntity: UserEntity? = userMapper.findByEmailOrName(name)
+        return userDomainConverter.toDomain(userEntity)
     }
 
     class UserServiceException(s: String) : Exception()

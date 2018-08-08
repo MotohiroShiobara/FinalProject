@@ -35,7 +35,8 @@ class ArticleController(
         private val likeService: LikeService,
         private val articleService: ArticleService,
         private val commentService: CommentService,
-        private val lessonService: LessonService) {
+        private val lessonService: LessonService,
+        private val articleLikeService: ArticleLikeService) {
 
     @GetMapping("/new")
     fun new(model: Model, principal: Principal): String {
@@ -48,7 +49,7 @@ class ArticleController(
     @GetMapping("/{articleId}/edit")
     fun edit(model: Model, principal: Principal, @PathVariable("articleId") articleId: Int): String {
         val currentUserId = userService.currentUser(principal).id
-        val article = articleService.find(articleId)
+        val article = articleService.findById(articleId) ?: return "error/404.html"
         model.addAttribute("jsMarkdownText", article.markdownText)
         // もし記事の投稿者ではない場合はリダイレクトする
         if (currentUserId != article.userId) {
@@ -112,24 +113,17 @@ class ArticleController(
 
     @GetMapping("/{articleId}")
     fun show(@PathVariable("articleId") articleId: Int, model: Model, principal: Principal, commentForm: CommentForm): String {
-        val article = try {
-            articleService.find(articleId)
-        } catch (e: ArticleService.ArticleServiceException) {
-            return "error/404.html"
-        } catch (e: ArticleService.ArticleNotFoundException) {
-            return "error/404.html"
-        }
-
-        val currentUser = userService.currentUser(principal)
+        val article = articleService.findById(articleId) ?: return "error/404.html"
+        val currentUser = userService.findByEmailOrAccountName(principal.name) ?: return "redirect:/logout"
         val currentUserId = currentUser.id
 
-        model.addAttribute("likeCount", userLikeArticleMapper.articleLikeCount(articleId))
+        model.addAttribute("likeCount", articleLikeService.likeCount(articleId))
         model.addAttribute("commentForm", commentForm)
         model.addAttribute("currentUserId", currentUserId)
 
         val commentList = commentService.commentListByArticle(articleId)
         model.addAttribute("commentList", commentList)
-        model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticleEntity)
+        model.addAttribute("userLiked", articleLikeService.isLikedByUser(articleId, currentUserId))
 
         model.addAttribute("article", article)
         model.addAttribute("isMyArticle", article.userId == currentUserId)
