@@ -146,7 +146,7 @@ class ArticleController(
 
     @DeleteMapping("/{articleId}")
     fun delete(@PathVariable("articleId") articleId: Int, principal: Principal, redirectAttributes: RedirectAttributes): String {
-        val user = userService.currentUser(principal)
+        val user = userService.findByEmailOrAccountName(principal.name) ?: return "redirect:/logout"
         try {
             articleService.delete(articleId, user.id)
         } catch (e: ResourceNotFoundException) {
