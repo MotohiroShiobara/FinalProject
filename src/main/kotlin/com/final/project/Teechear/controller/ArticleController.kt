@@ -123,7 +123,7 @@ class ArticleController(
 
         val commentList = commentService.commentListByArticle(articleId)
         model.addAttribute("commentList", commentList)
-        model.addAttribute("userLiked", userLikeArticleMapper.findByUserIdAndArticleId(articleId, currentUserId) is UserLikeArticleEntity)
+        model.addAttribute("userLiked", articleLikeService.isLikedByUser(articleId, currentUserId))
 
         model.addAttribute("article", article)
         model.addAttribute("isMyArticle", article.userId == currentUserId)
