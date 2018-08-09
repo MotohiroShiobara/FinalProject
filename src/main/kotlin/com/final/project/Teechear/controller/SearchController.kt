@@ -4,6 +4,7 @@ import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.Lesson
 import com.final.project.Teechear.service.ArticleService
 import com.final.project.Teechear.service.LessonService
+import com.final.project.Teechear.service.PagiNationService
 import com.final.project.Teechear.service.SearchService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -14,19 +15,22 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 @RequestMapping("/search")
 class SearchController(
-        private val articleService: ArticleService,
+        private val pageNationService: PagiNationService,
         private val searchService: SearchService
 ) {
 
     @GetMapping("")
-    fun search(model: Model, @RequestParam(value = "q") query: String, @RequestParam("type") type: String?): String {
+    fun search(model: Model, @RequestParam(value = "q") query: String, @RequestParam(value = "pageCount") pageCount: Int?, @RequestParam("type") type: String?): String {
         if (query.isNotEmpty()) {
             if (type is String && type == "lesson") {
                 val lessonList = searchService.searchByLesson(query)
                 model.addAttribute("lessonList", lessonList)
                 model.addAttribute("type", "lesson")
             } else {
-                val articleList = searchService.searchByArticle(query)
+                val articleList = searchService.pageSearchByArticle(
+                        query = query,
+                        pageCount = pageCount ?: 0,
+                        perPageCount = 20)
                 model.addAttribute("articleList", articleList)
                 model.addAttribute("type", "article")
             }
