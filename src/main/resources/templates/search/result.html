@@ -21,11 +21,13 @@
         <div class="tab-section">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a th:href="@{'/search?type=article&q=' + ${query}}" th:class="|nav-link ${type == 'article' ? 'active' : ''}|">記事</a>
+                    <a th:href="@{'/search?type=article&q=' + ${query}}"
+                       th:class="|nav-link ${type == 'article' ? 'active' : ''}|">記事</a>
                 </li>
 
                 <li class="nav-item">
-                    <a th:href="@{'/search?type=lesson&q=' + ${query}}" th:class="|nav-link ${type == 'lesson' ? 'active' : ''}|">講座</a>
+                    <a th:href="@{'/search?type=lesson&q=' + ${query}}"
+                       th:class="|nav-link ${type == 'lesson' ? 'active' : ''}|">講座</a>
                 </li>
             </ul>
         </div>
@@ -82,6 +84,26 @@
                    th:text="|「${query}」に一致する記事は見つかりませんでした。|"></p>
                 <p th:if="${lessonList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
             </div>
+
+            <!--<div th:fragment='paginationbar'>-->
+                <!--<ul>-->
+                    <!--<li th:class="${page.first} ? 'disabled':''" style="display:inline">-->
+                        <!--<span th:if="${page.first}">←先頭</span>-->
+                        <!--<a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>-->
+                    <!--</li>-->
+                    <!--<li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}'-->
+                        <!--th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">-->
+                        <!--<span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>-->
+                        <!--<a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">-->
+                            <!--<span th:text='${i+1}'>1</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li th:class="${page.last} ? 'disabled':''" style="display:inline">-->
+                        <!--<span th:if="${page.last}">末尾➝</span>-->
+                        <!--<a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </div>
     </div>
 </div>

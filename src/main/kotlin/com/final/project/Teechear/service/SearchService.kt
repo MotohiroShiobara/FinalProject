@@ -1,5 +1,6 @@
 package com.final.project.Teechear.service
 
+import com.final.project.Teechear.domain.PagiNate
 import com.final.project.Teechear.domain.SearchResultArticle
 import com.final.project.Teechear.domain.SearchResultLesson
 import com.final.project.Teechear.domainConverter.SearchResultArticleDomainConverter
@@ -23,12 +24,19 @@ class SearchService(
         return lessonMapper.search(escapeQuery).map { searchResultLessonDomainConverter.toDomain(it) }
     }
 
-    // TODO searchResultのCountを返すためのSQLをMapperに定義する
-    fun pageSearchByArticle(query: String, pageCount: Int, perPageCount: Int): List<SearchResultArticle> {
+    fun searchByArticle(query: String): List<SearchResultArticle> {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
-        val result = articleMapper.search(escapeQuery)
-        val range: Pagination.Range = pagination.obtainRange(pageSize = result.count(), currentPage = pageCount, perPageSize = perPageCount)
+        return articleMapper.search(escapeQuery).map {searchResultArticleDomainConverter.toDomain(it) }
+    }
 
-        return result.subList(range.offset, range.to).map {searchResultArticleDomainConverter.toDomain(it) }
+    // TODO mapperにintを返すようなものを実装する
+    fun searchResultCountByArticle(query: String): Int {
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return articleMapper.search(escapeQuery).count()
+    }
+
+    fun paginateSearchByArticle(query: String, paginate: PagiNate): List<SearchResultArticle> {
+        val range = pagination.obtainRange(paginate)
+        return searchByArticle(query).subList(range.offset, range.to)
     }
 }
