@@ -16,5 +16,3 @@ class PagiNationService(private val pagination: Pagination) {
                 lastPage = lastPage)
     }
 }
-
-

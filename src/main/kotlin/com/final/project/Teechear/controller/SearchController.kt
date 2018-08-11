@@ -36,7 +36,7 @@ class SearchController(
                 val articleList = searchService.paginateSearchByArticle(query, paginate)
 
                 model.addAttribute("articleList", articleList)
-                model.addAttribute("paginate", paginate)
+                model.addAttribute("page", paginate)
                 model.addAttribute("type", "article")
             }
         } else {
