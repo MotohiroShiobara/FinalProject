@@ -30,7 +30,7 @@ class SearchController(
                 // TODO paginateを使って取得範囲を特定し、そのarticleを返すようなメソッドを実装する
                 val searchResultCount = searchService.searchResultCountByArticle(query)
                 val paginate = pagiNationService.obtainPaginate(
-                        currentPage = pageCount ?: 0,
+                        currentPage = pageCount,
                         resultCount = searchResultCount,
                         perPageSize = 20)
                 val articleList = searchService.paginateSearchByArticle(query, paginate)
