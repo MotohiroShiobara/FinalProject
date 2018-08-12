@@ -82,4 +82,20 @@
     <delete id="delete">
         DELETE FROM lesson WHERE id=#{id} AND owner_id=#{ownerId}
     </delete>
+
+    <select id="searchCount" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        lesson
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        AND
+        event_datetime > now()
+        AND is_open=true
+        ORDER BY
+        event_datetime
+    </select>
 </mapper>

@@ -27,4 +27,6 @@ interface LessonMapper {
     fun search(query: String): List<LessonEntity>
 
     fun delete(id: Int, ownerId: Int): Int
+
+    fun searchCount(escapeQuery: String): Int
 }

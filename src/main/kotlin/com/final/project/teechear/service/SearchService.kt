@@ -38,6 +38,7 @@ class SearchService(
     }
 
     fun searchResultCountByLesson(query: String): Int {
-        return searchByLesson(query).count()
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return lessonMapper.searchCount(escapeQuery)
     }
 }
