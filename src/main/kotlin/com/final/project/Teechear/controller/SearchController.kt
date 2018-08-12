@@ -2,6 +2,7 @@ package com.final.project.Teechear.controller
 
 import com.final.project.Teechear.domain.Article
 import com.final.project.Teechear.domain.Lesson
+import com.final.project.Teechear.exception.PageNotFoundException
 import com.final.project.Teechear.service.PagiNationService
 import com.final.project.Teechear.service.SearchService
 import org.springframework.stereotype.Controller
@@ -29,10 +30,15 @@ class SearchController(
                 // TODO PaginatinoSearcHResultArticleを排除
                 // TODO paginateを使って取得範囲を特定し、そのarticleを返すようなメソッドを実装する
                 val searchResultCount = searchService.searchResultCountByArticle(query)
-                val paginate = pagiNationService.obtainPaginate(
-                        currentPage = pageCount,
-                        resultCount = searchResultCount,
-                        perPageSize = 20)
+                val paginate = try {
+                    pagiNationService.obtainPaginate(
+                            nullableCurrentPage = pageCount,
+                            resultCount = searchResultCount,
+                            perPageSize = 20)
+                } catch (e: PageNotFoundException) {
+                    return "error/404.html"
+                }
+
                 val articleList = searchService.paginateSearchByArticle(query, paginate)
 
                 model.addAttribute("articleList", articleList)

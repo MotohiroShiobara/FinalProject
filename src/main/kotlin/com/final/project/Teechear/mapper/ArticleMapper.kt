@@ -30,4 +30,6 @@ interface ArticleMapper {
     fun delete(id: Int, userId: Int): Int
 
     fun update(article: ArticleEntity): Int
+
+    fun searchCount(query: String): Int
 }

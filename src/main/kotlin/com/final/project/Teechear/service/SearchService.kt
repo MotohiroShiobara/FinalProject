@@ -32,7 +32,7 @@ class SearchService(
     // TODO mapperにintを返すようなものを実装する
     fun searchResultCountByArticle(query: String): Int {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return articleMapper.search(escapeQuery).count()
+        return articleMapper.searchCount(escapeQuery)
     }
 
     fun paginateSearchByArticle(query: String, paginate: PagiNate): List<SearchResultArticle> {

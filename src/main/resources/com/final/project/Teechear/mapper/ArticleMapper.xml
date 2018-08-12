@@ -125,4 +125,19 @@
     <delete id="delete">
         DELETE FROM article WHERE id=#{id} AND user_id=#{userId}
     </delete>
+
+    <select id="searchCount" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        article
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        OR
+        markdown_text
+        LIKE
+        CONCAT('%', #{query}, '%')
+    </select>
 </mapper>
