@@ -20,28 +20,37 @@ class SearchService(
         private val pagination: Pagination) {
 
     fun searchResultCountByArticle(query: String): Int {
-        val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return articleMapper.searchCount(escapeQuery)
+        return searchCount(query = query, funcSearch = { escapeQuery -> articleMapper.searchCount(escapeQuery) })
     }
 
     fun paginateSearchByArticle(query: String, paginate: PagiNate): List<SearchResultArticle> {
-        val range = pagination.obtainRange(paginate)
-        val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return articleMapper
-                .searchByPaginate(query = escapeQuery, offset = range.offset, limit = (range.to - range.offset))
-                .map { searchResultArticleDomainConverter.toDomain(it) }
+        return paginateSearch(
+                query = query,
+                paginate = paginate,
+                funcSearch = { escapeQuery, offset, limit -> articleMapper.searchByPaginate(escapeQuery, offset, limit) }
+        ).map { searchResultArticleDomainConverter.toDomain(it) }
     }
 
     fun searchResultCountByLesson(query: String): Int {
-        val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return lessonMapper.searchCount(escapeQuery)
+        return searchCount(query = query, funcSearch = { escapeQuery -> lessonMapper.searchCount(escapeQuery) })
     }
 
     fun paginateSearchByLesson(query: String, paginate: PagiNate): List<SearchResultLesson> {
+        return paginateSearch(
+                query = query,
+                paginate = paginate,
+                funcSearch = { escapeQuery, offset, limit -> lessonMapper.searchByPaginate(escapeQuery, offset, limit) }
+        ).map { searchResultLessonDomainConverter.toDomain(it) }
+    }
+
+    private fun <T> paginateSearch(query: String, paginate: PagiNate, funcSearch: (String, Int, Int) -> T): T {
         val range = pagination.obtainRange(paginate)
         val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return lessonMapper
-                .searchByPaginate(query = escapeQuery, offset = range.offset, limit = (range.to - range.offset))
-                .map { searchResultLessonDomainConverter.toDomain(it) }
+        return funcSearch(escapeQuery, range.offset, (range.to - range.offset))
+    }
+
+    private fun <Int> searchCount(query: String, funcSearch: (String) -> Int): Int {
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return funcSearch(escapeQuery)
     }
 }
