@@ -98,4 +98,24 @@
         ORDER BY
         event_datetime
     </select>
+
+    <select id="searchByPaginate" resultMap="lessonResultMap">
+        SELECT
+        *
+        FROM
+        lesson
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        AND
+        event_datetime > now()
+        AND is_open=true
+        ORDER BY
+        event_datetime
+        LIMIT
+        #{limit}
+        OFFSET
+        #{offset}
+    </select>
 </mapper>

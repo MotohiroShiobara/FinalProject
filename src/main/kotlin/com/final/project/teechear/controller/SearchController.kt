@@ -34,7 +34,7 @@ class SearchController(
                 } catch (e: PageNotFoundException) {
                     return "error/404.html"
                 }
-                val lessonList = searchService.searchByLesson(query)
+                val lessonList = searchService.paginateSearchByLesson(query = query, paginate = paginate)
                 model.addAttribute("lessonList", lessonList)
                 model.addAttribute("type", "lesson")
                 model.addAttribute("page", paginate)

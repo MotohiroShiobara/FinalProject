@@ -19,11 +19,6 @@ class SearchService(
         private val searchResultArticleDomainConverter: SearchResultArticleDomainConverter,
         private val pagination: Pagination) {
 
-    fun searchByLesson(query: String): List<SearchResultLesson> {
-        val escapeQuery = EscapeStringConverter.searchQuery(query)
-        return lessonMapper.search(escapeQuery).map { searchResultLessonDomainConverter.toDomain(it) }
-    }
-
     fun searchResultCountByArticle(query: String): Int {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return articleMapper.searchCount(escapeQuery)
@@ -40,5 +35,13 @@ class SearchService(
     fun searchResultCountByLesson(query: String): Int {
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return lessonMapper.searchCount(escapeQuery)
+    }
+
+    fun paginateSearchByLesson(query: String, paginate: PagiNate): List<SearchResultLesson> {
+        val range = pagination.obtainRange(paginate)
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return lessonMapper
+                .searchByPaginate(query = escapeQuery, offset = range.offset, limit = (range.to - range.offset))
+                .map { searchResultLessonDomainConverter.toDomain(it) }
     }
 }
