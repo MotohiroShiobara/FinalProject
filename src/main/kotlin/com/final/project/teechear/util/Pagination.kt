@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class Pagination {
-
+    
     fun obtainRange(paginate: PagiNate): Range {
         if (paginate.currentPage == 0 || paginate.currentPage == 1) return Range(offset = 0, to = if (paginate.pageSize > 20) 20 else paginate.pageSize)
 

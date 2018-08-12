@@ -53,7 +53,12 @@ class SearchController(
             }
 
         } else {
-            // TODO pageモデルを設定する
+            val paginate = try {
+                obtainPaginate(pageCount, 0)
+            } catch (e: PageNotFoundException) {
+                return "error/404.html"
+            }
+            model.addAttribute("page", paginate)
             model.addAttribute("lessonList", emptyList<Lesson>())
             model.addAttribute("articleList", emptyList<Article>())
             model.addAttribute("type", if (type == "lesson") "lesson" else "article")
@@ -63,6 +68,7 @@ class SearchController(
         return "search/result"
     }
 
+    @Throws(PageNotFoundException::class)
     private fun obtainPaginate(pageCount: Int?, searchResultCount: Int): PagiNate {
         return pagiNationService.obtainPaginate(
                 nullableCurrentPage = pageCount,
