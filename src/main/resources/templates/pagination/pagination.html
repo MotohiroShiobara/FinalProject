@@ -5,7 +5,7 @@
 <body>
 <div layout:fragment="pagination(url, page)">
     <div th:fragment='paginationbar'>
-        <nav aria-label="ページャー">
+        <nav aria-label="ページャー" th:if="${page.lastPage != 1}">
             <ul class="pagination justify-content-center">
                 <li>
                     <a th:class="|btn page-link badge-pill ${page.currentPage == 1 ? 'text-muted disabled' : ''}|"
