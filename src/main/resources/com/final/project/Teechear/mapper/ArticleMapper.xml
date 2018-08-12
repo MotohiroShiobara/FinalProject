@@ -111,6 +111,25 @@
         #{offset}
     </select>
 
+    <select id="searchByPaginate" resultMap="articleResultMap">
+        SELECT
+        *
+        FROM
+        article
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        OR
+        markdown_text
+        LIKE
+        CONCAT('%', #{query}, '%')
+        LIMIT
+        #{limit}
+        OFFSET
+        #{offset}
+    </select>
+
     <select id="findByIdAndUserId" resultMap="articleResultMap">
         SELECT
         *

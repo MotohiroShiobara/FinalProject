@@ -26,9 +26,6 @@ class SearchController(
                 model.addAttribute("lessonList", lessonList)
                 model.addAttribute("type", "lesson")
             } else {
-                // TODO searchResultのcountを返すようなmapperを用意
-                // TODO PaginatinoSearcHResultArticleを排除
-                // TODO paginateを使って取得範囲を特定し、そのarticleを返すようなメソッドを実装する
                 val searchResultCount = searchService.searchResultCountByArticle(query)
                 val paginate = try {
                     pagiNationService.obtainPaginate(

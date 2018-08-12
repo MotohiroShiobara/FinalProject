@@ -37,6 +37,9 @@ class SearchService(
 
     fun paginateSearchByArticle(query: String, paginate: PagiNate): List<SearchResultArticle> {
         val range = pagination.obtainRange(paginate)
-        return searchByArticle(query).subList(range.offset, range.to)
+        val escapeQuery = EscapeStringConverter.searchQuery(query)
+        return articleMapper
+                .searchByPaginate(escapeQuery, range.offset, (range.to - range.offset))
+                .map { searchResultArticleDomainConverter.toDomain(it) }
     }
 }
