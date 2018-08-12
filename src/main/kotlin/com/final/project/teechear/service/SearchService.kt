@@ -36,4 +36,8 @@ class SearchService(
                 .searchByPaginate(query = escapeQuery, offset = range.offset, limit = (range.to - range.offset))
                 .map { searchResultArticleDomainConverter.toDomain(it) }
     }
+
+    fun searchResultCountByLesson(query: String): Int {
+        return searchByLesson(query).count()
+    }
 }

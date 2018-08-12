@@ -10,6 +10,7 @@ class PagiNationService(private val pagination: Pagination) {
 
     @Throws(PageNotFoundException::class)
     fun obtainPaginate(resultCount: Int, nullableCurrentPage: Int?, perPageSize: Int): PagiNate {
+        // resultCountが１件もなかった場合
         val lastPage = pagination.calcLastPage(pageSize = resultCount, perPageSize = perPageSize)
         val currentPage = nullableCurrentPage ?: 1
         if (lastPage < currentPage || currentPage <= 0) {

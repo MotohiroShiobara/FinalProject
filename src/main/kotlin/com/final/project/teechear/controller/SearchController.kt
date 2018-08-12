@@ -28,9 +28,16 @@ class SearchController(
 
         if (query.isNotEmpty()) {
             if (type is String && type == "lesson") {
+                val searchResultCount = searchService.searchResultCountByLesson(query)
+                val paginate = try {
+                    obtainPaginate(pageCount, searchResultCount)
+                } catch (e: PageNotFoundException) {
+                    return "error/404.html"
+                }
                 val lessonList = searchService.searchByLesson(query)
                 model.addAttribute("lessonList", lessonList)
                 model.addAttribute("type", "lesson")
+                model.addAttribute("page", paginate)
             } else {
                 val searchResultCount = searchService.searchResultCountByArticle(query)
                 val paginate = try {
@@ -41,10 +48,12 @@ class SearchController(
                 val articleList = searchService.paginateSearchByArticle(query, paginate)
 
                 model.addAttribute("articleList", articleList)
-                model.addAttribute("page", paginate)
                 model.addAttribute("type", "article")
+                model.addAttribute("page", paginate)
             }
+
         } else {
+            // TODO pageモデルを設定する
             model.addAttribute("lessonList", emptyList<Lesson>())
             model.addAttribute("articleList", emptyList<Article>())
             model.addAttribute("type", if (type == "lesson") "lesson" else "article")
