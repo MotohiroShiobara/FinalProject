@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.final.project.teechear.mapper.ArticleMapper">
+    <resultMap id="articleResultMap" type="com.final.project.teechear.entity.ArticleEntity">
+        <result property="title" column="title"/>
+        <result property="userId" column="user_id"/>
+        <result property="releasedAt" column="released_at"/>
+        <result property="markdownText" column="markdown_text"/>
+        <result property="id" column="id"/>
+        <result property="userAccountName" column="user_account_name"/>
+        <result property="likeCount" column="like_count"/>
+    </resultMap>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article (user_id, title, markdown_text, released_at) VALUES (#{userId}, #{title}, #{markdownText}, #{releasedAt})
+    </insert>
+
+    <update id="update" useGeneratedKeys="true" keyProperty="id">
+        UPDATE article SET
+        title=#{title}, markdown_text=#{markdownText}
+        WHERE
+        id=#{id}
+    </update>
+
+    <select id="find" resultMap="articleResultMap">
+        SELECT
+        article.*, user.account_name user_account_name
+        FROM
+        article
+        INNER JOIN
+        user
+        ON
+        article.user_id = user.id
+        WHERE
+        article.id = #{id} LIMIT 1
+    </select>
+
+    <select id="trend" resultMap="articleResultMap">
+        select
+        article.*, (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count, user.account_name user_account_name
+        from
+        article
+        INNER JOIN
+        user
+        ON
+        article.user_id = user.id
+        where
+        article.released_at > DATE_SUB(now(), interval '7' DAY)
+        order by
+        like_count desc LIMIT 20;
+    </select>
+
+    <select id="search" resultMap="articleResultMap">
+        SELECT
+        *, user.account_name user_account_name
+        FROM
+        article
+        INNER JOIN
+        user
+        ON
+        article.user_id = user.id
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        OR
+        markdown_text
+        LIKE
+        CONCAT('%', #{query}, '%')
+    </select>
+
+    <select id="selectByUserId" resultMap="articleResultMap">
+        SELECT
+        article.*,
+        (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count,
+        user.account_name user_account_name
+        FROM
+        article
+        INNER JOIN
+        user
+        ON
+        article.user_id = user.id
+        WHERE
+        article.user_id = #{userId}
+        ORDER BY
+        article.released_at desc
+    </select>
+
+    <select id="selectByUserIdPageNate" resultMap="articleResultMap">
+        SELECT
+        article.*,
+        (select COUNT(*) from user_like_article ula where article.id = ula.article_id) like_count,
+        user.account_name user_account_name
+        FROM
+        article
+        INNER JOIN
+        user
+        ON
+        article.user_id = user.id
+        WHERE
+        article.user_id = #{userId}
+        ORDER BY
+        article.released_at desc
+        LIMIT
+        #{limit}
+        OFFSET
+        #{offset}
+    </select>
+
+    <select id="searchByPaginate" resultMap="articleResultMap">
+        SELECT
+        *
+        FROM
+        article
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        OR
+        markdown_text
+        LIKE
+        CONCAT('%', #{query}, '%')
+        LIMIT
+        #{limit}
+        OFFSET
+        #{offset}
+    </select>
+
+    <select id="findByIdAndUserId" resultMap="articleResultMap">
+        SELECT
+        *
+        FROM
+        article
+        WHERE
+        article.user_id = #{userId}
+        AND
+        article.id = #{id}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM article WHERE id=#{id} AND user_id=#{userId}
+    </delete>
+
+    <select id="searchCount" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        article
+        WHERE
+        title
+        LIKE
+        CONCAT('%', #{query}, '%')
+        OR
+        markdown_text
+        LIKE
+        CONCAT('%', #{query}, '%')
+    </select>
+</mapper>
