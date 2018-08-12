@@ -39,7 +39,7 @@ class SearchService(
         val range = pagination.obtainRange(paginate)
         val escapeQuery = EscapeStringConverter.searchQuery(query)
         return articleMapper
-                .searchByPaginate(escapeQuery, range.offset, (range.to - range.offset))
+                .searchByPaginate(query = escapeQuery, offset = range.offset, limit = (range.to - range.offset))
                 .map { searchResultArticleDomainConverter.toDomain(it) }
     }
 }
