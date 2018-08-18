@@ -31,4 +31,25 @@
         comment.created_at
         ASC
     </select>
+
+    <select id="selectIdAndByArticleIdAndUserId" resultMap="commentResultMap">
+        SELECT
+        *
+        FROM
+        comment
+        WHERE
+        id = #{id}
+        AND
+        article_id = #{articleId}
+        AND
+        user_id = #{userId}
+        LIMIT 1
+    </select>
+
+    <update id="update" useGeneratedKeys="true" keyProperty="id">
+        UPDATE comment SET
+        markdown_text=#{markdownText}
+        WHERE
+        id=#{id}
+    </update>
 </mapper>

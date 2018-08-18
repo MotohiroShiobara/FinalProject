@@ -9,4 +9,8 @@ interface CommentMapper {
     fun insert(comment: CommentEntity)
 
     fun selectByArticleId(articleId: Int): List<CommentEntity>
+
+    fun selectIdAndByArticleIdAndUserId(id: Int, userId: Int, articleId: Int): CommentEntity?
+
+    fun update(commentEntity: CommentEntity): Int
 }

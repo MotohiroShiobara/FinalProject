@@ -49,6 +49,12 @@ div.submit-button button {
     color: white;
 }
 
+div.submit-button a.close-button {
+    background-color: #aaaaaa;
+    color: white !important;
+    margin-right: 10px;
+}
+
 div.user-info a {
     display: inline-block;
     color: #6a737d;
@@ -87,6 +93,14 @@ div.comment-list div.comment-body {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+div.comment-list div.comment a {
+    display: inline;
+}
+
+div.comment-list div.comment a.edit-link {
+    float: right;
 }
 
 div.comment-form {
@@ -183,4 +197,8 @@ a.user-info b {
 
 a.edit-link span {
     color: #333333;
+}
+
+div.non-display {
+    display: none;
 }
