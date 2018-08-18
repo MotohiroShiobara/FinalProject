@@ -17,6 +17,7 @@ class CommentDomainConverter(private val userMapper: UserMapper) {
         val userEntity = userMapper.select(commentEntity.userId)
         if (userEntity?.accountName !is String) throw DomainArgumentException("userEntity: $userEntity")
         return Comment(
+                commentEntity.id!!,
                 commentEntity.markdownText,
                 userEntity.accountName,
                 userEntity.iconImageUrl ?: "",
