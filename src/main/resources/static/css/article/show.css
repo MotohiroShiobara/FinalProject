@@ -49,9 +49,28 @@ div.submit-button button {
     color: white;
 }
 
+div.submit-button a.close-button {
+    background-color: #aaaaaa;
+    color: white !important;
+    margin-right: 10px;
+}
+
 div.user-info a {
     display: inline-block;
     color: #6a737d;
+}
+
+div.user-info div.operation-section {
+    display: inline;
+    float: right;
+}
+
+div.user-info div.operation-section a {
+    display: inline;
+}
+
+div.user-info div.operation-section form {
+    display: inline;
 }
 
 p.released-at {
@@ -76,17 +95,25 @@ div.comment-list div.comment-body {
     border-radius: 5px;
 }
 
+div.comment-list div.comment a {
+    display: inline;
+}
+
+div.comment-list div.comment a.edit-link {
+    float: right;
+}
+
 div.comment-form {
     margin-top: 10px;
 }
 
-.btn-unsuccess {
+button.btn-unsuccess {
     color: #28a745;
     background-color: #fff;
     border-color: #28a745;
 }
 
-.btn-unsuccess:hover {
+button.btn-unsuccess:hover {
     background-color: #28a745;
     color: #fff;
 }
@@ -166,4 +193,12 @@ a.user-info b {
     background-color: #ffffff;
     border: none;
     color: #6a737d;
+}
+
+a.edit-link span {
+    color: #333333;
+}
+
+div.non-display {
+    display: none;
 }

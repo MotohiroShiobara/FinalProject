@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<div layout:fragment="pagination(url, page)">
+    <div th:fragment='paginationbar'>
+        <nav aria-label="ページャー" th:if="${page.lastPage != 1}">
+            <ul class="pagination justify-content-center">
+                <li>
+                    <a th:class="|btn page-link badge-pill ${page.currentPage == 1 ? 'text-muted disabled' : ''}|"
+                       th:href="@{${url}(pageCount=${page.currentPage-1})}">
+                        &larr; 前
+                    </a>
+                </li>
+                <li class="mx-2">
+                        <span class="btn page-link badge-pill">
+                            [[${page.currentPage}]]
+                        </span>
+                </li>
+                <li>
+                    <a th:class="|btn page-link badge-pill ${page.currentPage == page.lastPage ? 'text-muted disabled' : ''}|"
+                       th:href="@{${url}(pageCount=${page.currentPage+1})}">
+                        次 &rarr;
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

@@ -24,19 +24,30 @@
                     <a th:href="@{'/user/' + ${article.userId}}"><h4 th:text="${article.userName}"></h4></a>
                     <p class="released-at" th:text="|${#dates.format(article.releasedAt, 'yyyy年MM月dd日')}に投稿|"></p>
 
+                    <!--削除・編集ボタンの欄　自分の記事の場合のみ表示がされる-->
+                    <div class="operation-section" th:if="${article.userId == currentUser.id}">
+                        <a class="edit-link" th:href="@{'/article/' + ${article.id} + '/edit'}">
+                            <span class="fas fa-pencil-alt"></span><span>編集する</span>
+                        </a>
+                        <form id="deleteArticleForm" th:method="delete" th:action="@{'/article/' + ${articleId}}">
+                            <button type="submit" id="delete_article" class="fas fa-trash-alt"></button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="title">
                     <h1 th:text="${article.title}"></h1>
                     <form id="likeForm" method="post" th:action="@{'/article/' + ${articleId} + '/like'}"
                           th:if="${!userLiked && !isMyArticle}">
-                        <button type="submit" class="btn btn-unsuccess fas fa-thumbs-up is-liked" th:text="| ${likeCount}|">
+                        <button type="submit" class="btn btn-unsuccess fas fa-thumbs-up is-liked"
+                                th:text="| ${likeCount}|">
                         </button>
                     </form>
 
                     <form id="deleteLikeForm" th:method="delete" th:action="@{'/article/' + ${articleId} + '/unlike'}"
                           th:if="${userLiked}">
-                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked" th:text="| ${likeCount}|">
+                        <button type="submit" class="btn btn-success fas fa-thumbs-up is-liked"
+                                th:text="| ${likeCount}|">
                         </button>
                     </form>
                 </div>
@@ -78,11 +89,48 @@
                                  style="height: 32px; width: 32px;">
                             <b th:id="|user_name-${index.index}|"></b>
                         </a>
+                        <a href="javascript: void(0);" class="edit-link"
+                           th:id="|comment_edit_link_${comment.id}|" th:onclick="|openForm(${comment.id})|"
+                           th:if="${comment.userId == currentUser.id}">編集</a>
                     </div>
 
-                    <div class="comment-body">
-                        <div th:id="|markdown_comment-${index.index}|" class="md-section md-tx" v-html="compiledMarkdown"></div>
+                    <!--コメントエリア-->
+                    <div class="comment-body" th:id="|comment_area_${comment.id}|">
+                        <div th:id="|markdown_comment-${index.index}|" class="md-section md-tx"
+                             v-html="compiledMarkdown"></div>
                     </div>
+
+                    <!--コメント編集エリア-->
+                    <div class="comment-form non-display" th:id="|comment_edit_area_${comment.id}|"
+                         th:if="${comment.userId == currentUser.id}" th:object="${commentForm}">
+                        <form id="comment_edit_form" th:method="patch"
+                              th:action="@{'/comment/' + ${comment.id} + '/update'}">
+                            <div class="form-group text-area">
+                                <textarea class="form-control" rows="3" name="text"
+                                          maxlength="10000"
+                                          required>[[${comment.markdownText}]]</textarea>
+
+                                <input type="hidden" name="userId" th:value="${comment.userId}">
+                                <input type="hidden" name="articleId" th:value="${article.id}">
+                            </div>
+                            <div class="submit-button">
+                                <a class="btn close-button" href="javascript: void(0);"
+                                   onclick="location.reload();">閉じる</a>
+                                <button type="submit" class="btn submit-button">更新</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <script>
+                        function openForm(commentId) {
+                            document.getElementById('comment_area_' + commentId).classList.add("non-display");
+                            document.getElementById('comment_edit_area_' + commentId).classList.remove("non-display");
+                        }
+                        function closeForm(commentId) {
+                            document.getElementById('comment_area_' + commentId).classList.remove("non-display");
+                            document.getElementById('comment_edit_area_' + commentId).classList.add("non-display");
+                        }
+                    </script>
                 </div>
             </div>
 
@@ -109,11 +157,18 @@
         </div>
 
         <script>
+            $(document).ready(function () {
+                $('#delete_article').click(function (e) {
+                    if (window.confirm('削除してもよろしいですか？')) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
             marked.setOptions({
-                breaks : true,
+                breaks: true,
                 sanitize: true
             });
-
             $(document).ready(function () {
                 var plainText = document.getElementById("non_display_markdown_text").innerText
                 new Vue({

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>記事を編集する</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/article/form.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/markdown.css}">
+    <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+</head>
+<body>
+<div layout:decorator="layout">
+    <div layout:fragment="contents">
+        <div layout:include="/article/form :: form(articleForm=${articleForm}, jsMarkdownText=${jsMarkdownText}, method='patch', url='/article/update/' + ${articleId})"></div>
+    </div>
+</div>
+</body>
+</html>

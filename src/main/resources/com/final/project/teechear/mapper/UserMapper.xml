@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.final.project.teechear.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.final.project.teechear.entity.UserEntity">
+        <result property="accountName" column="account_name"/>
+        <result property="emailAddress" column="email_address"/>
+        <result property="password" column="password"/>
+        <result property="profile" column="profile"/>
+        <result property="id" column="id"/>
+        <result property="articleCount" column="article_count"/>
+        <result property="iconImageUrl" column="icon_image_url"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (account_name, email_address, password, profile, icon_image_url)
+        VALUES (#{accountName}, #{emailAddress}, #{password}, #{profile}, #{iconImageUrl})
+    </insert>
+
+    <select id="select" resultType="com.final.project.teechear.entity.UserEntity" resultMap="userResultMap">
+        SELECT
+        *,
+        (SELECT COUNT(*) FROM article WHERE article.user_id = user.id) article_count
+        FROM
+        user
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="com.final.project.teechear.entity.UserEntity" resultMap="userResultMap">
+        SELECT * FROM user;
+    </select>
+
+    <delete id="delete">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+    <update id="update" useGeneratedKeys="true" keyProperty="id">
+        UPDATE user SET
+        account_name=#{accountName}, email_address=#{emailAddress}, password=#{password}, profile=#{profile}, icon_image_url=#{iconImageUrl}
+        WHERE
+        id=#{id}
+    </update>
+
+    <select id="findByEmail" resultType="com.final.project.teechear.entity.UserEntity" resultMap="userResultMap">
+        SELECT * FROM user WHERE email_address=#{emailAddress} LIMIT 1
+    </select>
+
+    <select id="findByAccountName" resultType="com.final.project.teechear.entity.UserEntity" resultMap="userResultMap">
+        SELECT * FROM user WHERE account_name=#{accountName} LIMIT 1
+    </select>
+
+    <select id="findByEmailOrName" resultType="com.final.project.teechear.entity.UserEntity" resultMap="userResultMap">
+        SELECT * FROM user WHERE email_address=#{loginName} OR account_name=#{loginName} LIMIT 1
+    </select>
+
+    <select id="participant" resultMap="userResultMap" parameterType="java.util.List">
+        SELECT
+        *
+        FROM
+        user
+        INNER JOIN user_apply_lesson ual ON
+        user.id = ual.user_id
+        WHERE
+        ual.lesson_id
+        IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY apply_datetime DESC
+    </select>
+</mapper>

@@ -21,11 +21,13 @@
         <div class="tab-section">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a th:href="@{'/search?type=article&q=' + ${query}}" th:class="|nav-link ${type == 'article' ? 'active' : ''}|">記事</a>
+                    <a th:href="@{'/search?type=article&q=' + ${query}}"
+                       th:class="|nav-link ${type == 'article' ? 'active' : ''}|">記事</a>
                 </li>
 
                 <li class="nav-item">
-                    <a th:href="@{'/search?type=lesson&q=' + ${query}}" th:class="|nav-link ${type == 'lesson' ? 'active' : ''}|">講座</a>
+                    <a th:href="@{'/search?type=lesson&q=' + ${query}}"
+                       th:class="|nav-link ${type == 'lesson' ? 'active' : ''}|">講座</a>
                 </li>
             </ul>
         </div>
@@ -83,6 +85,8 @@
                 <p th:if="${lessonList.isEmpty() && query.length() == 0}">検索クエリが設定されていません。</p>
             </div>
         </div>
+
+        <div layout:include="/pagination/pagination :: pagination(url='/search?type=' + ${type} + '&q=' + ${query}, page=${page})"></div>
     </div>
 </div>
 </body>
