@@ -1,29 +1,67 @@
 package com.final.project.teechear.service
 
+import com.final.project.teechear.entity.LessonEntity
+import com.final.project.teechear.entity.UserEntity
+import com.final.project.teechear.mapper.LessonMapper
+import com.final.project.teechear.mapper.UserMapper
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
-import org.springframework.context.annotation.PropertySource
 import org.springframework.test.context.junit4.SpringRunner
+import java.util.*
+import javax.transaction.Transactional
 
 @SpringBootTest
 @RunWith(SpringRunner::class)
+@Transactional
 class LessonServiceTest {
 
     @Autowired
     private lateinit var lessonService: LessonService
 
+    @Autowired
+    private lateinit var lessonMapper: LessonMapper
+
+    @Autowired
+    private lateinit var userMapper: UserMapper
+
     @Test
     fun select() {
-        val id = 1
-        val expected = id
-        val result = lessonService.select(id)
-        println(result)
+        // 事前準備
 
-        Assert.assertEquals(expected, result.id)
+        // User
+        val userId = createUser()
+
+        // Lesson
+        val lessonEntity = LessonEntity(
+                title = "title",
+                eventDatetime = Date(),
+                description = "description",
+                emailAddress = "email@address",
+                ownerId = userId,
+                price = 0,
+                isOpen = true)
+        lessonMapper.insert(lessonEntity)
+
+        // 条件
+        val expectedId: Int = lessonEntity.id!!
+        val result = lessonService.select(expectedId)
+
+        // 結果
+        Assert.assertEquals(expectedId, result.id)
     }
+
+    fun createUser(): Int {
+        val userEntity = UserEntity(
+                accountName = "accountName",
+                password = "password",
+                emailAddress = "email@address"
+        )
+        userMapper.insert(userEntity)
+
+        return userEntity.id!!
+    }
+
 }
