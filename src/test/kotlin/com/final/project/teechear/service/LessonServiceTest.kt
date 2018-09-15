@@ -32,12 +32,7 @@ class LessonServiceTest {
         // 事前準備
 
         // User
-        val userEntity = UserEntity(
-                accountName = "accountName",
-                password = "password",
-                emailAddress = "email@address"
-        )
-        userMapper.insert(userEntity)
+        val userId = createUser()
 
         // Lesson
         val lessonEntity = LessonEntity(
@@ -45,7 +40,7 @@ class LessonServiceTest {
                 eventDatetime = Date(),
                 description = "description",
                 emailAddress = "email@address",
-                ownerId = userEntity.id,
+                ownerId = userId,
                 price = 0,
                 isOpen = true)
         lessonMapper.insert(lessonEntity)
@@ -57,4 +52,16 @@ class LessonServiceTest {
         // 結果
         Assert.assertEquals(expectedId, result.id)
     }
+
+    fun createUser(): Int {
+        val userEntity = UserEntity(
+                accountName = "accountName",
+                password = "password",
+                emailAddress = "email@address"
+        )
+        userMapper.insert(userEntity)
+
+        return userEntity.id!!
+    }
+
 }
