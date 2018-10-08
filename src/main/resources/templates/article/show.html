@@ -140,7 +140,7 @@
                          style="height: 32px; width: 32px;">
                 </a>
                 <b>コメントを投稿する</b>
-                <div id="app"></div>
+                <div id="vue-comment-form"></div>
                 <form id="commentForm" method="post" th:action="@{/comment/create}" th:object="${commentForm}">
                     <div class="form-group text-area">
                         <textarea class="form-control" rows="3" th:field="*{text}" maxlength="10000"

@@ -1,4 +1,5 @@
 const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     // メインとなるソースファイル
@@ -14,10 +15,10 @@ module.exports = {
     mode: 'development',
     module: {
         rules: [
-            // {
-            //     test: /\.vue$/,
-            //     loader: 'vue-loader',
-            // },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -25,13 +26,23 @@ module.exports = {
                     loader: 'babel-loader'
                 }
             },
-            // {
-            //     test: /\.(css|sass|scss)$/,
-            //     loader: 'sass-loader',
-            // },
+            {
+                test: /\.(css|sass|scss)$/,
+                loader: 'sass-loader',
+            },
         ]
+    },
+    resolve: {
+        extensions: ['.js', '.vue'],
+        alias: {
+            vue$: 'vue/dist/vue.esm.js',
+        },
     },
     devServer: {
         contentBase: 'public',
     },
+    plugins: [
+        // make sure to include the plugin!
+        new VueLoaderPlugin()
+    ]
 };
