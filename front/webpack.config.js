@@ -1,4 +1,6 @@
-// webpack.config.js
+const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
     // メインとなるソースファイル
     entry: './src/index.js',
@@ -8,11 +10,39 @@ module.exports = {
         // 出力先のファイル名
         filename: 'bundle.js',
         // 出力先のファイルパス
-        path: `${__dirname}/src/main/resources/static/javascript`,
+        path: `${__dirname}/../src/main/resources/static/javascript`,
     },
-    // 開発サーバの設定
-    // devServer: {
-    //     // destディレクトリの中身を表示してね、という設定
-    //     contentBase: 'javascript',
-    // },
+    mode: 'development',
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            },
+            {
+                test: /\.(css|sass|scss)$/,
+                loader: 'sass-loader',
+            },
+        ]
+    },
+    resolve: {
+        extensions: ['.js', '.vue'],
+        alias: {
+            vue$: 'vue/dist/vue.esm.js',
+        },
+    },
+    devServer: {
+        contentBase: 'public',
+    },
+    plugins: [
+        // make sure to include the plugin!
+        new VueLoaderPlugin()
+    ]
 };
